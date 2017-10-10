@@ -34,14 +34,19 @@ CalculatriceIP::CalculatriceIP(QWidget *parent) :
         }
         // Ecriture du masque sur l'IHM
          ui->comboBoxMasque->addItem(masque);
-         int nbReseaux = qPow(2,valeur);
+         // Calcul et Ecriture du nombre maximum de sous réseaux
+         int nbReseaux = 0;
+         if (valeur != 30)
+            nbReseaux = qPow(2,(32 - valeur-2));
          ui->comboBoxSousReseaux->addItem(QString::number(nbReseaux));
+         // Calcul et Ecriture du nombre maximum d'adresses IP
          int nbHotes = (qPow(2,(32 - valeur))) -2;
          ui->compoBoxAdressesIP->addItem(QString::number(nbHotes));
 
          leMasque >>= 1 ;
          leMasque |= 0x80000000;
     }
+    ui->comboBoxSuffixe->setCurrentIndex(16);
     ui->lineEditAdresse1->setValidator(new QIntValidator(1,223));
     ui->lineEditAdresse2->setValidator(new QIntValidator(0,255));
     ui->lineEditAdresse3->setValidator(new QIntValidator(0,255));
@@ -75,9 +80,14 @@ void CalculatriceIP::on_comboBoxSuffixe_currentIndexChanged(int index)
 
     AdresseIPv4 adresse(tabAdresse,suffixe);   // création d'un objet adresse IPv4
     adresse.ObtenirAdresseReseau(tabAdresse);  // appelle de la méthode obtenir adresse réseau
-    ui->lineEditAdresseReseau->setText(ConvertirTableauIpEnQString(tabAdresse));   // affichage de l'adresse réseau
+    QString adresseReseau;
+    adresseReseau = ConvertirTableauIpEnQString(tabAdresse);
+    adresseReseau += " / ";
+    adresseReseau += ui->comboBoxSuffixe->currentText();
+    ui->lineEditAdresseReseau->setText(adresseReseau);   // affichage de l'adresse réseau
 
     adresse.ObtenirAdresseDiffusion(tabAdresse);  // appelle de la méthode obtenir adresse de diffusion
+
     ui->lineEditAdresseDiffusion->setText(ConvertirTableauIpEnQString(tabAdresse));  // affichage de l'adresse de diffusion
 
     adresse.ObtenirPremiereAdresse(tabAdresse);  // appelle de la methode première adresse réseau
@@ -88,6 +98,8 @@ void CalculatriceIP::on_comboBoxSuffixe_currentIndexChanged(int index)
     ui->lineEditAdresseUtilisables->setText(plageAdresse);
 }
 
+
+// Corrigé de la Question 10
 void CalculatriceIP::onAdresseIPChange()
 {
     on_comboBoxSuffixe_currentIndexChanged(ui->comboBoxSuffixe->currentIndex());
