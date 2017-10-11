@@ -1,6 +1,7 @@
 #ifndef ADRESSEIPV4_H
 #define ADRESSEIPV4_H
 #include <QtGlobal>
+#include <QString>
 
 
 class AdresseIPv4
@@ -26,6 +27,7 @@ public:
     void ObtenirPremiereAdresse(quint8 _adresse[]);
     void ObtenirDerniereAdresse(quint8 _adresse[]);
     void ObtenirAdresseDiffusion(quint8 _adresse[]);
+    QString ObtenirClasseAdresse();
 };
 
 #endif // ADRESSEIPV4_H

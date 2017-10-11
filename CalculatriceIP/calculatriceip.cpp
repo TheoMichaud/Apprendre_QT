@@ -47,7 +47,7 @@ CalculatriceIP::CalculatriceIP(QWidget *parent) :
          leMasque |= 0x80000000;
     }
     ui->comboBoxSuffixe->setCurrentIndex(16);
-    ui->lineEditAdresse1->setValidator(new QIntValidator(1,223));
+    ui->lineEditAdresse1->setValidator(new QIntValidator(1,254));
     ui->lineEditAdresse2->setValidator(new QIntValidator(0,255));
     ui->lineEditAdresse3->setValidator(new QIntValidator(0,255));
     ui->lineEditAdresse4->setValidator(new QIntValidator(0,254));
@@ -84,6 +84,8 @@ void CalculatriceIP::on_comboBoxSuffixe_currentIndexChanged(int index)
     adresseReseau = ConvertirTableauIpEnQString(tabAdresse);
     adresseReseau += " / ";
     adresseReseau += ui->comboBoxSuffixe->currentText();
+    adresseReseau += "    ";
+    adresseReseau += adresse.ObtenirClasseAdresse();
     ui->lineEditAdresseReseau->setText(adresseReseau);   // affichage de l'adresse réseau
 
     adresse.ObtenirAdresseDiffusion(tabAdresse);  // appelle de la méthode obtenir adresse de diffusion
