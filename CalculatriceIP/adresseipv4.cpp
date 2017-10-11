@@ -100,8 +100,7 @@ void AdresseIPv4::CalculerMasque(){
 
 }
 
-void AdresseIPv4::CalculerSuffixe()
-{
+void AdresseIPv4::CalculerSuffixe(){
 
 }
 

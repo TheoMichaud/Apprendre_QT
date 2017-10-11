@@ -13,8 +13,6 @@ CalculatriceIP::CalculatriceIP(QWidget *parent) :
     quint8  octet;
     QString masque;
 
-
-
     ui->setupUi(this);
 
     for(int valeur=8; valeur<=30; valeur++){
