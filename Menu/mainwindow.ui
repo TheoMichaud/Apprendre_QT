@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>649</width>
+    <height>358</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QTextEdit" name="textLogActions">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>0</y>
+      <width>621</width>
+      <height>301</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>649</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFichier">
+    <property name="title">
+     <string>Fichier</string>
+    </property>
+    <addaction name="actionOuvrir"/>
+    <addaction name="separator"/>
+    <addaction name="actionQuitter"/>
+   </widget>
+   <widget class="QMenu" name="menuTest">
+    <property name="title">
+     <string>Test</string>
+    </property>
+    <widget class="QMenu" name="menuSous_menu1">
+     <property name="title">
+      <string>Sous menu1</string>
+     </property>
+     <addaction name="Autre_chose"/>
+     <addaction name="Autre_chose_encore"/>
+    </widget>
+    <addaction name="menuSous_menu1"/>
+    <addaction name="separator"/>
+    <addaction name="actionInformation"/>
+    <addaction name="actionPolice"/>
+   </widget>
+   <addaction name="menuFichier"/>
+   <addaction name="menuTest"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionOuvrir">
+   <property name="text">
+    <string>Ouvrir un fichier</string>
+   </property>
+  </action>
+  <action name="actionInformation">
+   <property name="text">
+    <string>Saisir une information</string>
+   </property>
+  </action>
+  <action name="Autre_chose">
+   <property name="text">
+    <string>Autre chose</string>
+   </property>
+  </action>
+  <action name="Autre_chose_encore">
+   <property name="text">
+    <string>Autre chose encore</string>
+   </property>
+  </action>
+  <action name="actionQuitter">
+   <property name="text">
+    <string>Quitter</string>
+   </property>
+  </action>
+  <action name="actionPolice">
+   <property name="text">
+    <string>Sélectionner une police</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
