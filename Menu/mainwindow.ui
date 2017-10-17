@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>649</width>
-    <height>358</height>
+    <width>922</width>
+    <height>372</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,11 +17,33 @@
    <widget class="QTextEdit" name="textLogActions">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>290</x>
       <y>0</y>
-      <width>621</width>
+      <width>631</width>
       <height>301</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 227);</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="logo">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>50</y>
+      <width>161</width>
+      <height>171</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="ressource1.qrc">:/prefix1/logo_touchard.jpg</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
     </property>
    </widget>
   </widget>
@@ -30,7 +52,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>649</width>
+     <width>922</width>
      <height>26</height>
     </rect>
    </property>
@@ -56,6 +78,7 @@
     <addaction name="menuSous_menu1"/>
     <addaction name="separator"/>
     <addaction name="actionInformation"/>
+    <addaction name="actionCouleur"/>
     <addaction name="actionPolice"/>
    </widget>
    <addaction name="menuFichier"/>
@@ -95,6 +118,11 @@
     <string>Quitter</string>
    </property>
   </action>
+  <action name="actionCouleur">
+   <property name="text">
+    <string>Sélectionner une couleur</string>
+   </property>
+  </action>
   <action name="actionPolice">
    <property name="text">
     <string>Sélectionner une police</string>
@@ -102,6 +130,8 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="ressource1.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QInputDialog>
 #include <QFontDialog>
+#include <QColorDialog>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -79,4 +80,16 @@ void MainWindow::on_actionPolice_triggered()
         if (ok){
             ui->textLogActions->setFont(police);
         }
+}
+
+void MainWindow::on_actionCouleur_triggered()
+{
+        qDebug() << "Choisir une couleur a été cliqué";
+        QColor couleur = QColorDialog::getColor(Qt::yellow, this );
+        if( couleur.isValid() )
+            {
+              qDebug() << "Couleur sélectionnée : " << couleur.name();
+
+              ui->textLogActions->setStyleSheet(QString("background: %1").arg(couleur.name()));
+            }
 }

@@ -31,6 +31,7 @@ private slots:
     void on_actionQuitter_triggered();
     void on_actionInformation_triggered();
     void on_actionPolice_triggered();
+    void on_actionCouleur_triggered();
 
 private:
     Ui::MainWindow *ui;
