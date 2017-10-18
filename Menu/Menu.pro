@@ -34,4 +34,8 @@ FORMS += \
         mainwindow.ui
 
 RESOURCES += \
-    ressource1.qrc
+    ressource1.qrc \
+    res.qrc
+
+DISTFILES += \
+    Save-icon.png

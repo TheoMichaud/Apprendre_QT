@@ -6,6 +6,7 @@
 #include <QInputDialog>
 #include <QFontDialog>
 #include <QColorDialog>
+#include <QFileDialog>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -24,12 +25,20 @@ MainWindow::~MainWindow()
 
 void MainWindow::Ouvrir()
 {
+    // La boîte de dialogue « Ouverture d'un fichier » est gérée par
+    // getOpenFileName().
+    // Sans paramètre particulier, la boîte de dialogue permet d'ouvrir
+    // n'importe quel fichier.
+
+    QString fichier = QFileDialog::getOpenFileName(this, "Ouvrir un fichier cpp", QString());
+
     // Message box information
     // La méthode statique information()permet d'ouvrir une boîte de dialogue
     // constituée d'une icône « information ».
 
-    QMessageBox::information(this, "Info", "Vous venez de cliquer sur <b>Ouvrir</b> dans le menu Fichier");
-    ui->textLogActions->append("Clique sur <b>\"Ouvrir\"</b> dans le menu Fichier");
+    QMessageBox::information(this, "Fichier", "Vous avez sélectionné :\n" + fichier);
+    ui->textLogActions->append("Vous avez sélectionné : <b>" + fichier + "</b>");
+
 }
 
 void MainWindow::on_Autre_chose_triggered()
@@ -91,5 +100,14 @@ void MainWindow::on_actionCouleur_triggered()
               qDebug() << "Couleur sélectionnée : " << couleur.name();
 
               ui->textLogActions->setStyleSheet(QString("background: %1").arg(couleur.name()));
-            }
+        }
+}
+
+
+
+void MainWindow::on_actionEnregistrer_triggered()
+{
+    qDebug() << "L'action Enregistrer a été cliqué";
+    QMessageBox::information(this, "Info", "Vous venez de cliquer sur <b>Enregistrer</b>");
+
 }

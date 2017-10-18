@@ -33,6 +33,8 @@ private slots:
     void on_actionPolice_triggered();
     void on_actionCouleur_triggered();
 
+    void on_actionEnregistrer_triggered();
+
 private:
     Ui::MainWindow *ui;
 };

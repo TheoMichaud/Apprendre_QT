@@ -53,16 +53,17 @@
      <x>0</x>
      <y>0</y>
      <width>922</width>
-     <height>26</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFichier">
     <property name="title">
      <string>Fichier</string>
     </property>
-    <addaction name="actionOuvrir"/>
     <addaction name="separator"/>
+    <addaction name="actionOuvrir"/>
     <addaction name="actionQuitter"/>
+    <addaction name="actionEnregistrer"/>
    </widget>
    <widget class="QMenu" name="menuTest">
     <property name="title">
@@ -91,9 +92,17 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionOuvrir"/>
+   <addaction name="actionEnregistrer"/>
+   <addaction name="separator"/>
+   <addaction name="actionQuitter"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOuvrir">
+   <property name="icon">
+    <iconset resource="ressource1.qrc">
+     <normaloff>:/menu/open-file-icon.png</normaloff>:/menu/open-file-icon.png</iconset>
+   </property>
    <property name="text">
     <string>Ouvrir un fichier</string>
    </property>
@@ -114,6 +123,10 @@
    </property>
   </action>
   <action name="actionQuitter">
+   <property name="icon">
+    <iconset resource="ressource1.qrc">
+     <normaloff>:/menu/Windows-Close-Program-icon.png</normaloff>:/menu/Windows-Close-Program-icon.png</iconset>
+   </property>
    <property name="text">
     <string>Quitter</string>
    </property>
@@ -126,6 +139,15 @@
   <action name="actionPolice">
    <property name="text">
     <string>Sélectionner une police</string>
+   </property>
+  </action>
+  <action name="actionEnregistrer">
+   <property name="icon">
+    <iconset resource="ressource1.qrc">
+     <normaloff>:/menu/Save-icon.png</normaloff>:/menu/Save-icon.png</iconset>
+   </property>
+   <property name="text">
+    <string>Enregistrer</string>
    </property>
   </action>
  </widget>
