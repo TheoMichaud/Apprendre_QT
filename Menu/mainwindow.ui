@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>922</width>
-    <height>372</height>
+    <height>444</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,11 +17,16 @@
    <widget class="QTextEdit" name="textLogActions">
     <property name="geometry">
      <rect>
-      <x>290</x>
-      <y>0</y>
+      <x>280</x>
+      <y>10</y>
       <width>631</width>
       <height>301</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
     </property>
     <property name="styleSheet">
      <string notr="true">background-color: rgb(255, 255, 227);</string>
@@ -53,7 +58,7 @@
      <x>0</x>
      <y>0</y>
      <width>922</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFichier">
@@ -62,8 +67,8 @@
     </property>
     <addaction name="separator"/>
     <addaction name="actionOuvrir"/>
-    <addaction name="actionQuitter"/>
     <addaction name="actionEnregistrer"/>
+    <addaction name="actionQuitter"/>
    </widget>
    <widget class="QMenu" name="menuTest">
     <property name="title">

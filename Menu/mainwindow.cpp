@@ -7,6 +7,8 @@
 #include <QFontDialog>
 #include <QColorDialog>
 #include <QFileDialog>
+#include <QFile>
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -30,15 +32,22 @@ void MainWindow::Ouvrir()
     // Sans paramètre particulier, la boîte de dialogue permet d'ouvrir
     // n'importe quel fichier.
 
-    QString fichier = QFileDialog::getOpenFileName(this, "Ouvrir un fichier cpp", QString());
-
+    QString nomFichier = QFileDialog::getOpenFileName(this, "Ouvrir un fichier cpp", QString());
+    QString contenuFichier;
     // Message box information
     // La méthode statique information()permet d'ouvrir une boîte de dialogue
     // constituée d'une icône « information ».
 
-    QMessageBox::information(this, "Fichier", "Vous avez sélectionné :\n" + fichier);
-    ui->textLogActions->append("Vous avez sélectionné : <b>" + fichier + "</b>");
 
+    QFile fichier(nomFichier);
+
+    if(fichier.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+         contenuFichier = fichier.readAll();
+         fichier.close();
+         ui->textLogActions->setText(contenuFichier);
+    }
+    else qDebug() << "Impossible d'ouvrir le fichier !";
 }
 
 void MainWindow::on_Autre_chose_triggered()
