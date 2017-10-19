@@ -119,9 +119,15 @@ void MainWindow::on_actionEnregistrer_triggered()
     qDebug() << "L'action Enregistrer a été cliqué";
     QFile fichier(nomFichier);
     // Ouverture d'un fichier en lecture seule
-    fichier.open(QIODevice::WriteOnly | QIODevice::Text);
-    // création d'un flux
-    QTextStream flux(&fichier);
-    QMessageBox::information(this, "Info", "Vous venez de cliquer sur <b>Enregistrer</b>");
-
+    if (fichier.open(QIODevice::WriteOnly | QIODevice::Text)){
+        // création d'un flux
+        QTextStream flux(&fichier);
+        contenuFichier = ui->textLogActions->toPlainText();
+        flux << contenuFichier;
+        fichier.close();
+        QMessageBox::information(this, "Info", "Le fichier : <b>" + nomFichier + "</b> a été Enregistré");
+    }
+    else{
+        QMessageBox::information(this, "Info", "erreur lors de l'ouverture du fichier");
+    }
 }
