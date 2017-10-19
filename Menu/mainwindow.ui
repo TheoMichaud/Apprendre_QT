@@ -17,10 +17,10 @@
    <widget class="QTextEdit" name="textLogActions">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>10</y>
-      <width>631</width>
-      <height>301</height>
+      <x>159</x>
+      <y>11</y>
+      <width>751</width>
+      <height>341</height>
      </rect>
     </property>
     <property name="font">
@@ -35,10 +35,10 @@
    <widget class="QLabel" name="logo">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>50</y>
-      <width>161</width>
-      <height>171</height>
+      <x>21</x>
+      <y>11</y>
+      <width>131</width>
+      <height>131</height>
      </rect>
     </property>
     <property name="text">
@@ -58,7 +58,7 @@
      <x>0</x>
      <y>0</y>
      <width>922</width>
-     <height>26</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFichier">

@@ -32,8 +32,8 @@ void MainWindow::Ouvrir()
     // Sans paramètre particulier, la boîte de dialogue permet d'ouvrir
     // n'importe quel fichier.
 
-    QString nomFichier = QFileDialog::getOpenFileName(this, "Ouvrir un fichier cpp", QString());
-    QString contenuFichier;
+    nomFichier = QFileDialog::getOpenFileName(this, "Ouvrir un fichier cpp", QString());
+
     // Message box information
     // La méthode statique information()permet d'ouvrir une boîte de dialogue
     // constituée d'une icône « information ».
@@ -117,6 +117,11 @@ void MainWindow::on_actionCouleur_triggered()
 void MainWindow::on_actionEnregistrer_triggered()
 {
     qDebug() << "L'action Enregistrer a été cliqué";
+    QFile fichier(nomFichier);
+    // Ouverture d'un fichier en lecture seule
+    fichier.open(QIODevice::WriteOnly | QIODevice::Text);
+    // création d'un flux
+    QTextStream flux(&fichier);
     QMessageBox::information(this, "Info", "Vous venez de cliquer sur <b>Enregistrer</b>");
 
 }
