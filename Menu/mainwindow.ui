@@ -72,7 +72,7 @@
    </widget>
    <widget class="QMenu" name="menuTest">
     <property name="title">
-     <string>Test</string>
+     <string>Préférences</string>
     </property>
     <widget class="QMenu" name="menuSous_menu1">
      <property name="title">
@@ -111,6 +111,12 @@
    <property name="text">
     <string>Ouvrir un fichier</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
   </action>
   <action name="actionInformation">
    <property name="text">
@@ -135,24 +141,39 @@
    <property name="text">
     <string>Quitter</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
   </action>
   <action name="actionCouleur">
    <property name="text">
-    <string>Sélectionner une couleur</string>
+    <string>Couleur du fond</string>
    </property>
   </action>
   <action name="actionPolice">
    <property name="text">
-    <string>Sélectionner une police</string>
+    <string>Police</string>
    </property>
   </action>
   <action name="actionEnregistrer">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="ressource1.qrc">
      <normaloff>:/menu/Save-icon.png</normaloff>:/menu/Save-icon.png</iconset>
    </property>
    <property name="text">
     <string>Enregistrer</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
    </property>
   </action>
  </widget>
