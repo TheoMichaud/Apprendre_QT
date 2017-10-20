@@ -14,43 +14,20 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QTextEdit" name="textLogActions">
-    <property name="geometry">
-     <rect>
-      <x>159</x>
-      <y>11</y>
-      <width>751</width>
-      <height>341</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>11</pointsize>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 255, 227);</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="logo">
-    <property name="geometry">
-     <rect>
-      <x>21</x>
-      <y>11</y>
-      <width>131</width>
-      <height>131</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap resource="ressource1.qrc">:/prefix1/logo_touchard.jpg</pixmap>
-    </property>
-    <property name="scaledContents">
-     <bool>true</bool>
-    </property>
-   </widget>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QTextEdit" name="textLogActions">
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 227);</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -58,7 +35,7 @@
      <x>0</x>
      <y>0</y>
      <width>922</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFichier">
@@ -72,7 +49,7 @@
    </widget>
    <widget class="QMenu" name="menuTest">
     <property name="title">
-     <string>Test</string>
+     <string>Préférences</string>
     </property>
     <widget class="QMenu" name="menuSous_menu1">
      <property name="title">
@@ -87,8 +64,15 @@
     <addaction name="actionCouleur"/>
     <addaction name="actionPolice"/>
    </widget>
+   <widget class="QMenu" name="menuInfo">
+    <property name="title">
+     <string>Aide</string>
+    </property>
+    <addaction name="actionA_propos"/>
+   </widget>
    <addaction name="menuFichier"/>
    <addaction name="menuTest"/>
+   <addaction name="menuInfo"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -110,6 +94,12 @@
    </property>
    <property name="text">
     <string>Ouvrir un fichier</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
    </property>
   </action>
   <action name="actionInformation">
@@ -135,24 +125,44 @@
    <property name="text">
     <string>Quitter</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
   </action>
   <action name="actionCouleur">
    <property name="text">
-    <string>Sélectionner une couleur</string>
+    <string>Couleur du fond</string>
    </property>
   </action>
   <action name="actionPolice">
    <property name="text">
-    <string>Sélectionner une police</string>
+    <string>Police</string>
    </property>
   </action>
   <action name="actionEnregistrer">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="ressource1.qrc">
      <normaloff>:/menu/Save-icon.png</normaloff>:/menu/Save-icon.png</iconset>
    </property>
    <property name="text">
     <string>Enregistrer</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
+  </action>
+  <action name="actionA_propos">
+   <property name="text">
+    <string> A propos de Menu</string>
    </property>
   </action>
  </widget>

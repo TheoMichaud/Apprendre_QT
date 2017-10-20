@@ -2,7 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
+/**
+ * @author Philippe SIMIER
+ * @brief  Mini Editeur de texte
+ * @date   20 octobre 2017
+ */
 namespace Ui {
 class MainWindow;
 }
@@ -34,6 +38,10 @@ private slots:
     void on_actionCouleur_triggered();
 
     void on_actionEnregistrer_triggered();
+
+    void on_textLogActions_textChanged();
+
+    void on_actionA_propos_triggered();
 
 private:
     Ui::MainWindow *ui;
