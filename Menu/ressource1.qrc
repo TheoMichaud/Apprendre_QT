@@ -6,5 +6,7 @@
         <file>Save-icon.png</file>
         <file>open-file-icon.png</file>
         <file>Windows-Close-Program-icon.png</file>
+        <file>page-blanche-icon.png</file>
+        <file>point-interrogation-icon.png</file>
     </qresource>
 </RCC>

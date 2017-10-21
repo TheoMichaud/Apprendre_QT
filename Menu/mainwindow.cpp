@@ -19,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // connection du signal trigerred du menu actionOuvrir au slot Ouvrir
     connect(ui->actionOuvrir, SIGNAL(triggered(bool)),
             this, SLOT(Ouvrir()));
+    nomFichier = "";
 
 }
 
@@ -34,7 +35,7 @@ void MainWindow::Ouvrir()
     // Sans paramètre particulier, la boîte de dialogue permet d'ouvrir
     // n'importe quel fichier.
 
-    nomFichier = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", NULL, "Text files (*.txt)");
+    nomFichier = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", QDir::homePath() , "Text files (*.txt)");
 
 
 
@@ -120,32 +121,37 @@ void MainWindow::on_actionCouleur_triggered()
 void MainWindow::on_actionEnregistrer_triggered()
 {
     qDebug() << "L'action Enregistrer a été cliqué";
-    QFile fichier(nomFichier);
-    // Ouverture d'un fichier en lecture seule
-    if (fichier.open(QIODevice::WriteOnly | QIODevice::Text)){
-        // création d'un flux
-        QTextStream flux(&fichier);
-        contenuFichier = ui->textLogActions->toPlainText();
-        flux << contenuFichier;
-        fichier.close();
-        QMessageBox::information(this, "Info", "Le fichier : <b>" + nomFichier + "</b> a été Enregistré");
-        // désactive le bouton enregistrer
-        ui->actionEnregistrer->setEnabled(false);
+    if (nomFichier != ""){
+        QFile fichier(nomFichier);
+        // Ouverture d'un fichier en lecture seule
+        if (fichier.open(QIODevice::WriteOnly | QIODevice::Text)){
+            // création d'un flux
+            QTextStream flux(&fichier);
+            contenuFichier = ui->textLogActions->toPlainText();
+            flux << contenuFichier;
+            fichier.close();
+            QMessageBox::information(this, "Info", "Le fichier : <b>" + nomFichier + "</b> a été Enregistré");
+            // désactive le bouton enregistrer
+            ui->actionEnregistrer->setEnabled(false);
+        }
+        else{
+
+            // Message box information
+            // La méthode statique information()permet d'ouvrir une boîte de dialogue
+            // constituée d'une icône « information ».
+
+            QMessageBox::information(this, "Info", "erreur lors de l'ouverture du fichier");
+        }
     }
     else{
-
-        // Message box information
-        // La méthode statique information()permet d'ouvrir une boîte de dialogue
-        // constituée d'une icône « information ».
-
-        QMessageBox::information(this, "Info", "erreur lors de l'ouverture du fichier");
+        on_actionEnregistrer_sous_triggered();
     }
 }
-
 void MainWindow::on_textLogActions_textChanged()
 {
     // active le bouton enregistrer
     ui->actionEnregistrer->setEnabled(true);
+    ui->actionEnregistrer_sous->setEnabled(true);
 }
 
 void MainWindow::on_actionA_propos_triggered()
@@ -154,4 +160,19 @@ void MainWindow::on_actionA_propos_triggered()
 
     fenetre.exec();
     qDebug() << " info a été cliqué";
+}
+
+void MainWindow::on_actionEnregistrer_sous_triggered()
+{
+    nomFichier = QFileDialog::getSaveFileName(this, "Enregistrer sous...", QDir::homePath(), "Texte (*.txt)");
+    qDebug() << nomFichier;
+    on_actionEnregistrer_triggered();
+}
+
+void MainWindow::on_actionNouveau_triggered()
+{
+    nomFichier = "";
+    ui->textLogActions->setText("");
+    ui->actionEnregistrer->setEnabled(false);
+    ui->actionEnregistrer_sous->setEnabled(false);
 }

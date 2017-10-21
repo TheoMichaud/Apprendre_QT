@@ -36,12 +36,11 @@ private slots:
     void on_actionInformation_triggered();
     void on_actionPolice_triggered();
     void on_actionCouleur_triggered();
-
     void on_actionEnregistrer_triggered();
-
     void on_textLogActions_textChanged();
-
     void on_actionA_propos_triggered();
+    void on_actionEnregistrer_sous_triggered();
+    void on_actionNouveau_triggered();
 
 private:
     Ui::MainWindow *ui;
