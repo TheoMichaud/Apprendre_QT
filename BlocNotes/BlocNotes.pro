@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2017-10-15T14:26:05
+# Project created by QtCreator 2017-10-22T08:55:49
 #
 #-------------------------------------------------
 
@@ -8,7 +8,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = Menu
+TARGET = BlocNotes
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -25,23 +25,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp \
-    widgetreutilisable.cpp \
+        blocnotes.cpp \
     info.cpp
 
 HEADERS += \
-        mainwindow.h \
-    widgetreutilisable.h \
+        blocnotes.h \
     info.h
 
 FORMS += \
-        mainwindow.ui \
-    widgetreutilisable.ui \
+        blocnotes.ui \
     info.ui
 
 RESOURCES += \
-    ressource1.qrc \
-    res.qrc
-
-DISTFILES += \
-    Save-icon.png
+    ressourcesicones.qrc
