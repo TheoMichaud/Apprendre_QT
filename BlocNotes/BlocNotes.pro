@@ -26,15 +26,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         blocnotes.cpp \
-    info.cpp
+    info.cpp \
+    finddialog.cpp
 
 HEADERS += \
         blocnotes.h \
-    info.h
+    info.h \
+    finddialog.h
 
 FORMS += \
         blocnotes.ui \
-    info.ui
+    info.ui \
+    finddialog.ui
 
 RESOURCES += \
     ressourcesicones.qrc

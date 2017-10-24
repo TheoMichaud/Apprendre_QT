@@ -2,6 +2,7 @@
 #include "ui_blocnotes.h"
 #include "info.h"
 
+
 blocNotes::blocNotes(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::blocNotes),
@@ -13,7 +14,12 @@ blocNotes::blocNotes(QWidget *parent) :
     ui->setupUi(this);
     ui->actionEnregistrer->setEnabled(false);
     ui->actionEnregistrer_sous->setEnabled(false);
+    WRechercher = new FindDialog(this);
 
+    if(!connect(WRechercher, SIGNAL(rechercherSuivant(QString,Qt::CaseSensitivity)), this, SLOT(rechercherSuivant(QString,Qt::CaseSensitivity))))
+        qDebug() << "Erreur connexion rechercher suivant";
+    if(!connect(WRechercher, SIGNAL(rechercherPrecedent(QString,Qt::CaseSensitivity)), this, SLOT(rechercherPrecedent(QString,Qt::CaseSensitivity))))
+        qDebug() << "Erreur connexion rechercher precedent";
 }
 
 blocNotes::~blocNotes()
@@ -148,10 +154,29 @@ void blocNotes::on_actionR_tablir_triggered(){
 }
 
 void blocNotes::on_actionRechercher_triggered(){
-    expression = QInputDialog::getText(this, "Rechercher", "Rechercher : ");
-    if(!ui->plainTextEdit->find(expression)){
+
+    WRechercher->exec();
+}
+
+void blocNotes::rechercherSuivant(QString expression, Qt::CaseSensitivity cv ){
+
+     statusBar()->showMessage("rechercher suivant : " + expression);
+     blocNotes::expression = expression;
+
+     if(!ui->plainTextEdit->find(expression)){
+         QMessageBox::information(this, "Info", "L'expression : <b>" + expression + "</b> n'a pas été trouvée !");
+     }
+}
+
+void blocNotes::rechercherPrecedent(QString expression, Qt::CaseSensitivity cv){
+
+    statusBar()->showMessage("rechercher précédent: " + expression);
+    blocNotes::expression = expression;
+    QTextDocument::FindFlag options = QTextDocument::FindBackward;
+    if(!ui->plainTextEdit->find(expression, options)){
         QMessageBox::information(this, "Info", "L'expression : <b>" + expression + "</b> n'a pas été trouvée !");
     }
+
 }
 
 void blocNotes::on_actionRechercher_le_suivant_triggered(){

@@ -10,6 +10,9 @@
 #include <QFontDialog>
 #include <QColorDialog>
 #include <QInputDialog>
+#include <QDebug>
+#include "finddialog.h"
+
 
 namespace Ui {
 class blocNotes;
@@ -23,6 +26,10 @@ public:
     explicit blocNotes(QWidget *parent = 0);
     ~blocNotes();
 
+public slots:
+    void rechercherSuivant(QString expression, Qt::CaseSensitivity cv);
+    void rechercherPrecedent(QString expression, Qt::CaseSensitivity cv);
+
 private slots:
     void on_actionOuvrir_triggered();
     void on_actionNouveau_triggered();
@@ -30,28 +37,21 @@ private slots:
     void on_actionEnregistrer_sous_triggered();
     void on_actionPolice_triggered();
     void on_actionA_propos_triggered();
-
     void on_plainTextEdit_textChanged();
-
     void on_actionQuitter_triggered();
-
     void on_actionCouleur_du_fond_triggered();
-
     void on_actionAnnuler_triggered();
-
     void on_actionR_tablir_triggered();
-
     void on_actionRechercher_triggered();
-
     void on_actionRechercher_le_suivant_triggered();
 
 private:
     Ui::blocNotes *ui;
+    FindDialog *WRechercher;
     QString nomDocument;
     QString contenuDocument;
     QFileInfo *fichierInfo;
     bool modifie;
-    QIcon *icone;
     QString expression;
 };
 
