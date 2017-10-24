@@ -2,6 +2,7 @@
 #define FINDDIALOG_H
 
 #include <QDialog>
+#include <QTextDocument>
 
 namespace Ui {
 class FindDialog;
@@ -17,12 +18,12 @@ public:
 
 private slots:
     void on_texteRecherche_textChanged(const QString &arg1);
-
     void on_pushButtonRechercher_clicked();
 
 signals:
-    void rechercherPrecedent(QString texte, Qt::CaseSensitivity cs);
-    void rechercherSuivant(QString texte, Qt::CaseSensitivity cs);
+    void rechercher(QString expression, QTextDocument::FindFlag options);
+    void rechercherReg(QRegExp expression, QTextDocument::FindFlags options);
+
 
 private:
     Ui::FindDialog *ui;

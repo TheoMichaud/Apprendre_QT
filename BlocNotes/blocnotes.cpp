@@ -16,10 +16,10 @@ blocNotes::blocNotes(QWidget *parent) :
     ui->actionEnregistrer_sous->setEnabled(false);
     WRechercher = new FindDialog(this);
 
-    if(!connect(WRechercher, SIGNAL(rechercherSuivant(QString,Qt::CaseSensitivity)), this, SLOT(rechercherSuivant(QString,Qt::CaseSensitivity))))
-        qDebug() << "Erreur connexion rechercher suivant";
-    if(!connect(WRechercher, SIGNAL(rechercherPrecedent(QString,Qt::CaseSensitivity)), this, SLOT(rechercherPrecedent(QString,Qt::CaseSensitivity))))
-        qDebug() << "Erreur connexion rechercher precedent";
+    if(!connect(WRechercher, SIGNAL(rechercher(QString,QTextDocument::FindFlag)), this, SLOT(rechercher(QString,QTextDocument::FindFlag))))
+        qDebug() << "Erreur connexion rechercher";
+    if(!connect(WRechercher, SIGNAL(rechercherReg(QRegExp,QTextDocument::FindFlags)), this, SLOT(rechercherReg(QRegExp,QTextDocument::FindFlags))))
+        qDebug() << "Erreur connexion rechercherReg";
 }
 
 blocNotes::~blocNotes()
@@ -115,7 +115,7 @@ void blocNotes::on_actionQuitter_triggered(){
     this->close();
 }
 
-// SLOT pour sélectionner un nouvelle Font
+// SLOT pour sélectionner une nouvelle Font
 void blocNotes::on_actionPolice_triggered(){
     statusBar()->showMessage("Action Choisir une Font");
     bool ok = false;
@@ -158,29 +158,51 @@ void blocNotes::on_actionRechercher_triggered(){
     WRechercher->exec();
 }
 
-void blocNotes::rechercherSuivant(QString expression, Qt::CaseSensitivity cv ){
+void blocNotes::rechercher(QString expression, QTextDocument::FindFlag options ){
 
-     statusBar()->showMessage("rechercher suivant : " + expression);
-     blocNotes::expression = expression;
 
-     if(!ui->plainTextEdit->find(expression)){
-         QMessageBox::information(this, "Info", "L'expression : <b>" + expression + "</b> n'a pas été trouvée !");
-     }
-}
+    blocNotes::expression = expression;  // sauvegarde de l'expression dans l'argument expression du blocNotes
+    blocNotes::options = options;        // sauvegarde des options de recherche
 
-void blocNotes::rechercherPrecedent(QString expression, Qt::CaseSensitivity cv){
-
-    statusBar()->showMessage("rechercher précédent: " + expression);
-    blocNotes::expression = expression;
-    QTextDocument::FindFlag options = QTextDocument::FindBackward;
     if(!ui->plainTextEdit->find(expression, options)){
-        QMessageBox::information(this, "Info", "L'expression : <b>" + expression + "</b> n'a pas été trouvée !");
+        QMessageBox::information(this, "Info", "Recherche terminée !");
     }
+    else{
+        QTextCursor curseur;
+        curseur = ui->plainTextEdit->textCursor();
 
+        statusBar()->showMessage("Expression trouvée : " + expression +
+                                 "\t-> (ligne " +
+                                 QString::number(curseur.blockNumber()+1) +
+                                 " colonne " +
+                                 QString::number(curseur.columnNumber() - expression.size()+1) +
+                                 ")"
+                                 );
+    }
 }
 
-void blocNotes::on_actionRechercher_le_suivant_triggered(){
-    if(!ui->plainTextEdit->find(expression)){
-        QMessageBox::information(this, "Info", "L'expression : <b>" + expression + "</b> n'a pas été trouvée !");
+// slot pour rechercher à partir d'une expression régulière
+// exemple [0-9]{3}  recherche d'un nombre composé de 3 chiffres
+void blocNotes::rechercherReg(QRegExp expression, QTextDocument::FindFlags options)
+{
+    if(!ui->plainTextEdit->find(expression, options)){
+        QMessageBox::information(this, "Info", "Recherche terminée !");
     }
+    else{
+        QTextCursor curseur;
+        curseur = ui->plainTextEdit->textCursor();
+
+        statusBar()->showMessage("Expression matchée -> (ligne " +
+                                 QString::number(curseur.blockNumber()+1) +
+                                 " colonne " +
+                                 QString::number(curseur.columnNumber()) +
+                                 ")"
+                                 );
+    }
+}
+
+
+// Slot appelé quand la touche F3 est actionné
+void blocNotes::on_actionRechercher_le_suivant_triggered(){
+    rechercher(expression,options);   // appelle le slot rechercher
 }

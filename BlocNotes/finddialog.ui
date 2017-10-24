@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>440</width>
-    <height>182</height>
+    <height>195</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Rechercher...</string>
   </property>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
      <y>20</y>
      <width>419</width>
-     <height>132</height>
+     <height>164</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -35,7 +35,7 @@
            </font>
           </property>
           <property name="text">
-           <string> Recherche : </string>
+           <string> Expression : </string>
           </property>
          </widget>
         </item>
@@ -54,18 +54,6 @@
        </layout>
       </item>
       <item>
-       <widget class="QCheckBox" name="checkBoxCasse">
-        <property name="font">
-         <font>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Respecter la casse</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QCheckBox" name="checkBoxArriere">
         <property name="font">
          <font>
@@ -78,6 +66,18 @@
        </widget>
       </item>
       <item>
+       <widget class="QCheckBox" name="checkBoxCasse">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Respecter la casse</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QCheckBox" name="checkBoxMotEntier">
         <property name="font">
          <font>
@@ -85,7 +85,19 @@
          </font>
         </property>
         <property name="text">
-         <string>Chercher le mot entier</string>
+         <string>Chercher le mot complet</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBoxExpReg">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Utiliser les expressions régulières</string>
         </property>
        </widget>
       </item>

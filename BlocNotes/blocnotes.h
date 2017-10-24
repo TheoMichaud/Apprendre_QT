@@ -27,8 +27,9 @@ public:
     ~blocNotes();
 
 public slots:
-    void rechercherSuivant(QString expression, Qt::CaseSensitivity cv);
-    void rechercherPrecedent(QString expression, Qt::CaseSensitivity cv);
+    void rechercher(QString expression, QTextDocument::FindFlag options);
+    void rechercherReg(QRegExp expression, QTextDocument::FindFlags options);
+
 
 private slots:
     void on_actionOuvrir_triggered();
@@ -52,7 +53,9 @@ private:
     QString contenuDocument;
     QFileInfo *fichierInfo;
     bool modifie;
+    // attributs utilisés pour la recherche
     QString expression;
+    QTextDocument::FindFlag options;
 };
 
 #endif // BLOCNOTES_H

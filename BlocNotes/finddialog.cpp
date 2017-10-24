@@ -30,10 +30,24 @@ void FindDialog::on_texteRecherche_textChanged(const QString &arg1)
 
 void FindDialog::on_pushButtonRechercher_clicked()
 {
-    QString texte = ui->texteRecherche->text(); // QLineEdit
-    Qt::CaseSensitivity cs = Qt::CaseInsensitive;
-    if ( ui->checkBoxArriere->isChecked()) // QCheckBox
-        emit rechercherPrecedent(texte, cs);
-    else
-        emit rechercherSuivant(texte, cs);
+
+
+    QTextDocument::FindFlag options;
+    int value = 0;
+    if (ui->checkBoxArriere->isChecked())
+        value = 1;   // Search backwards instead of forwards.
+    if (ui->checkBoxCasse->isChecked())
+        value +=2;   // Specifying this option changes the behaviour to a case sensitive find operation.
+    if (ui->checkBoxMotEntier->isChecked())
+        value +=4;   // Makes find match only complete words.
+    options = (QTextDocument::FindFlag) value;
+
+    if ( !ui->checkBoxExpReg->isChecked()){
+        QString expression = ui->texteRecherche->text(); // le texte du QLineEdit
+        emit rechercher(expression, options);   // recherche normale
+    }
+    else{
+        QRegExp expression(ui->texteRecherche->text());
+        emit rechercherReg(expression, options);  // recherche avec les expressions régulières
+    }
 }
