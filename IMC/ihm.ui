@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>545</width>
-    <height>500</height>
+    <height>520</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>545</width>
-    <height>500</height>
+    <height>520</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -110,7 +110,7 @@ QSpinBox, QDoubleSpinBox, QPushButton, QLineEdit{
         <x>80</x>
         <y>40</y>
         <width>331</width>
-        <height>263</height>
+        <height>276</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -474,36 +474,69 @@ QSpinBox, QDoubleSpinBox, QPushButton, QLineEdit{
      </widget>
     </widget>
    </widget>
-   <widget class="QPushButton" name="pushButtonQuitter">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>230</x>
+      <x>110</x>
       <y>430</y>
-      <width>80</width>
-      <height>25</height>
+      <width>331</width>
+      <height>32</height>
      </rect>
     </property>
-    <property name="font">
-     <font>
-      <pointsize>12</pointsize>
-     </font>
+    <layout class="QHBoxLayout" name="horizontalLayout_8">
+     <item>
+      <spacer name="horizontalSpacer_6">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonQuitter">
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Quitter</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_7">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>2</width>
+      <height>2</height>
+     </rect>
     </property>
-    <property name="text">
-     <string>Quitter</string>
-    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_3"/>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <widget class="QMenuBar" name="menuBar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>545</width>
-     <height>22</height>
-    </rect>
-   </property>
-  </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
