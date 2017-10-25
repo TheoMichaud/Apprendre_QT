@@ -155,7 +155,7 @@ void blocNotes::on_actionR_tablir_triggered(){
 
 void blocNotes::on_actionRechercher_triggered(){
 
-    WRechercher->exec();
+    WRechercher->show();
 }
 
 void blocNotes::rechercher(QString expression, QTextDocument::FindFlag options ){
@@ -202,7 +202,23 @@ void blocNotes::rechercherReg(QRegExp expression, QTextDocument::FindFlags optio
 }
 
 
-// Slot appelé quand la touche F3 est actionné
+// Slot appelé quand la touche F3 est actionnée
 void blocNotes::on_actionRechercher_le_suivant_triggered(){
     rechercher(expression,options);   // appelle le slot rechercher
+}
+
+void blocNotes::on_actionCouper_triggered(){
+    ui->plainTextEdit->cut();
+}
+
+void blocNotes::on_actionCopier_triggered(){
+    ui->plainTextEdit->copy();
+}
+
+void blocNotes::on_actionColler_triggered(){
+    ui->plainTextEdit->paste();
+}
+
+void blocNotes::on_actionSelectionner_tout_triggered(){
+    ui->plainTextEdit->selectAll();
 }

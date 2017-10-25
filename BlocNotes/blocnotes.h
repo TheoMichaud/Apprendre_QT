@@ -45,6 +45,11 @@ private slots:
     void on_actionR_tablir_triggered();
     void on_actionRechercher_triggered();
     void on_actionRechercher_le_suivant_triggered();
+    void on_actionCouper_triggered();
+    void on_actionCopier_triggered();
+    void on_actionColler_triggered();
+
+    void on_actionSelectionner_tout_triggered();
 
 private:
     Ui::blocNotes *ui;

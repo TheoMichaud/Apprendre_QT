@@ -11,6 +11,9 @@
         <file>icones/font-icon.png</file>
         <file>icones/refaire-icon.png</file>
         <file>icones/recherche-icon.png</file>
+        <file>icones/copie-icon.png</file>
+        <file>icones/couper-icon.png</file>
+        <file>icones/coller-icon.png</file>
     </qresource>
     <qresource prefix="/logo">
         <file>icones/logo_touchard.jpg</file>

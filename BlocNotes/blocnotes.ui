@@ -50,9 +50,9 @@
          <colorrole role="Midlight">
           <brush brushstyle="SolidPattern">
            <color alpha="255">
-            <red>85</red>
-            <green>170</green>
-            <blue>0</blue>
+            <red>0</red>
+            <green>85</green>
+            <blue>255</blue>
            </color>
           </brush>
          </colorrole>
@@ -60,8 +60,17 @@
           <brush brushstyle="SolidPattern">
            <color alpha="255">
             <red>0</red>
-            <green>170</green>
-            <blue>0</blue>
+            <green>85</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="HighlightedText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
            </color>
           </brush>
          </colorrole>
@@ -70,9 +79,9 @@
          <colorrole role="Midlight">
           <brush brushstyle="SolidPattern">
            <color alpha="255">
-            <red>85</red>
-            <green>170</green>
-            <blue>0</blue>
+            <red>0</red>
+            <green>85</green>
+            <blue>255</blue>
            </color>
           </brush>
          </colorrole>
@@ -85,14 +94,23 @@
            </color>
           </brush>
          </colorrole>
+         <colorrole role="HighlightedText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
         </inactive>
         <disabled>
          <colorrole role="Midlight">
           <brush brushstyle="SolidPattern">
            <color alpha="255">
-            <red>85</red>
-            <green>170</green>
-            <blue>0</blue>
+            <red>0</red>
+            <green>85</green>
+            <blue>255</blue>
            </color>
           </brush>
          </colorrole>
@@ -101,6 +119,15 @@
            <color alpha="255">
             <red>51</red>
             <green>153</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="HighlightedText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
             <blue>255</blue>
            </color>
           </brush>
@@ -155,8 +182,14 @@
     <addaction name="actionAnnuler"/>
     <addaction name="actionR_tablir"/>
     <addaction name="separator"/>
+    <addaction name="actionCouper"/>
+    <addaction name="actionCopier"/>
+    <addaction name="actionColler"/>
+    <addaction name="separator"/>
     <addaction name="actionRechercher"/>
     <addaction name="actionRechercher_le_suivant"/>
+    <addaction name="separator"/>
+    <addaction name="actionSelectionner_tout"/>
    </widget>
    <addaction name="menuFichier"/>
    <addaction name="menuEdition"/>
@@ -176,6 +209,9 @@
    <addaction name="separator"/>
    <addaction name="actionAnnuler"/>
    <addaction name="actionR_tablir"/>
+   <addaction name="actionCouper"/>
+   <addaction name="actionCopier"/>
+   <addaction name="actionColler"/>
    <addaction name="actionRechercher"/>
    <addaction name="separator"/>
    <addaction name="actionA_propos"/>
@@ -313,6 +349,50 @@
    </property>
    <property name="shortcut">
     <string>F3</string>
+   </property>
+  </action>
+  <action name="actionCouper">
+   <property name="icon">
+    <iconset resource="ressourcesicones.qrc">
+     <normaloff>:/menu/icones/couper-icon.png</normaloff>:/menu/icones/couper-icon.png</iconset>
+   </property>
+   <property name="text">
+    <string>Couper</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
+   </property>
+  </action>
+  <action name="actionCopier">
+   <property name="icon">
+    <iconset resource="ressourcesicones.qrc">
+     <normaloff>:/menu/icones/copie-icon.png</normaloff>:/menu/icones/copie-icon.png</iconset>
+   </property>
+   <property name="text">
+    <string>Copier</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="actionColler">
+   <property name="icon">
+    <iconset resource="ressourcesicones.qrc">
+     <normaloff>:/menu/icones/coller-icon.png</normaloff>:/menu/icones/coller-icon.png</iconset>
+   </property>
+   <property name="text">
+    <string>Coller</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+V</string>
+   </property>
+  </action>
+  <action name="actionSelectionner_tout">
+   <property name="text">
+    <string>Selectionner tout</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+A</string>
    </property>
   </action>
  </widget>
