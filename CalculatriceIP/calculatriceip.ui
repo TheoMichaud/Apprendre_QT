@@ -18,6 +18,10 @@
   <property name="windowTitle">
    <string>Calculatrice IPv4</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="icons.qrc">
+    <normaloff>:/icons/icons/config-reseau-icon.png</normaloff>:/icons/icons/config-reseau-icon.png</iconset>
+  </property>
   <widget class="QPushButton" name="pushButtonQuitter">
    <property name="geometry">
     <rect>
@@ -312,7 +316,9 @@
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="icons.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>pushButtonQuitter</sender>

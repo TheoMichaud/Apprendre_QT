@@ -1,8 +1,7 @@
 #include "adresseipv4.h"
 
 
-AdresseIPv4::AdresseIPv4(const quint8 _adresse[], const quint8 _suffixe)
-{
+AdresseIPv4::AdresseIPv4(const quint8 _adresse[], const quint8 _suffixe){
     for (int i =0; i < 4; i++){
         adresse[i] = _adresse[i];
     }
@@ -10,8 +9,7 @@ AdresseIPv4::AdresseIPv4(const quint8 _adresse[], const quint8 _suffixe)
     CalculerMasque();
 }
 
-AdresseIPv4::AdresseIPv4(const quint8 _adresse[], const quint8 _masque[])
-{
+AdresseIPv4::AdresseIPv4(const quint8 _adresse[], const quint8 _masque[]){
     for (int i =0; i < 4; i++){
         adresse[i] = _adresse[i];
     }
@@ -21,14 +19,12 @@ AdresseIPv4::AdresseIPv4(const quint8 _adresse[], const quint8 _masque[])
     CalculerSuffixe();
 }
 
-void AdresseIPv4::ObtenirMasque(quint8 _masque[])
-{
+void AdresseIPv4::ObtenirMasque(quint8 _masque[]){
     for(int i = 0 ; i < 4 ; i++)
            _masque[i] = masque[i];
 }
 
-void AdresseIPv4::ObtenirAdresseReseau(quint8 _adresse[])
-{
+void AdresseIPv4::ObtenirAdresseReseau(quint8 _adresse[]){
     for(int i = 0 ; i < 4 ; i++)
     {
         _adresse[i] = adresse[i] & masque[i] ;
@@ -36,14 +32,11 @@ void AdresseIPv4::ObtenirAdresseReseau(quint8 _adresse[])
 
 }
 
-void AdresseIPv4::ObtenirPremiereAdresse(quint8 _adresse[])
-{
+void AdresseIPv4::ObtenirPremiereAdresse(quint8 _adresse[]){
 
     quint8 adresseDuReseau[4];
     ObtenirAdresseReseau(adresseDuReseau);
-
     adresseDuReseau[3] += 1;
-
     for(int i = 0 ; i < 4 ; i++)
         {
             _adresse[i] = adresseDuReseau[i]  ;

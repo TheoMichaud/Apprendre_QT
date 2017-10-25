@@ -34,3 +34,6 @@ HEADERS += \
 
 FORMS += \
         calculatriceip.ui
+
+RESOURCES += \
+    icons.qrc
