@@ -71,6 +71,7 @@ void MainWindow::dessinerCadran()
     monPixmap.load(":/images/logo_touchard2.png");
     item[4] = scene->addPixmap(monPixmap);
     item[4]->setPos(-40, 60);
+    item[4]->setFlag(QGraphicsItem::ItemIsMovable);
 
     QPen penAxeCentral(Qt::red, 4, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     QBrush brushAxeCentral(Qt::red);
