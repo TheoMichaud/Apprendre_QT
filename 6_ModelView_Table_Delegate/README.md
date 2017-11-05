@@ -26,6 +26,20 @@ Ici nous mettons en  œuvre le modèle de type **QStandardItemModel** qui permet
 
 Nous redéfinissons le délégué pour que l'utilisateur ne puissent éditer que des entiers compris dans intervalle [0 100].     L’éditeur choisi est le **QSpinBox**.   Pour personnaliser le rendu , la couleur de fond d'une cellule modifiée sera verte. Pour ce faire, nous devons créer une classe  Delegate qui hérite de la classe **QItemDelegate**.  Les méthodes  createEditor , setEditorData, setModelData et updateEditorGeometry doivent être définies.
 
+ 
+ - **createEditor()** :  retourne le widget (éditeur) pour éditer l'item se trouvant à l'index *index*.
+ - **setEditorData()** : permet de transmettre à l'éditeur *editor* les données à afficher à partir du modèle se trouvant à l'index *index*.
+ - **setModelData()** : permet de récupérer les données de l'éditeur et de les stocker à
+l'intérieur du modèle, à l'index identifié par le paramètre index.
+ - **updateEditorGeometry()** : permet de redimensionner l'éditeur à la bonne taille 
+lorsque la taille de la vue change
+
+  
+
+
+
+
+
 ----------
 
 La fonction **afficher la sélection** affiche le contenu des cellules et la position ligne colonne des cellule sélectionnées.  
