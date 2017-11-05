@@ -2,9 +2,29 @@
 ================
 Présentation
 ----
-Ce Tp fait suite au précédent qui mettait en œuvre les listes simples. 
-Ici nous mettons en  œuvre un modèle de type **QStandardItemModel** et le widget **QTableView** qui permettent respectivement de créer un modèle tableau et la vue graphique correspondante.
-Nous redéfinissons le délégué pour que l'utilisateur ne puissent saisir que des entiers compris dans intervalle [0 100].   Pour modifier le contenu,  L’éditeur choisi est le **QSpinBox**.   La couleur de fond de la cellule sera vert pour chaque élément modifié par l'utilisateur. Pour ce faire, nous devons créer une classe  Delegate qui hérite de la classe virtuelle QItemDelegate.  Les méthodes virtuelles createEditor , setEditorData, setModelData et updateEditorGeometry doivent être définies.
+Qt utilise  une architecture modèle-­vue (model-­view) entourée d'un délégué **(delegate)**. 
+Cependant, pour des raisons de flexibilité, l'interaction  et les entrées utilisateurs ne sont non pas prises en compte  par un composant totalement séparé, à savoir le contrôleur, mais par un composant « interne » à la vue : le délégué. 
+Ce composant est responsable de deux choses :
+
+ - personnaliser l'édition des éléments au moyen d'un éditeur ;
+ - personnaliser le rendu des éléments à l'intérieur d'une vue.
+
+Tous les délégués fournis par Qt sont basés sur la classe **QAbstractItemDelegate**. Qt fournit deux délégués :
+
+ -  QItemDelegate ;
+ -  QStyledItemDelegate (utilise le style courant pour le rendu des données)
+ 
+Les vues sont déjà dotées d'un délégué par défaut QStyledItemDelegate. 
+Cependant, même si les vues sont dotées d'un délégué par défaut, il est bien 
+entendu possible de le modifier. C'est le sujet de ce TP.
+
+
+----------
+
+
+Ici nous mettons en  œuvre le modèle de type **QStandardItemModel** qui permet de créer un tableau et le widget **QTableView** qui permet de créer la vue graphique correspondante.
+
+Nous redéfinissons le délégué pour que l'utilisateur ne puissent éditer que des entiers compris dans intervalle [0 100].     L’éditeur choisi est le **QSpinBox**.   Pour personnaliser le rendu , la couleur de fond d'une cellule modifiée sera verte. Pour ce faire, nous devons créer une classe  Delegate qui hérite de la classe **QItemDelegate**.  Les méthodes  createEditor , setEditorData, setModelData et updateEditorGeometry doivent être définies.
 
 ----------
 
@@ -14,7 +34,8 @@ il est également possible d'étendre le tableau en lui ajoutant soit une ligne 
 L'objectif de ce TP est :
 ---
  - Mettre en œuvre le modele/vue avec **QStandardItemModel** et **QTableView**
- - Mettre en œuvre la sélection multiple et l'édition des éléments sur la vue en redéfinissant le délégué. 
+ - Redéfinir le délégué  **QItemDelegate**
+ - Mettre en œuvre la sélection multiple
  
 Screenshot:
 ----
