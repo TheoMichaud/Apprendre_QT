@@ -6,6 +6,8 @@
 #include <QtSql>
 #include <QtCore>
 #include <QDebug>
+#include <QMessageBox>
+#include <QInputDialog>
 
 namespace Ui {
 class Dialog;
