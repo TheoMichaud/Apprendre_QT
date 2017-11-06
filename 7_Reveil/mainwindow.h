@@ -8,7 +8,7 @@
 #include <QGraphicsItem>
 #include <QTime>
 #include <QTimer>
-#include <QSound>
+//#include <QSound>
 #include <QDebug>
 #include "alarmes.h"
 
@@ -41,7 +41,7 @@ private:
     QGraphicsLineItem *petiteAiguille;
     QGraphicsLineItem *troteuse;
 
-    QSound *sonnerieAlarme;
+    //QSound *sonnerieAlarme;
     Alarmes *WAlarme;
     QTime timeAlarme;
     void dessinerCadran();

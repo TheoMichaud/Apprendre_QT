@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     dessinerCadran();
     tournerAiguilles();
-    sonnerieAlarme = new QSound(":/sons/sonnerie.wav");
+    //sonnerieAlarme = new QSound(":/sons/sonnerie.wav");
     WAlarme = new Alarmes(this);
     if(!connect(WAlarme, SIGNAL(reglerAlarme(QTime)), this, SLOT(setAlarme(QTime))) )
         qDebug() << "Erreur connexion Alarme";
@@ -120,7 +120,7 @@ void MainWindow::tournerAiguilles()
     petiteAiguille->setRotation((0.0083333333 * sec) + (0.5 * min) + (30 * h));
 
     if (maintenant.toString("HH:mm:ss") == timeAlarme.toString("HH:mm:ss")){
-        sonnerieAlarme->play();
+        //sonnerieAlarme->play();
 
     }
     QTimer::singleShot(1000, this, SLOT(tournerAiguilles()));
