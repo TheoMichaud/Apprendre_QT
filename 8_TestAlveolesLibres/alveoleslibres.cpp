@@ -25,7 +25,8 @@ bool Alveoleslibres::Reserver(int &_rangee, int &_colonne)
         _colonne = ((numAlveole-1) % nbColonnes) + 1;
         retour = true;
     }
-    return retour;
+    return retour;  // retour est vrai si la reservation est possible
+    // dans le cas ou il n'y a plus d'emplacement libre retour est faux
 
 }
 
@@ -35,7 +36,7 @@ bool Alveoleslibres::Liberer(const int _rangee, const int _colonne)
     bool retour = false ;
     if (size() < nbColonnes * nbRangees)
     {
-        numAlveole=_colonne+nbColonnes*(_rangee-1);
+        numAlveole= _colonne + nbColonnes * (_rangee-1);
         push_back(numAlveole);
         retour = true ;
     }

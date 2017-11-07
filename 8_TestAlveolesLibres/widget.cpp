@@ -24,6 +24,7 @@ void Widget::on_pushButtonReserver_clicked()
     int rangee;
     int colonne;
     QString texte;
+
     if(lesAlveolesLibres->Reserver(rangee,colonne))
     {
         texte = "Alveole (" + QString::number(rangee) ;
