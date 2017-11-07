@@ -7,7 +7,11 @@
 #include <QtCore>
 #include <QDebug>
 #include <QMessageBox>
+
+#include <QInputDialog>
+
 #include "connexion.h"
+
 
 namespace Ui {
 class Dialog;
