@@ -9,7 +9,6 @@ Dialog::Dialog(QWidget *parent) :
     db = QSqlDatabase::addDatabase("QMYSQL");
 
     Wconnexion = new connexion();
-    connect(Wconnexion, SIGNAL(connecter(QString,QString,QString,QString)),this, SLOT(connecter(QString,QString,QString,QString)));
 
     this->modele = new QSqlTableModel(this);
     modele->setEditStrategy(QSqlTableModel::OnRowChange); // definie la stratégie de modification
@@ -28,31 +27,20 @@ void Dialog::on_pushButton_clicked()
 {
     qDebug() << "Connexion";
     ouvrirBase();
-
-
-}
-
-void Dialog::connecter(QString serveurIp, QString base, QString utilisateur, QString password)
-{
-    Dialog::hostName =  serveurIp;
-    Dialog::userName = utilisateur;
-    Dialog::password = password;
-    Dialog::base = base;
 }
 
 void Dialog::ouvrirBase()
 {
-
-    // On efface le modèle
+    //  efface le modèle
     modele->clear();
-    // On lance la fenêtre connexion
+    // lance la fenêtre connexion
     Wconnexion->exec();
 
 
-    db.setHostName(hostName);           // l'adresse IP du serveur mySQL
-    db.setUserName(userName);           // le nom de l'utilisateur
-    db.setPassword(password);           // le mot de passe de l'utilisateur
-    db.setDatabaseName(base);           // le nom de la base
+    db.setHostName(Wconnexion->ServeurIp());           // l'adresse IP du serveur mySQL
+    db.setUserName(Wconnexion->Utilisateur());           // le nom de l'utilisateur
+    db.setPassword(Wconnexion->Password());           // le mot de passe de l'utilisateur
+    db.setDatabaseName(Wconnexion->Base());           // le nom de la base
     if(!db.open())
     {
         QMessageBox::information(this, "Erreur !!!", db.lastError().driverText());
@@ -61,7 +49,21 @@ void Dialog::ouvrirBase()
     {
         table = ui->lineEditNomTable->text();
         modele->setTable(table);          // Sélection de la table
-        modele->select();
+        modele->select();                 // Chargement des données dans le modèle
     }
 
+}
+
+// Slot pour ajouter un compte client
+void Dialog::on_pushButtonAjouter_clicked()
+{
+   int ligne = modele->rowCount();
+    modele->insertRows(ligne,1);
+}
+
+void Dialog::on_lineEditNomTable_textChanged(const QString &arg1)
+{
+    table = ui->lineEditNomTable->text();
+    modele->setTable(table);          // Sélection de la table
+    modele->select();
 }

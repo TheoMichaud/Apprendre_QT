@@ -27,8 +27,9 @@ public:
 
 private slots:
     void on_pushButton_clicked();
-    void connecter(QString serveurIp, QString base, QString utilisateur, QString password);
+    void on_pushButtonAjouter_clicked();
 
+    void on_lineEditNomTable_textChanged(const QString &arg1);
 
 private:
     Ui::Dialog *ui;
@@ -37,10 +38,6 @@ private:
 
 
     QSqlDatabase db;
-    QString hostName;
-    QString userName;
-    QString password;
-    QString base;
     QString table;
 
     void ouvrirBase();

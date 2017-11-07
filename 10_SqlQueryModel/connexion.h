@@ -15,6 +15,12 @@ class connexion : public QDialog
 public:
     explicit connexion(QWidget *parent = 0);
     ~connexion();
+    // les getteurs
+    QString ServeurIp();
+    QString Base();
+    QString Utilisateur();
+    QString Password();
+
 
 private slots:
     void on_buttonBox_accepted();
@@ -26,8 +32,10 @@ private:
     QString utilisateur;
     QString password;
 
+/*
 signals:
 void connecter(QString serveurIp, QString base, QString utilisateur, QString password);
+*/
 };
 
 #endif // CONNEXION_H
