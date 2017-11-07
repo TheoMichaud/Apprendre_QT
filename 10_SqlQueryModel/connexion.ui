@@ -35,6 +35,9 @@
          <pointsize>12</pointsize>
         </font>
        </property>
+       <property name="text">
+        <string>172.18.58.14</string>
+       </property>
       </widget>
      </item>
      <item row="2" column="0">
@@ -55,6 +58,9 @@
         <font>
          <pointsize>12</pointsize>
         </font>
+       </property>
+       <property name="text">
+        <string>banque</string>
        </property>
       </widget>
      </item>
@@ -77,6 +83,9 @@
          <pointsize>12</pointsize>
         </font>
        </property>
+       <property name="text">
+        <string>snir</string>
+       </property>
       </widget>
      </item>
      <item row="7" column="0">
@@ -97,6 +106,12 @@
         <font>
          <pointsize>12</pointsize>
         </font>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="echoMode">
+        <enum>QLineEdit::Password</enum>
        </property>
       </widget>
      </item>

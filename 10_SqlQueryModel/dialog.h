@@ -41,6 +41,9 @@ private:
     QString userName;
     QString password;
     QString base;
+    QString table;
+
+    void ouvrirBase();
 };
 
 #endif // DIALOG_H
