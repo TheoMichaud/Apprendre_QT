@@ -14,8 +14,9 @@ MainWindow::MainWindow(QWidget *parent) :
     if(!connect(WAlarme, SIGNAL(reglerAlarme(QTime)), this, SLOT(setAlarme(QTime))) )
         qDebug() << "Erreur connexion Alarme";
 
-
-
+    tictac = new QTimer;
+    connect(tictac,SIGNAL(timeout()),this,SLOT(tournerAiguilles()));
+    tictac->start(1000);
 }
 
 MainWindow::~MainWindow()
@@ -44,7 +45,7 @@ void MainWindow::dessinerCadran()
 
     // les repères des minutes tous les 6 degrees
 
-    QGraphicsItem  *reperes[61];
+    QGraphicsItem  *reperes[60];
     for (int i=0; i<60; i++){
         if(i%5 == 0)    // les repères des cinq minutes sont plus gros
             reperes[i] = scene->addLine(200, 0, 225, 0, pen5);
@@ -123,7 +124,6 @@ void MainWindow::tournerAiguilles()
         //sonnerieAlarme->play();
 
     }
-    QTimer::singleShot(1000, this, SLOT(tournerAiguilles()));
 }
 
 void MainWindow::setAlarme(const QTime &valeurAlarme)

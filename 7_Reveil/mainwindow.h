@@ -45,6 +45,7 @@ private:
     Alarmes *WAlarme;
     QTime timeAlarme;
     void dessinerCadran();
+    QTimer *tictac;
 
 
 };
