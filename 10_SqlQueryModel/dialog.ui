@@ -43,14 +43,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEditNomTable">
+        <widget class="QComboBox" name="comboBoxTable">
          <property name="font">
           <font>
            <pointsize>12</pointsize>
           </font>
-         </property>
-         <property name="text">
-          <string>comptes</string>
          </property>
         </widget>
        </item>

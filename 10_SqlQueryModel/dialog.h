@@ -29,7 +29,11 @@ private slots:
     void on_pushButton_clicked();
     void on_pushButtonAjouter_clicked();
 
-    void on_lineEditNomTable_textChanged(const QString &arg1);
+
+
+
+
+    void on_comboBoxTable_currentIndexChanged(const QString &arg1);
 
 private:
     Ui::Dialog *ui;
@@ -41,6 +45,7 @@ private:
     QString table;
 
     void ouvrirBase();
+    void lireTables();
 };
 
 #endif // DIALOG_H
