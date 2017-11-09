@@ -8,11 +8,11 @@ Dialog::Dialog(QWidget *parent) :
     ui->setupUi(this);
     db = QSqlDatabase::addDatabase("QMYSQL");
 
-    Wconnexion = new connexion();
+    Wconnexion = new connexion(this);
 
     this->modele = new QSqlTableModel(this);
     modele->setEditStrategy(QSqlTableModel::OnRowChange); // definie la stratégie de modification
-    ui->tableView->setModel(modele);     // association du modèle à la vue
+    ui->tableView->setModel(modele);  // association du modèle à la vue
 
     ouvrirBase();
 }
@@ -55,6 +55,7 @@ void Dialog::ouvrirBase()
         table = ui->comboBoxTable->currentText();
         modele->setTable(table);          // Sélection de la table
         modele->select();                 // Chargement des données dans le modèle
+        ui->tableView->resizeColumnsToContents();  // ajustement de la largeur des colonnes
     }
 
 }
@@ -75,6 +76,7 @@ void Dialog::on_pushButtonAjouter_clicked()
 {
    int ligne = modele->rowCount();
     modele->insertRows(ligne,1);
+
 }
 
 
@@ -84,4 +86,13 @@ void Dialog::on_comboBoxTable_currentIndexChanged(const QString &arg1)
     qDebug()<< arg1;
     modele->setTable(arg1);          // Sélection de la table
     modele->select();
+    ui->tableView->resizeColumnsToContents();  // ajustement de la largeur des colonnes
+}
+
+void Dialog::on_pushButton_2_clicked()
+{
+    int ligne = ui->tableView->selectionModel()->currentIndex().row(); // on récupère le n° de la ligne
+
+    modele->removeRow(ligne);  // retire la ligne du modèle
+    modele->select();      // recharge le modèle
 }
