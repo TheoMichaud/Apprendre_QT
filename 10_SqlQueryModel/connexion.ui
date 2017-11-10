@@ -36,7 +36,7 @@
         </font>
        </property>
        <property name="text">
-        <string>172.18.58.14</string>
+        <string>172.18.58.5</string>
        </property>
       </widget>
      </item>
@@ -60,7 +60,7 @@
         </font>
        </property>
        <property name="text">
-        <string>banque</string>
+        <string>snirBanque</string>
        </property>
       </widget>
      </item>
