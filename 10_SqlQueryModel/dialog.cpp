@@ -25,13 +25,13 @@ Dialog::~Dialog()
 
 void Dialog::on_pushButton_clicked()
 {
-    qDebug() << "Connexion";
     ouvrirBase();
 }
 
 void Dialog::ouvrirBase()
 {
     //  efface le modèle
+
     modele->clear();
     // efface la liste des tables
     ui->comboBoxTable->clear();
@@ -63,36 +63,43 @@ void Dialog::ouvrirBase()
 void Dialog::lireTables()
 {
 
-       QStringList tables = db.tables(QSql::AllTables);  // les tables plus les vues
+    QStringList tables = db.tables(QSql::AllTables);  // AllTables les tables plus les vues
 
-       for (int i=0; i<tables.size(); i++)
-       {
-           ui->comboBoxTable->addItem(tables[i]);
-       }
+    for (int i=0; i<tables.size(); i++)
+    {
+        ui->comboBoxTable->addItem(tables[i]);
+    }
 }
 
 // Slot pour ajouter un enregistrement à la table
 void Dialog::on_pushButtonAjouter_clicked()
 {
-   int ligne = modele->rowCount();
-    modele->insertRows(ligne,1);
+    int ligne = modele->rowCount();
+    modele->insertRows(0,1);   // insert une ligne au début
 
 }
 
 
-
+// Rechargement des données quand une nouvelle table est sélectionnée
 void Dialog::on_comboBoxTable_currentIndexChanged(const QString &arg1)
 {
-    qDebug()<< arg1;
-    modele->setTable(arg1);          // Sélection de la table
-    modele->select();
+
+    modele->setTable(arg1);          // Sélection de la nouvelle table
+    modele->select();                // recharge le modèle avec les données
     ui->tableView->resizeColumnsToContents();  // ajustement de la largeur des colonnes
 }
 
+// Effacer un enregistrement
 void Dialog::on_pushButton_2_clicked()
 {
     int ligne = ui->tableView->selectionModel()->currentIndex().row(); // on récupère le n° de la ligne
 
-    modele->removeRow(ligne);  // retire la ligne du modèle
-    modele->select();      // recharge le modèle
+    // message box question (demande de confirmation avant de supprimer la ligne)
+    QMessageBox::StandardButton reponse;
+    QString message = "Confirmer vous la <b>suppression</b><br> de l'enregistrement ligne : " + QString::number(ligne + 1);
+    reponse = QMessageBox::question(this, "Supprimer", message, QMessageBox::Yes|QMessageBox::No );
+    if (reponse == QMessageBox::Yes){
+        modele->removeRow(ligne);   // retire la ligne du modèle
+        modele->select();           // recharge le modèle
+    }
 }
