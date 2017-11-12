@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Sam 11 Novembre 2017 à 19:01
+-- Généré le :  Dim 12 Novembre 2017 à 18:22
 -- Version du serveur :  5.5.54-0+deb8u1
 -- Version de PHP :  5.6.30-0+deb8u1
 
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `client` (
   `nom` varchar(128) NOT NULL,
   `prenom` varchar(128) NOT NULL,
   `ville` varchar(128) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `client`
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `compte` (
 `idcompte` int(5) NOT NULL,
   `idproprietaire` int(5) NOT NULL,
   `type` enum('Compte Courant','Livret A','PEA','Assurance vie','PEL') NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `compte`
@@ -82,6 +82,7 @@ INSERT INTO `compte` (`idcompte`, `idproprietaire`, `type`) VALUES
 
 CREATE TABLE IF NOT EXISTS `operation` (
 `idop` int(5) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `idcompte` int(5) NOT NULL,
   `montant` decimal(10,2) NOT NULL,
   `informations` text NOT NULL
@@ -91,29 +92,30 @@ CREATE TABLE IF NOT EXISTS `operation` (
 -- Contenu de la table `operation`
 --
 
-INSERT INTO `operation` (`idop`, `idcompte`, `montant`, `informations`) VALUES
-(1, 1, 2000.00, 'Salaire'),
-(2, 1, -121.53, 'Courses'),
-(3, 1, -75.92, 'Essence'),
-(4, 1, -150.00, 'VIR Livret A'),
-(5, 2, 150.00, 'VIR du Compte Courant'),
-(6, 4, 3000.00, 'Salaire'),
-(7, 3, 10000.00, 'VIR initial'),
-(8, 3, 537.00, 'Interets'),
-(9, 5, 10508.50, 'VIR initial'),
-(10, 7, 500.00, 'VIR initial'),
-(11, 10, 3500.00, 'VIR Initial'),
-(13, 12, 2000.00, 'VIR initial'),
-(17, 8, 4200.00, 'virement Ouverture '),
-(18, 15, 14000.00, 'Vir Ouverture');
+INSERT INTO `operation` (`idop`, `date`, `idcompte`, `montant`, `informations`) VALUES
+(1, '2017-10-01 09:37:23', 1, 2000.00, 'Salaire'),
+(2, '2017-05-16 08:44:00', 1, -121.53, 'Courses'),
+(3, '2017-11-10 18:51:00', 1, -75.92, 'Essence'),
+(4, '2017-03-12 18:55:42', 1, -150.00, 'VIR Livret A'),
+(5, '2017-11-09 16:55:42', 2, 150.00, 'VIR du Compte Courant'),
+(6, '2017-08-01 10:51:42', 4, 3000.00, 'Salaire'),
+(7, '2017-09-11 11:53:42', 3, 10000.00, 'VIR initial'),
+(8, '2017-12-31 22:59:42', 3, 537.00, 'Interets'),
+(9, '2017-11-12 16:51:42', 5, 10508.50, 'VIR initial'),
+(10, '2017-08-12 12:55:42', 7, 500.00, 'VIR initial'),
+(11, '2017-08-10 11:58:42', 10, 3500.00, 'VIR Initial'),
+(13, '2017-08-09 13:37:42', 12, 2000.00, 'VIR initial'),
+(17, '2017-12-09 15:49:42', 8, 4200.00, 'virement Ouverture '),
+(18, '2017-03-02 16:53:42', 15, 14000.00, 'Vir Ouverture');
 
 -- --------------------------------------------------------
 
 --
--- Doublure de structure pour la vue `V_recapitulatif_compte`
+-- Doublure de structure pour la vue `Vue_compte`
 --
-CREATE TABLE IF NOT EXISTS `V_recapitulatif_compte` (
-`idcompte` int(5)
+CREATE TABLE IF NOT EXISTS `Vue_compte` (
+`id` int(5)
+,`idcompte` int(5)
 ,`nom` varchar(128)
 ,`prenom` varchar(128)
 ,`type` enum('Compte Courant','Livret A','PEA','Assurance vie','PEL')
@@ -131,11 +133,11 @@ CREATE TABLE IF NOT EXISTS `V_solde_compte` (
 -- --------------------------------------------------------
 
 --
--- Structure de la vue `V_recapitulatif_compte`
+-- Structure de la vue `Vue_compte`
 --
-DROP TABLE IF EXISTS `V_recapitulatif_compte`;
+DROP TABLE IF EXISTS `Vue_compte`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `V_recapitulatif_compte` AS select `compte`.`idcompte` AS `idcompte`,`client`.`nom` AS `nom`,`client`.`prenom` AS `prenom`,`compte`.`type` AS `type`,`V_solde_compte`.`solde` AS `solde` from ((`client` join `compte`) join `V_solde_compte`) where ((`client`.`idclient` = `compte`.`idproprietaire`) and (`compte`.`idcompte` = `V_solde_compte`.`idcompte`));
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `Vue_compte` AS select `client`.`idclient` AS `id`,`compte`.`idcompte` AS `idcompte`,`client`.`nom` AS `nom`,`client`.`prenom` AS `prenom`,`compte`.`type` AS `type`,`V_solde_compte`.`solde` AS `solde` from ((`client` join `compte`) join `V_solde_compte`) where ((`client`.`idclient` = `compte`.`idproprietaire`) and (`compte`.`idcompte` = `V_solde_compte`.`idcompte`));
 
 -- --------------------------------------------------------
 
@@ -176,12 +178,12 @@ ALTER TABLE `operation`
 -- AUTO_INCREMENT pour la table `client`
 --
 ALTER TABLE `client`
-MODIFY `idclient` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
+MODIFY `idclient` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT pour la table `compte`
 --
 ALTER TABLE `compte`
-MODIFY `idcompte` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
+MODIFY `idcompte` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT pour la table `operation`
 --
