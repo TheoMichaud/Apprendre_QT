@@ -58,7 +58,7 @@ void Dialog::ouvrirBase()
         modele->setTable(table);          // Sélection de la table
         modele->select();                 // Chargement des données dans le modèle
         ui->tableView->resizeColumnsToContents();  // ajustement de la largeur des colonnes
-        //ui->tableView->setColumnHidden(0,true);    // la première colonne est cachée
+
     }
 
 }

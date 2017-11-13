@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
     db.setHostName("172.18.58.5");     // l'adresse IP du serveur mySQL
     db.setUserName("snir");    // le nom de l'utilisateur
     db.setPassword("snir");         // le mot de passe de l'utilisateur
-    db.setDatabaseName("snirBanque");           // le nom de la base
+    db.setDatabaseName("snirBanque1");           // le nom de la base
 
     if(db.open())
     {
@@ -45,9 +45,9 @@ int main(int argc, char *argv[])
 
         QString insRequete = "INSERT INTO `snirBanque`.`client` ( `nom`, `prenom`, `ville` ) VALUES ( :prenom , :nom, :ville )";
         maRequete.prepare(insRequete);
-        maRequete.bindValue(":prenom", "Michel");
-        maRequete.bindValue(":nom", "Lafont");
-        maRequete.bindValue(":ville", "Versaille");
+        maRequete.bindValue(":prenom", "Philippe");
+        maRequete.bindValue(":nom", "SIMIER");
+        maRequete.bindValue(":ville", "Le Mans");
 
         if (maRequete.exec())
         {
