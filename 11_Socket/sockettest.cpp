@@ -8,15 +8,15 @@ socketTest::socketTest(QObject *parent) : QObject(parent)
 void socketTest::Connect()
 {
     socket = new QTcpSocket(this);
-    // poirier.depinfo.touchard.edu/siteweb/public/
-    socket->connectToHost("172.18.58.14",80);
+
+    socket->connectToHost("example.com",80);
 
     if(socket->waitForConnected(3000))
     {
         qDebug() << "Connected!";
 
-        //send
-        socket->write("GET /siteweb/public/\r\n\r\n\r\n\r\n");
+        // Envoi d'une requète GET protocole HTTP/1.1
+        socket->write("GET / HTTP/1.1\r\nHost: example.com\r\nConnection: Close\r\n\r\n");
 
         socket->waitForBytesWritten(1000);
         socket->waitForReadyRead(3000);
