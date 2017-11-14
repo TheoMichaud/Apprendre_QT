@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/Add record.png</file>
+        <file>images/Chart.png</file>
+        <file>images/Database.png</file>
+        <file>images/Sum.png</file>
+    </qresource>
+</RCC>

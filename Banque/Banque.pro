@@ -1,14 +1,15 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2017-11-04T17:12:05
+# Project created by QtCreator 2017-11-14T13:40:44
 #
 #-------------------------------------------------
 
-QT       += core gui sql
+QT       += core gui
+QT       += sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = 10_SqlQueryModel
+TARGET = Banque
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -25,14 +26,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        dialog.cpp \
+        mainwindow.cpp \
     connexion.cpp
 
 HEADERS += \
-        dialog.h \
+        mainwindow.h \
     connexion.h
 
 FORMS += \
-        dialog.ui \
-    connexion.ui \
-    dialog2.ui
+        mainwindow.ui \
+    connexion.ui
+
+RESOURCES += \
+    icons.qrc
