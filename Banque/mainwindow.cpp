@@ -28,7 +28,7 @@ void MainWindow::on_actionConnexion_triggered()
 void MainWindow::lireTables()
 {
     QStringList tables = db.tables(QSql::AllTables);  // AllTables les tables plus les vues
-
+    ui->comboBoxTable->clear();
     for (int i=0; i<tables.size(); i++)
     {
         ui->comboBoxTable->addItem(tables[i]);  // chaque nom de table est affecté a un QcomboBox
@@ -38,6 +38,7 @@ void MainWindow::lireTables()
 // Fonction pour lire les base de données disponibles
 void MainWindow::lireBases()
 {
+    ui->comboBoxBases->clear();
     QSqlQuery maRequete(db);
     maRequete.exec("SHOW DATABASES;");
     while (maRequete.next()) {
@@ -120,4 +121,22 @@ void MainWindow::on_pushButtonSupprimer_clicked()
         modele->removeRow(ligne);   // retire la ligne du modèle
         modele->select();           // recharge le modèle
     }
+}
+
+
+
+void MainWindow::on_comboBoxBases_currentTextChanged(const QString &arg1)
+{
+    qDebug() << arg1;
+    db.setDatabaseName(arg1);
+    if(db.open())
+    {
+        statusBar()->showMessage("Base ouverte : " + arg1 );
+        lireTables();
+        modele->setTable(ui->comboBoxTable->currentText());    // Sélection de la table
+        modele->select();                 // Chargement des données dans le modèle
+    }
+
+
+
 }

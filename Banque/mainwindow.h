@@ -28,6 +28,8 @@ private slots:
 
     void on_pushButtonSupprimer_clicked();
 
+    void on_comboBoxBases_currentTextChanged(const QString &arg1);
+
 private:
     Ui::MainWindow *ui;
     Connexion      *Wconnexion;
