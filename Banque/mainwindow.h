@@ -34,6 +34,7 @@ private:
     QSqlDatabase   db;
     QSqlTableModel *modele;
 
+    void lireBases();
     void ouvrirBase();
     void lireTables();
 };

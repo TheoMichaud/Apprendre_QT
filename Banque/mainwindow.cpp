@@ -23,7 +23,8 @@ void MainWindow::on_actionConnexion_triggered()
     ouvrirBase();
 }
 
-// Fonction pour lire les tables présentes dans la table et compléter le comboxTable
+// Fonction pour lire les tables présentes dans une base de données
+// et compléter le comboxTable
 void MainWindow::lireTables()
 {
     QStringList tables = db.tables(QSql::AllTables);  // AllTables les tables plus les vues
@@ -31,6 +32,18 @@ void MainWindow::lireTables()
     for (int i=0; i<tables.size(); i++)
     {
         ui->comboBoxTable->addItem(tables[i]);  // chaque nom de table est affecté a un QcomboBox
+    }
+}
+
+// Fonction pour lire les base de données disponibles
+void MainWindow::lireBases()
+{
+    QSqlQuery maRequete(db);
+    maRequete.exec("SHOW DATABASES;");
+    while (maRequete.next()) {
+        QVariant base = maRequete.value(0);
+        ui->comboBoxBases->addItem(base.toString());
+        qDebug() << base;
     }
 }
 
@@ -50,19 +63,15 @@ void MainWindow::ouvrirBase()
     db.setHostName(Wconnexion->ServeurIp() );         // l'adresse IP du serveur mySQL
     db.setUserName(Wconnexion->Utilisateur()  );      // le nom de l'utilisateur
     db.setPassword(Wconnexion->Password());           // le mot de passe de l'utilisateur
-    //db.setDatabaseName(Wconnexion->Base());           // le nom de la base
+    db.setDatabaseName(Wconnexion->Base());           // le nom de la base
     if(!db.open())
     {
         QMessageBox::information(this, "Erreur !!!", db.lastError().driverText());
     }
     else
     {
-        QSqlQuery maRequete(db);
-           maRequete.exec("SHOW DATABASES;");
-        while (maRequete.next()) {
-            QVariant base = maRequete.value(0);
-            qDebug() << base;
-        }
+
+        lireBases();
         lireTables();
         statusBar()->showMessage("Base ouverte : " + Wconnexion->Base() );
         modele->setTable(ui->comboBoxTable->currentText());    // Sélection de la table
@@ -102,13 +111,13 @@ void MainWindow::on_pushButtonSupprimer_clicked()
 {
     int ligne = ui->tableView->selectionModel()->currentIndex().row(); // on récupère le n° de la ligne
 
-        // message box question (demande de confirmation avant de supprimer la ligne)
-        QMessageBox::StandardButton reponse;
+    // message box question (demande de confirmation avant de supprimer la ligne)
+    QMessageBox::StandardButton reponse;
 
-        QString message = "Confirmer vous la <b>suppression</b><br> de l'enregistrement ligne : " + QString::number(ligne + 1);
-        reponse = QMessageBox::question(this, "Supprimer", message, QMessageBox::Yes|QMessageBox::No );
-        if (reponse == QMessageBox::Yes){
-            modele->removeRow(ligne);   // retire la ligne du modèle
-            modele->select();           // recharge le modèle
+    QString message = "Confirmer vous la <b>suppression</b><br> de l'enregistrement ligne : " + QString::number(ligne + 1);
+    reponse = QMessageBox::question(this, "Supprimer", message, QMessageBox::Yes|QMessageBox::No );
+    if (reponse == QMessageBox::Yes){
+        modele->removeRow(ligne);   // retire la ligne du modèle
+        modele->select();           // recharge le modèle
     }
 }
