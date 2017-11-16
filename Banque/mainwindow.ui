@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>712</width>
+    <width>728</width>
     <height>491</height>
    </rect>
   </property>
@@ -24,30 +24,6 @@
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
-        <item>
-         <widget class="QPushButton" name="pushButtonInserer">
-          <property name="font">
-           <font>
-            <pointsize>12</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>Insérer</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pushButtonSupprimer">
-          <property name="font">
-           <font>
-            <pointsize>12</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>Supprimer</string>
-          </property>
-         </widget>
-        </item>
         <item>
          <widget class="QLabel" name="label">
           <property name="font">
@@ -78,17 +54,31 @@
         <item>
          <widget class="QLabel" name="label_2">
           <property name="text">
-           <string> Base :</string>
+           <string>Enregistrement :</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QComboBox" name="comboBoxBases">
-          <property name="minimumSize">
-           <size>
-            <width>200</width>
-            <height>0</height>
-           </size>
+         <widget class="QPushButton" name="pushButtonInserer">
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Insérer</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButtonSupprimer">
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Supprimer</string>
           </property>
          </widget>
         </item>
@@ -125,13 +115,13 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>712</width>
+     <width>728</width>
      <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuBase_de_donn_es">
     <property name="title">
-     <string>Base de données</string>
+     <string>Serveur MySQL</string>
     </property>
     <addaction name="actionConnexion"/>
     <addaction name="actionQuitter"/>
@@ -152,7 +142,7 @@
   <action name="actionConnexion">
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/images/Database.png</normaloff>:/images/Database.png</iconset>
+     <normaloff>:/images/serveur.png</normaloff>:/images/serveur.png</iconset>
    </property>
    <property name="text">
     <string>Connexion</string>

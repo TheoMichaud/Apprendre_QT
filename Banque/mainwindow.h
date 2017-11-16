@@ -28,15 +28,13 @@ private slots:
 
     void on_pushButtonSupprimer_clicked();
 
-    void on_comboBoxBases_currentTextChanged(const QString &arg1);
+    void on_actionQuitter_triggered();
 
 private:
     Ui::MainWindow *ui;
     Connexion      *Wconnexion;
-    QSqlDatabase   db;
     QSqlTableModel *modele;
 
-    void lireBases();
     void ouvrirBase();
     void lireTables();
 };

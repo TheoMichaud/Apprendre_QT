@@ -6,9 +6,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    db = QSqlDatabase::addDatabase("QMYSQL");
     this->Wconnexion = new Connexion(this);
     this->modele = new QSqlTableModel(this);
+    // definie la stratégie de modification
+    this->modele->setEditStrategy(QSqlTableModel::OnRowChange);
+    // association du modèle à la vue
+    ui->tableView->setModel(modele);
+
+
+
 
 
 }
@@ -18,16 +24,27 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+// Slot pour l'ouverture d'une connexion a
+// un serveur de base de données
+
 void MainWindow::on_actionConnexion_triggered()
 {
-    ouvrirBase();
+    modele->clear();
+    // efface la liste des tables
+    ui->comboBoxTable->clear();
+
+    // lance la fenêtre connexion
+    Wconnexion->exec();
+    lireTables();
 }
 
 // Fonction pour lire les tables présentes dans une base de données
 // et compléter le comboxTable
 void MainWindow::lireTables()
 {
-    QStringList tables = db.tables(QSql::AllTables);  // AllTables les tables plus les vues
+    qDebug() << "lireTables()";
+    statusBar()->showMessage("Base ouverte : " + Wconnexion->Base() + " sur le serveur : " + Wconnexion->ServeurIp());
+    QStringList tables = Wconnexion->db.tables(QSql::AllTables);  // AllTables les tables plus les vues
     ui->comboBoxTable->clear();
     for (int i=0; i<tables.size(); i++)
     {
@@ -35,56 +52,29 @@ void MainWindow::lireTables()
     }
 }
 
-// Fonction pour lire les base de données disponibles
-void MainWindow::lireBases()
-{
-    ui->comboBoxBases->clear();
-    QSqlQuery maRequete(db);
-    maRequete.exec("SHOW DATABASES;");
-    while (maRequete.next()) {
-        QVariant base = maRequete.value(0);
-        ui->comboBoxBases->addItem(base.toString());
-        qDebug() << base;
-    }
-}
+
 
 // Fonction pour ouvrir une base de données
 void MainWindow::ouvrirBase()
 {
     //  efface le modèle
 
-    modele->clear();
-    // efface la liste des tables
-    ui->comboBoxTable->clear();
-
-    // lance la fenêtre connexion
-    Wconnexion->exec();
 
 
-    db.setHostName(Wconnexion->ServeurIp() );         // l'adresse IP du serveur mySQL
-    db.setUserName(Wconnexion->Utilisateur()  );      // le nom de l'utilisateur
-    db.setPassword(Wconnexion->Password());           // le mot de passe de l'utilisateur
-    db.setDatabaseName(Wconnexion->Base());           // le nom de la base
-    if(!db.open())
-    {
-        QMessageBox::information(this, "Erreur !!!", db.lastError().driverText());
-    }
-    else
-    {
 
-        lireBases();
+
         lireTables();
-        statusBar()->showMessage("Base ouverte : " + Wconnexion->Base() );
+
         modele->setTable(ui->comboBoxTable->currentText());    // Sélection de la table
         modele->select();                 // Chargement des données dans le modèle
         ui->tableView->resizeColumnsToContents();  // ajustement de la largeur des colonnes
         // association du modèle à la vue
         ui->tableView->setModel(modele);
         // definie la stratégie de modification
-        modele->setEditStrategy(QSqlTableModel::OnRowChange);
 
 
-    }
+
+
 
 }
 
@@ -96,6 +86,8 @@ void MainWindow::on_comboBoxTable_currentIndexChanged(const QString &arg1)
     ui->tableView->resizeColumnsToContents(); // ajustement de la largeur des colonnes
 }
 
+
+
 // Slot pour ajouter un enregistrement à la table
 // nous appelons insertRows pour créer une nouvelle ligne (enregistrement) vide
 
@@ -103,6 +95,8 @@ void MainWindow::on_pushButtonInserer_clicked()
 {
     modele->insertRows(0,1); // insert une ligne au début
 }
+
+
 
 // Slot pour supprimer un enregistrement
 // nous appelons removeRow pour retirer une ligne du modèle
@@ -125,18 +119,11 @@ void MainWindow::on_pushButtonSupprimer_clicked()
 
 
 
-void MainWindow::on_comboBoxBases_currentTextChanged(const QString &arg1)
+// Action quitter
+
+
+
+void MainWindow::on_actionQuitter_triggered()
 {
-    qDebug() << arg1;
-    db.setDatabaseName(arg1);
-    if(db.open())
-    {
-        statusBar()->showMessage("Base ouverte : " + arg1 );
-        lireTables();
-        modele->setTable(ui->comboBoxTable->currentText());    // Sélection de la table
-        modele->select();                 // Chargement des données dans le modèle
-    }
-
-
-
+    this->close();
 }

@@ -2,6 +2,8 @@
 #define CONNEXION_H
 
 #include <QDialog>
+#include <QtSql>
+#include <QMessageBox>
 
 namespace Ui {
 class Connexion;
@@ -19,18 +21,24 @@ public:
      QString Base();
      QString Utilisateur();
      QString Password();
+     QSqlDatabase   db;
 
 
 
 private slots:
     void on_buttonBox_accepted();
 
+    void on_pushButton_clicked();
+
 private:
     Ui::Connexion *ui;
+
     QString serveurIp;
     QString base;
     QString utilisateur;
     QString password;
+
+    void lireBases();
 };
 
 #endif // CONNEXION_H
