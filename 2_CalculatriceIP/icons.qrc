@@ -1,5 +1,0 @@
-<RCC>
-    <qresource prefix="/icons">
-        <file>icons/config-reseau-icon.png</file>
-    </qresource>
-</RCC>

@@ -1,9 +1,0 @@
-<RCC>
-    <qresource prefix="/sons">
-        <file>sonnerie.wav</file>
-    </qresource>
-    <qresource prefix="/images">
-        <file>reveil-icon.png</file>
-        <file>logo_touchard2.png</file>
-    </qresource>
-</RCC>
