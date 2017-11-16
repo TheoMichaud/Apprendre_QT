@@ -1,0 +1,21 @@
+<RCC>
+    <qresource prefix="/menu">
+        <file>icones/open-file-icon.png</file>
+        <file>icones/page-blanche-icon.png</file>
+        <file>icones/point-interrogation-icon.png</file>
+        <file>icones/Save-icon.png</file>
+        <file>icones/Windows-Close-Program-icon.png</file>
+        <file>icones/notes-icon.png</file>
+        <file>icones/color-icon.png</file>
+        <file>icones/defaire-icon.png</file>
+        <file>icones/font-icon.png</file>
+        <file>icones/refaire-icon.png</file>
+        <file>icones/recherche-icon.png</file>
+        <file>icones/copie-icon.png</file>
+        <file>icones/couper-icon.png</file>
+        <file>icones/coller-icon.png</file>
+    </qresource>
+    <qresource prefix="/logo">
+        <file>icones/logo_touchard.jpg</file>
+    </qresource>
+</RCC>
