@@ -40,5 +40,4 @@ FORMS += \
 RESOURCES += \
     icons.qrc
 
-DISTFILES += \
-    images/serveur.png
+DISTFILES +=

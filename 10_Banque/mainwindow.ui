@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>620</width>
+    <width>672</width>
     <height>494</height>
    </rect>
   </property>
@@ -104,6 +104,9 @@
           <pointsize>12</pointsize>
          </font>
         </property>
+        <property name="alternatingRowColors">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
      </layout>
@@ -115,8 +118,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>620</width>
-     <height>27</height>
+     <width>672</width>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuBase_de_donn_es">
@@ -142,7 +145,7 @@
   <action name="actionConnexion">
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/images/serveur.png</normaloff>:/images/serveur.png</iconset>
+     <normaloff>:/images/data-center.png</normaloff>:/images/data-center.png</iconset>
    </property>
    <property name="text">
     <string>Connexion</string>
