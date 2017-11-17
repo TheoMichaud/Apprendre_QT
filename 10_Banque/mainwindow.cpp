@@ -6,7 +6,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    this->Wconnexion = new Connexion(this);
+    Wconnexion = new Connexion(this);
     this->modele = new QSqlTableModel(this);
     // definie la stratégie de modification
     this->modele->setEditStrategy(QSqlTableModel::OnRowChange);
@@ -24,7 +24,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-// Slot pour l'ouverture d'une connexion a
+// Slot pour l'ouverture d'une connexion à
 // un serveur de base de données
 
 void MainWindow::on_actionConnexion_triggered()
@@ -43,8 +43,8 @@ void MainWindow::on_actionConnexion_triggered()
 void MainWindow::lireTables()
 {
     qDebug() << "lireTables()";
-    statusBar()->showMessage("Base ouverte : " + Wconnexion->Base() + " sur le serveur : " + Wconnexion->ServeurIp());
-    QStringList tables = Wconnexion->db.tables(QSql::AllTables);  // AllTables les tables plus les vues
+    statusBar()->showMessage("Base ouverte : " + Wconnexion->ObtenirBase() + " sur le serveur : " + Wconnexion->ObtenirIpServeur());
+    QStringList tables = Wconnexion->ObtenirDb().tables(QSql::AllTables);  // AllTables les tables plus les vues
     ui->comboBoxTable->clear();
     for (int i=0; i<tables.size(); i++)
     {

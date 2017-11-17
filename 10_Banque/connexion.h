@@ -17,11 +17,12 @@ public:
     explicit Connexion(QWidget *parent = 0);
     ~Connexion();
     // les getteurs
-     QString ServeurIp();
-     QString Base();
-     QString Utilisateur();
-     QString Password();
-     QSqlDatabase   db;
+     QString ObtenirIpServeur();
+     QString ObtenirBase();
+     QString ObtenirUtilisateur();
+     QString ObtenirPassword();
+     QSqlDatabase ObtenirDb();
+
 
 
 
@@ -37,7 +38,7 @@ private:
     QString base;
     QString utilisateur;
     QString password;
-
+    QSqlDatabase   db;
     void lireBases();
 };
 

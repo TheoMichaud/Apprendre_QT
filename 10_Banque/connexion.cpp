@@ -15,22 +15,27 @@ Connexion::~Connexion()
     delete ui;
 }
 
-QString Connexion::ServeurIp()
+QString Connexion::ObtenirIpServeur()
 {
     return serveurIp;
 }
 
-QString Connexion::Base()
+QString Connexion::ObtenirBase()
 {
     return base;
 }
 
-QString Connexion::Utilisateur()
+QSqlDatabase Connexion::ObtenirDb()
+{
+    return db;
+}
+
+QString Connexion::ObtenirUtilisateur()
 {
     return utilisateur;
 }
 
-QString Connexion::Password()
+QString Connexion::ObtenirPassword()
 {
     return password;
 }
