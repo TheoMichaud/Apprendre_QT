@@ -4,6 +4,8 @@
 #include <QDialog>
 #include <QtSql>
 #include <QMessageBox>
+#include <QErrorMessage>
+#include <QStringList>
 
 namespace Ui {
 class Connexion;
@@ -17,28 +19,16 @@ public:
     explicit Connexion(QWidget *parent = 0);
     ~Connexion();
     // les getteurs
-     QString ObtenirIpServeur();
-     QString ObtenirBase();
-     QString ObtenirUtilisateur();
-     QString ObtenirPassword();
-     QSqlDatabase ObtenirDb();
-
-
-
+    QSqlDatabase ObtenirDb();
+    QStringList *ObtenirListeBases();
 
 private slots:
     void on_buttonBox_accepted();
 
-    void on_pushButton_clicked();
-
 private:
     Ui::Connexion *ui;
-
-    QString serveurIp;
-    QString base;
-    QString utilisateur;
-    QString password;
     QSqlDatabase   db;
+    QStringList *listeBases;
     void lireBases();
 };
 

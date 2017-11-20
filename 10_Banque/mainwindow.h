@@ -30,6 +30,8 @@ private slots:
 
     void on_actionQuitter_triggered();
 
+    void on_comboBoxBases_currentIndexChanged(const QString &arg1);
+
 private:
     Ui::MainWindow *ui;
     Connexion      *Wconnexion;

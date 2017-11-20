@@ -12,11 +12,6 @@ MainWindow::MainWindow(QWidget *parent) :
     this->modele->setEditStrategy(QSqlTableModel::OnRowChange);
     // association du modèle à la vue
     ui->tableView->setModel(modele);
-
-
-
-
-
 }
 
 MainWindow::~MainWindow()
@@ -35,6 +30,13 @@ void MainWindow::on_actionConnexion_triggered()
 
     // lance la fenêtre connexion
     Wconnexion->exec();
+    QStringList *listeBases = new QStringList();
+    listeBases = Wconnexion->ObtenirListeBases();
+    ui->comboBoxBases->clear();
+    for (int i=0; i<listeBases->size(); i++)
+    {
+        ui->comboBoxBases->addItem(listeBases->at(i));  // chaque nom de table est affecté a un QcomboBox
+    }
     lireTables();
 }
 
@@ -42,8 +44,8 @@ void MainWindow::on_actionConnexion_triggered()
 // et compléter le comboxTable
 void MainWindow::lireTables()
 {
-    qDebug() << "lireTables()";
-    statusBar()->showMessage("Base ouverte : " + Wconnexion->ObtenirBase() + " sur le serveur : " + Wconnexion->ObtenirIpServeur());
+
+    statusBar()->showMessage("Base ouverte : " + Wconnexion->ObtenirDb().databaseName() + " sur le serveur : " + Wconnexion->ObtenirDb().hostName());
     QStringList tables = Wconnexion->ObtenirDb().tables(QSql::AllTables);  // AllTables les tables plus les vues
     ui->comboBoxTable->clear();
     for (int i=0; i<tables.size(); i++)
@@ -100,4 +102,17 @@ void MainWindow::on_pushButtonSupprimer_clicked()
 void MainWindow::on_actionQuitter_triggered()
 {
     this->close();
+}
+
+//Changement de base
+void MainWindow::on_comboBoxBases_currentIndexChanged(const QString &arg1)
+{
+    QSqlDatabase db = Wconnexion->ObtenirDb();
+    db.setDatabaseName(ui->comboBoxBases->currentText());
+    if(!db.open())
+    {
+        QErrorMessage *erreur = new QErrorMessage(this);
+        erreur->showMessage(db.lastError().driverText());
+    }
+    lireTables();
 }
