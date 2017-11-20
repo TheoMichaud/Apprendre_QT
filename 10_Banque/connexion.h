@@ -21,6 +21,7 @@ public:
     // les getteurs
     QSqlDatabase ObtenirDb();
     QStringList *ObtenirListeBases();
+    bool Ouvert();
 
 private slots:
     void on_buttonBox_accepted();
@@ -29,6 +30,7 @@ private:
     Ui::Connexion *ui;
     QSqlDatabase   db;
     QStringList *listeBases;
+    bool connectee;
     void lireBases();
 };
 

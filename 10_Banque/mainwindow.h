@@ -36,6 +36,7 @@ private:
     Ui::MainWindow *ui;
     Connexion      *Wconnexion;
     QSqlTableModel *modele;
+    QStringList     *listeBases;
 
     void lireTables();
 };

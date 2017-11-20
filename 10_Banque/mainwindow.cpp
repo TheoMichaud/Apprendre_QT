@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     Wconnexion = new Connexion(this);
+    listeBases = new QStringList();
     this->modele = new QSqlTableModel(this);
     // definie la stratégie de modification
     this->modele->setEditStrategy(QSqlTableModel::OnRowChange);
@@ -27,30 +28,39 @@ void MainWindow::on_actionConnexion_triggered()
     modele->clear();
     // efface la liste des tables
     ui->comboBoxTable->clear();
+    // efface la liste des bases
+    ui->comboBoxBases->clear();
+
+
 
     // lance la fenêtre connexion
     Wconnexion->exec();
-    QStringList *listeBases = new QStringList();
+
     listeBases = Wconnexion->ObtenirListeBases();
-    ui->comboBoxBases->clear();
+
     for (int i=0; i<listeBases->size(); i++)
     {
         ui->comboBoxBases->addItem(listeBases->at(i));  // chaque nom de table est affecté a un QcomboBox
     }
-    lireTables();
+    if(listeBases->size() >= 1)
+    {
+        lireTables();
+    }
+
 }
 
 // Fonction pour lire les tables présentes dans une base de données
 // et compléter le comboxTable
 void MainWindow::lireTables()
 {
-
-    statusBar()->showMessage("Base ouverte : " + Wconnexion->ObtenirDb().databaseName() + " sur le serveur : " + Wconnexion->ObtenirDb().hostName());
-    QStringList tables = Wconnexion->ObtenirDb().tables(QSql::AllTables);  // AllTables les tables plus les vues
-    ui->comboBoxTable->clear();
-    for (int i=0; i<tables.size(); i++)
-    {
-        ui->comboBoxTable->addItem(tables[i]);  // chaque nom de table est affecté a un QcomboBox
+    if (Wconnexion->ObtenirDb().open()){
+        statusBar()->showMessage("Base ouverte : " + Wconnexion->ObtenirDb().databaseName() + " sur le serveur : " + Wconnexion->ObtenirDb().hostName());
+        QStringList tables = Wconnexion->ObtenirDb().tables(QSql::AllTables);  // AllTables les tables plus les vues
+        ui->comboBoxTable->clear();
+        for (int i=0; i<tables.size(); i++)
+        {
+            ui->comboBoxTable->addItem(tables[i]);  // chaque nom de table est affecté a un QcomboBox
+        }
     }
 }
 
