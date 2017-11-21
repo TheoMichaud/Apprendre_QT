@@ -86,7 +86,7 @@ void ServeurMainWindow::slotReadyRead()
                 clientConnexion->write(reponse.toLatin1());
                 break;
             case 'o':
-
+                // Commande umame -p nom du processeur
                 process->start("uname",QStringList("-p"));
 
                 break;
@@ -95,6 +95,7 @@ void ServeurMainWindow::slotReadyRead()
                 clientConnexion->write(reponse.toLatin1());
                 break;
             case 'a':
+
                 process->start("uname");
 
             }

@@ -25,6 +25,13 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>Base :</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QComboBox" name="comboBoxBases">
           <property name="minimumSize">
            <size>
@@ -129,7 +136,7 @@
      <x>0</x>
      <y>0</y>
      <width>908</width>
-     <height>26</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuBase_de_donn_es">

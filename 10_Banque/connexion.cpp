@@ -31,11 +31,6 @@ QStringList *Connexion::ObtenirListeBases()
 
 }
 
-bool Connexion::Ouvert()
-{
-    return connectee;
-}
-
 
 // Au click sur le bouton OK
 // Etablissement d'une  connexion au serveur pour

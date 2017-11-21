@@ -21,7 +21,6 @@ public:
     // les getteurs
     QSqlDatabase ObtenirDb();
     QStringList *ObtenirListeBases();
-    bool Ouvert();
 
 private slots:
     void on_buttonBox_accepted();
