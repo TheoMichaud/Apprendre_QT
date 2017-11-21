@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QTcpSocket>
+#include <QAbstractSocket>
 #include <QDebug>
 
 class socketTest : public QObject
@@ -11,14 +12,20 @@ class socketTest : public QObject
 public:
     explicit socketTest(QObject *parent = nullptr);
 
-     void Connect();
+     void LireEntete();
+     void FixerHostname(QString adresse);
 
 signals:
 
 public slots:
+     void connected();
+     void disconnected();
+     void bytesWritten (qint64 bytes);
+     void readyRead();
 
 private:
     QTcpSocket *socket;
+    QString hostname;
 };
 
 #endif // SOCKETTEST_H
