@@ -92,7 +92,6 @@ void ServeurMainWindow::slotReadyRead()
             messageReponse += reponse;
             ui->listWidgetEtat->insertItem(1,messageReponse);
             ui->listWidgetEtat->insertItem(2,"");
-            qDebug() << "Reponse : " << messageReponse;
             break;
 
         case 'o':
