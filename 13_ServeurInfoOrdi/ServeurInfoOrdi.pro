@@ -18,3 +18,6 @@ SOURCES += main.cpp\
 HEADERS  += serveurmainwindow.h
 
 FORMS    += serveurmainwindow.ui
+
+RESOURCES += \
+    icones.qrc

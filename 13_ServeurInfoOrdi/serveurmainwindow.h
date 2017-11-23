@@ -5,6 +5,11 @@
 #include <QTcpServer>
 #include <QTcpSocket>
 #include <QProcess>
+#include <QErrorMessage>
+#include <QHostInfo>
+#include <QHostAddress>
+#include <QNetworkInterface>
+
 
 namespace Ui {
 class ServeurMainWindow;
@@ -29,6 +34,9 @@ private slots:
     void slotReadyRead();
     void slotDisconnected();
     void slotReadFromStdOutput();
+    void on_actionQuitter_triggered();
+    void on_actionA_propos_triggered();
+    void on_actionD_connecter_le_client_triggered();
 };
 
 #endif // SERVEURMAINWINDOW_H
