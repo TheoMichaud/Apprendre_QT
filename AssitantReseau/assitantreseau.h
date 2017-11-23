@@ -27,6 +27,8 @@ private slots:
 
     void on_actionroute_print_triggered();
 
+    void on_actionver_triggered();
+
 private:
     Ui::AssitantReseau *ui;
     QProcess *process;

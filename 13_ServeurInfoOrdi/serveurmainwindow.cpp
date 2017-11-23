@@ -97,7 +97,13 @@ void ServeurMainWindow::slotReadyRead()
 
         case 'o':
             // Commande (linux) umame -p pour obtenir le nom du processeur
-            process->start("uname",QStringList("-p"));
+            reponse = QSysInfo::buildCpuArchitecture();
+            reponse =  QSysInfo::buildAbi();
+            clientConnexion->write(reponse.toLatin1());
+            messageReponse += reponse;
+            ui->listWidgetEtat->insertItem(1,messageReponse);
+            ui->listWidgetEtat->insertItem(2,"");
+            qDebug() << "Reponse : " << messageReponse;
             break;
 
         case 'c':
@@ -112,8 +118,14 @@ void ServeurMainWindow::slotReadyRead()
 
         case 'a':
             // Commande (Linux) uname pour
-            // obtenir le nom du système d'exploitation
-            process->start("uname");
+            reponse = QSysInfo::productType();
+            reponse += " - ";
+            reponse += QSysInfo::productVersion();
+            messageReponse += reponse;
+            ui->listWidgetEtat->insertItem(1,messageReponse);
+            ui->listWidgetEtat->insertItem(2,"");
+            clientConnexion->write(reponse.toLatin1());
+            qDebug() << "Reponse : " << messageReponse;
             break;
 
         }
@@ -125,7 +137,7 @@ void ServeurMainWindow::slotReadyRead()
 void ServeurMainWindow::slotDisconnected()
 {
     clientConnexion->deleteLater();
-    this->statusBar()->showMessage("Client déconnecté !");
+    this->statusBar()->showMessage("Le client a fermé la connexion !");
     clientConnexion = NULL;
 
 }
@@ -165,7 +177,7 @@ void ServeurMainWindow::on_actionD_connecter_le_client_triggered()
         clientConnexion->disconnect();
         delete clientConnexion;
         clientConnexion = NULL;
-        this->statusBar()->showMessage("Client déconnecté par le serveur!");
+        this->statusBar()->showMessage("Client déconnecté par le serveur !");
 
     }
 }

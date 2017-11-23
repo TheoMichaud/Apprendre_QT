@@ -43,6 +43,7 @@
     <addaction name="actionarp_a"/>
     <addaction name="actionarp_d"/>
     <addaction name="actionroute_print"/>
+    <addaction name="actionver"/>
    </widget>
    <addaction name="menucommande"/>
   </widget>
@@ -73,6 +74,11 @@
   <action name="actionroute_print">
    <property name="text">
     <string>route print</string>
+   </property>
+  </action>
+  <action name="actionver">
+   <property name="text">
+    <string>ver</string>
    </property>
   </action>
  </widget>

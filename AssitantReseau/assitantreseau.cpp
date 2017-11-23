@@ -48,3 +48,9 @@ void AssitantReseau::on_actionroute_print_triggered()
     arguments << "print";
     process->start("route",arguments);
 }
+
+void AssitantReseau::on_actionver_triggered()
+{
+    QStringList arguments;
+    process->start("ver", arguments);
+}
