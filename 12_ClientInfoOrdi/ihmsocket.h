@@ -40,8 +40,6 @@ private slots:
 
     void on_pushButtonNomMachine_clicked();
 
-
-
     void on_pushButtonNomDomaine_clicked();
 
     void on_pushButtonTypeDemarrage_clicked();

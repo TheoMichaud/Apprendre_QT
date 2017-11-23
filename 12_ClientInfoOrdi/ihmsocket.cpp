@@ -150,13 +150,6 @@ void 	ClientDialogueWindows::onQTcpSocket_stateChanged ( QAbstractSocket::Socket
 
     }
 
-    //    QAbstractSocket::UnconnectedState	0	The socket is not connected.
-    //    QAbstractSocket::HostLookupState	1	The socket is performing a host name lookup.
-    //    QAbstractSocket::ConnectingState	2	The socket has started establishing a connection.
-    //    QAbstractSocket::ConnectedState	3	A connection is established.
-    //    QAbstractSocket::BoundState	4	The socket is bound to an address and port (for servers).
-    //    QAbstractSocket::ClosingState	6	The socket is about to close (data may still be waiting to be written).
-    //    QAbstractSocket::ListeningState	5	For internal use only.
     ui->textEditAfficheurEvenement->append(message);
 
 }
@@ -169,13 +162,13 @@ void 	ClientDialogueWindows::onQTcpSocket_aboutToClose ()
 
 void 	ClientDialogueWindows::onQTcpSocket_bytesWritten ( qint64 bytes )
 {
-    ui->textEditAfficheurEvenement->append("donnees ecrites");
+    ui->textEditAfficheurEvenement->append("données écrites");
 
 }
 
 void 	ClientDialogueWindows::onQTcpSocket_readChannelFinished ()
 {
-    ui->textEditAfficheurEvenement->append("lecture du canal termine");
+    ui->textEditAfficheurEvenement->append("lecture du canal terminé");
 
 }
 
@@ -195,7 +188,6 @@ void ClientDialogueWindows::onQTcpSocket_readyRead ()
         break;
     case 'a':ui->lineEditNomDomaine->setText ( QString::fromUtf8(buffer.data() ));
         break;
-
     case 'o':ui->lineEditTypeDemarrage->setText ( QString::fromUtf8(buffer.data() ));
         break;
 

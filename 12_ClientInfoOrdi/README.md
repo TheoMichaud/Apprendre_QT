@@ -3,8 +3,10 @@
 Présentation
 ----
 On se propose de créer un **client TCP** capable de se connecter à un serveur. Le client enverra une requête  sous forme d'un caractère au serveur et affichera la réponse reçue en retour à sa demande.
+
 Le module QtNetwork
 -----
+
 Le module QtNetwork offre des classes qui vous permettent d’écrire vos propres clients et serveurs TCP/IP. Pour inclure les déclarations des classes de ce module, il vous faut utiliser la directive suivante :
 
     #include <QtNetwork>
