@@ -6,19 +6,28 @@ ClientDialogueWindows::ClientDialogueWindows(QWidget *parent) :
     ui(new Ui::IhmSocket)
 {
     ui->setupUi(this);
-    // creation de la socket
+    // création de la socket
     socketDeDialogueAvecServeur=new QTcpSocket ( this );
 
-    // association des evenements possible lies a la socket
+    // association des evenements possible liés à la socket
     connect ( socketDeDialogueAvecServeur,SIGNAL ( connected() ),this,SLOT ( onQTcpSocket_connected() ) );
+
     connect ( socketDeDialogueAvecServeur,SIGNAL ( disconnected() ),this,SLOT ( onQTcpSocket_disconnected() ) );
+
     connect ( socketDeDialogueAvecServeur,SIGNAL ( error ( QAbstractSocket::SocketError ) ),this,SLOT ( onQTcpSocket_error ( QAbstractSocket::SocketError ) ) );
+
     connect ( socketDeDialogueAvecServeur,SIGNAL ( hostFound() ),this,SLOT ( onQTcpSocket_hostFound() ) );
+
     connect(socketDeDialogueAvecServeur,SIGNAL(proxyAuthenticationRequired(QNetworkProxy,QAuthenticator*)),this,SLOT(onQTcpSocket_proxyAuthenticationRequired(QNetworkProxy,QAuthenticator*)));
+
     connect ( socketDeDialogueAvecServeur,SIGNAL ( stateChanged ( QAbstractSocket::SocketState ) ),this,SLOT ( onQTcpSocket_stateChanged ( QAbstractSocket::SocketState ) ) );
+
     connect(socketDeDialogueAvecServeur,SIGNAL(aboutToClose()),this,SLOT(onQTcpSocket_aboutToClose()));
+
     connect(socketDeDialogueAvecServeur,SIGNAL(bytesWritten(qint64)),this,SLOT(onQTcpSocket_bytesWritten(qint64)));
+
     connect(socketDeDialogueAvecServeur,SIGNAL(readChannelFinished()),this,SLOT(onQTcpSocket_readChannelFinished()));
+
     connect ( socketDeDialogueAvecServeur,SIGNAL ( readyRead() ),this,SLOT ( onQTcpSocket_readyRead() ) );
 
 }
