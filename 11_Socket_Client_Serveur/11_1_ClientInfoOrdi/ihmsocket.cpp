@@ -114,9 +114,12 @@ void 	ClientDialogueWindows::onQTcpSocket_error( QAbstractSocket::SocketError so
     erreur->showMessage(message);
 }
 
+
+// Étape 2 : le serveur accuse réception de la session de communication client-serveur
+// et demande l'établissement d'une session de communication serveur-client.
 void 	ClientDialogueWindows::onQTcpSocket_hostFound ()
 {
-    ui->textEditAfficheurEvenement->append("Serveur trouvé");
+    ui->textEditAfficheurEvenement->append("E2 - Le serveur répond.");
 }
 
 
@@ -125,29 +128,51 @@ void 	ClientDialogueWindows::onQTcpSocket_stateChanged ( QAbstractSocket::Socket
     QString message;
     switch (socketState)
     {
-    case QAbstractSocket::UnconnectedState :
-        message="Le client n'est pas connecté.";
-        break;
+
     case QAbstractSocket::HostLookupState:
         message="Le client effectue une recherche de nom d'hôte.";
         break;
     case QAbstractSocket::ConnectingState:
-        message="Le client a commencé à établir une connexion.";
+        message="E1 - Le client demande l'établissement d'une connexion.";
         break;
     case QAbstractSocket::ConnectedState:
-        message="Une connexion est établie avec le serveur.";
+        message="E3 - Une connexion est établie avec le serveur.";
         break;
+
+    // Fermeture 1 : quand le client n'a plus de données à envoyer dans le flux,
+    // il envoie un segment dont l'indicateur FIN est défini.
+    // toutefois des données peuvent toujours être en attente d'être reçues.
     case QAbstractSocket::ClosingState	:
-        message="Le dialogue est sur le point de se terminer toutefois des données peuvent toujours être en attente d'être écrites).";
+        message="F1 - le client n'a plus de données à envoyer.";
+        break;
+
+    // Fermeture 2 : le serveur envoie un segment ACK
+    // pour indiquer la bonne réception du segment FIN
+    // afin de fermer la session du client au serveur.
+    case QAbstractSocket::UnconnectedState :
+        message="F2 - Le client n'est plus connecté.";
+        break;
+
+    case QAbstractSocket::ListeningState :
+        message="For internal use only. ";
         break;
     }
     ui->textEditAfficheurEvenement->append(message);
 }
 
+// Fermeture 3 : le serveur envoie un segment FIN au client
+// pour mettre fin à la session du serveur au client.
+void 	ClientDialogueWindows::onQTcpSocket_readChannelFinished ()
+{
+    ui->textEditAfficheurEvenement->append("F3 - le serveur met fin au dialogue.");
 
+}
+
+// Fermeture 4 : le client répond à l'aide d'un segment ACK
+// pour accuser réception du segment FIN envoyé par le serveur.
 void 	ClientDialogueWindows::onQTcpSocket_aboutToClose ()
 {
-    ui->textEditAfficheurEvenement->append("le dialogue est clos");
+    ui->textEditAfficheurEvenement->append("F4 - le dialogue est clos.");
 }
 
 void 	ClientDialogueWindows::onQTcpSocket_bytesWritten ( qint64 bytes )
@@ -156,11 +181,6 @@ void 	ClientDialogueWindows::onQTcpSocket_bytesWritten ( qint64 bytes )
 
 }
 
-void 	ClientDialogueWindows::onQTcpSocket_readChannelFinished ()
-{
-    ui->textEditAfficheurEvenement->append("lecture de la réponse terminée");
-
-}
 
 void ClientDialogueWindows::onQTcpSocket_readyRead ()
 {
