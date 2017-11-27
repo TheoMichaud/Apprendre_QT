@@ -10,7 +10,7 @@ ServeurMainWindow::ServeurMainWindow(QWidget *parent) :
     process = new QProcess(this);
 
     tcpServeur = new QTcpServer(this);
-    tcpServeur->setMaxPendingConnections(10);  // 10 clients max à la fois
+    tcpServeur->setMaxPendingConnections(30);  // maximum 30 clients  à la fois
 
 
 
@@ -72,13 +72,14 @@ void ServeurMainWindow::slotReadyRead()
 
     QChar   commande;
     // renvoie un pointeur sur le client qui a envoyé le signal ReadyRead
-    QTcpSocket *clientConnexion = (QTcpSocket *)this->sender();
-    if(clientConnexion->bytesAvailable() )
+    QTcpSocket *client = (QTcpSocket *)this->sender();
+    if(client->bytesAvailable() )
     {
-        QByteArray tmp=clientConnexion->readAll();
+        QByteArray tmp=client->readAll();
         commande=tmp.at(0);  // obtention du premier caractère
 
-        QString messageCommande = "Commande reçue :<b> (" + tmp + ")</b>";
+        QHostAddress addresseClient = client->peerAddress();
+        QString messageCommande = "Requète de :<b>" + addresseClient.toString() + " (" + tmp + ")</b>";
         ui->textEditEtat->append(messageCommande);
 
         QString messageReponse  = "Réponse envoyée : <b>";
@@ -89,7 +90,7 @@ void ServeurMainWindow::slotReadyRead()
             // lecture de la variable d'environnement USERNAME
             reponse = qgetenv("USERNAME");
 
-            clientConnexion->write(reponse.toUtf8());
+            client->write(reponse.toUtf8());
             messageReponse += reponse;
             messageReponse += "</b>";
             ui->textEditEtat->append(messageReponse);
@@ -98,7 +99,7 @@ void ServeurMainWindow::slotReadyRead()
         case 'o':
 
             reponse =  QSysInfo::buildAbi();
-            clientConnexion->write(reponse.toUtf8());
+            client->write(reponse.toUtf8());
             messageReponse += reponse;
             messageReponse += "</b>";
             ui->textEditEtat->append(messageReponse);
@@ -109,7 +110,7 @@ void ServeurMainWindow::slotReadyRead()
             reponse = QHostInfo::localHostName();
             messageReponse += reponse;
             messageReponse += "</b>";
-            clientConnexion->write(reponse.toUtf8());
+            client->write(reponse.toUtf8());
             ui->textEditEtat->append(messageReponse);
             break;
 
@@ -120,15 +121,15 @@ void ServeurMainWindow::slotReadyRead()
             reponse += QSysInfo::productVersion();
             messageReponse += reponse;
             messageReponse += "</b>";
-            clientConnexion->write(reponse.toUtf8());
+            client->write(reponse.toUtf8());
             ui->textEditEtat->append(messageReponse);
             break;
 
 
         default:
-            reponse = "501 Not Implemented \n\r";
+            reponse = "Requête non implémentée \n\r";
             messageReponse += reponse;
-            clientConnexion->write(reponse.toUtf8());
+            client->write(reponse.toUtf8());
             ui->textEditEtat->append(messageReponse);
             break;
 
@@ -153,13 +154,13 @@ void ServeurMainWindow::slotDisconnected()
 // les réponses aux appels système
 void ServeurMainWindow::slotReadFromStdOutput()
 {
-    QTcpSocket *clientConnexion = (QTcpSocket *)this->sender(); // renvoie un pointeur sur l'objet qui a envoyé le signal
+    QTcpSocket *client = (QTcpSocket *)this->sender(); // renvoie un pointeur sur l'objet qui a envoyé le signal
     QString reponse = process->readAllStandardOutput();
     if(!reponse.isEmpty())
     {
         QString messageReponse = "Réponse envoyée : " + reponse;
         ui->textEditEtat->append(messageReponse);
-        clientConnexion->write(reponse.toLatin1());
+        client->write(reponse.toLatin1());
         qDebug() << "Reponse : " << reponse;
     }
 }
@@ -178,16 +179,14 @@ void ServeurMainWindow::on_actionA_propos_triggered()
 
 }
 
-// slot pour déconnecter le client
+// slot pour déconnecter le ou les clients
 void ServeurMainWindow::on_actionD_connecter_le_client_triggered()
 {
-    QTcpSocket *clientConnexion = (QTcpSocket *)this->sender(); // renvoie un pointeur sur l'objet qui a envoyé des données
-    if (clientConnexion != NULL)
+    for (int i=0; i <lesConnexionsClients.size(); i++)
     {
-        clientConnexion->disconnect();
-        delete clientConnexion;
-        clientConnexion = NULL;
-        this->statusBar()->showMessage("Client déconnecté par le serveur !");
-
+        //lesConnexionsClients.at(i)->disconnect();
+        lesConnexionsClients.at(i)->deleteLater();
     }
+    lesConnexionsClients.clear();
+    this->statusBar()->showMessage("Client(s) déconnectés par le serveur !");
 }

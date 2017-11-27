@@ -26,8 +26,7 @@ public:
 private:
     Ui::ServeurMainWindow *ui;
     QTcpServer *tcpServeur;
-    //QTcpSocket *clientConnexion;
-    QList <QTcpSocket *> lesConnexionsClients;
+    QList <QTcpSocket *> lesConnexionsClients;  // liste des clients connectés
     QProcess   *process;
 
 private slots:
