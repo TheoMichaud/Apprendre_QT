@@ -207,6 +207,9 @@ void ClientDialogueWindows::onQTcpSocket_readyRead ()
     case 'h':
         ui->textEditHead->clear();
         ui->textEditHead->append( QString::fromUtf8(buffer.data() ));
+    default:
+        ui->textEditHead->clear();
+        ui->textEditHead->append( QString::fromUtf8(buffer.data() ));
 
     }
 }
