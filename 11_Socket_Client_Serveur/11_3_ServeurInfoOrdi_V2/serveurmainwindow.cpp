@@ -10,9 +10,9 @@ ServeurMainWindow::ServeurMainWindow(QWidget *parent) :
     process = new QProcess(this);
 
     tcpServeur = new QTcpServer(this);
-    tcpServeur->setMaxPendingConnections(1);  // un seul client à la fois
+    tcpServeur->setMaxPendingConnections(10);  // 10 clients max à la fois
 
-    clientConnexion = NULL;
+
 
     if(!tcpServeur->listen(QHostAddress::Any,8888))
     {
@@ -43,35 +43,36 @@ ServeurMainWindow::ServeurMainWindow(QWidget *parent) :
 
 ServeurMainWindow::~ServeurMainWindow()
 {
-    delete ui;
-    delete tcpServeur;
-    if (clientConnexion != NULL)
-        delete clientConnexion;
+
 }
 
-// Quand un client se connecte
+// Quand un nouveau client se connecte
 void ServeurMainWindow::slotNewConnection()
 {
-    if(clientConnexion == NULL)
+
+    while (tcpServeur->hasPendingConnections())
     {
-        clientConnexion = tcpServeur->nextPendingConnection();
-        connect(clientConnexion,SIGNAL(readyRead()),this,SLOT(slotReadyRead()));
-        connect(clientConnexion,SIGNAL(disconnected()),this,SLOT(slotDisconnected()));
+        QTcpSocket *client = tcpServeur->nextPendingConnection();
+        connect(client,SIGNAL(readyRead()),this,SLOT(slotReadyRead()));
+        connect(client,SIGNAL(disconnected()),this,SLOT(slotDisconnected()));
+        lesConnexionsClients.append(client);
 
-        QHostAddress addresseClient = clientConnexion->peerAddress();
-
-        QString message = "Client connecté : " + addresseClient.toString();
+        QHostAddress addresseClient = client->peerAddress();
+        QString message = "Nouveau client connecté : " + addresseClient.toString();
         this->statusBar()->showMessage(message);
-        ui->textEditEtat->clear();  // on efface le dialogue
+
     }
+
 }
 
-// Quand des données sont disponibles
+
+// Quand des données sont disponibles sur un client
 void ServeurMainWindow::slotReadyRead()
 {
 
     QChar   commande;
-
+    // renvoie un pointeur sur le client qui a envoyé le signal ReadyRead
+    QTcpSocket *clientConnexion = (QTcpSocket *)this->sender();
     if(clientConnexion->bytesAvailable() )
     {
         QByteArray tmp=clientConnexion->readAll();
@@ -136,18 +137,23 @@ void ServeurMainWindow::slotReadyRead()
     }
 }
 
-// slot appeler quand le client déconnecte
+// slot appeler quand un client se déconnecte
 void ServeurMainWindow::slotDisconnected()
 {
-    clientConnexion->deleteLater();
-    this->statusBar()->showMessage("Le client a fermé la connexion !");
-    clientConnexion = NULL;
+    // renvoie un QTcpSocket sur le client qui a envoyé le signal de déconnexion
+    QTcpSocket *client = (QTcpSocket *)this->sender();
+    QHostAddress addresseClient = client->peerAddress();
+    QString message = "Le client " + addresseClient.toString() + " a  déconnecté" ;
+    this->statusBar()->showMessage(message);
+    lesConnexionsClients.removeOne(client);
+    client->deleteLater();
 
 }
 
 // les réponses aux appels système
 void ServeurMainWindow::slotReadFromStdOutput()
 {
+    QTcpSocket *clientConnexion = (QTcpSocket *)this->sender(); // renvoie un pointeur sur l'objet qui a envoyé le signal
     QString reponse = process->readAllStandardOutput();
     if(!reponse.isEmpty())
     {
@@ -175,7 +181,7 @@ void ServeurMainWindow::on_actionA_propos_triggered()
 // slot pour déconnecter le client
 void ServeurMainWindow::on_actionD_connecter_le_client_triggered()
 {
-
+    QTcpSocket *clientConnexion = (QTcpSocket *)this->sender(); // renvoie un pointeur sur l'objet qui a envoyé des données
     if (clientConnexion != NULL)
     {
         clientConnexion->disconnect();

@@ -9,7 +9,7 @@
  */
 
 #include "compteclient.h"
-InterfaceAccesBDBanque CompteClient::bd("172.18.58.15","banque","snir","snir");
+InterfaceAccesBDBanque CompteClient::bd("172.18.58.14","banque","snir","snir");
 
 
 CompteClient::CompteClient(QObject *parent):QTcpSocket(parent)

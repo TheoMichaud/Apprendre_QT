@@ -69,5 +69,6 @@ float InterfaceAccesBDBanque::ObtenirSolde(int numCompte)
     }
     requete.next();
     solde=requete.value("solde").toFloat();
+    qDebug() << solde;
     return solde;
 }
