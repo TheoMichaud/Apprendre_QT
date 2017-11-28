@@ -76,7 +76,7 @@ void ServeurMainWindow::slotReadyRead()
     if(client->bytesAvailable() )
     {
         QByteArray tmp=client->readAll();
-        commande=tmp.at(0);  // obtention du premier caractère
+        commande=tmp.at(0);  // obtention du premier caractère uniquement
 
         QHostAddress addresseClient = client->peerAddress();
         QString messageCommande = "Requète de :<b>" + addresseClient.toString() + " (" + tmp + ")</b>";
@@ -88,45 +88,49 @@ void ServeurMainWindow::slotReadyRead()
         {
         case 'u':
             // lecture de la variable d'environnement USERNAME
-            reponse = qgetenv("USERNAME");
-
+            reponse = qgetenv("USERNAME") + "\n\r";
             client->write(reponse.toUtf8());
-            messageReponse += reponse;
-            messageReponse += "</b>";
+            messageReponse += reponse + "</b>" ;
             ui->textEditEtat->append(messageReponse);
             break;
 
         case 'o':
 
-            reponse =  QSysInfo::buildAbi();
+            reponse =  QSysInfo::buildAbi() + "\n\r";
             client->write(reponse.toUtf8());
-            messageReponse += reponse;
-            messageReponse += "</b>";
+            messageReponse += reponse + "</b>";
             ui->textEditEtat->append(messageReponse);
             break;
 
         case 'c':
             // le nom de l'hôte local
-            reponse = QHostInfo::localHostName();
-            messageReponse += reponse;
-            messageReponse += "</b>";
+            reponse = QHostInfo::localHostName() + "\n\r";
+            messageReponse += reponse + "</b>";
             client->write(reponse.toUtf8());
             ui->textEditEtat->append(messageReponse);
             break;
 
         case 'a':
             // Commande (Linux) uname  ou QSysInfo
-            reponse = QSysInfo::productType();
-            reponse += " - ";
-            reponse += QSysInfo::productVersion();
-            messageReponse += reponse;
-            messageReponse += "</b>";
+            reponse = QSysInfo::productType() + " - " + QSysInfo::productVersion() + "\n\r";
+            messageReponse += reponse + "</b>";
             client->write(reponse.toUtf8());
             ui->textEditEtat->append(messageReponse);
             break;
 
+        case '?':
+            // Commande d'aide pour afficher les options possible
+            reponse =  "u : le nom de l'utilisateur connecté\n\r";
+            reponse += "c : le nom de la machine\n\r";
+            reponse += "o : le type et la version du système d'exploitation\n\r";
+            reponse += "a : Le type de processeur\n\r";
+            messageReponse += reponse + "</b>";
+            client->write(reponse.toUtf8());
+            ui->textEditEtat->append(messageReponse);
+            break;
 
         default:
+            // La requète n'est pas dans la liste !!!
             reponse = "Requête non implémentée \n\r";
             messageReponse += reponse;
             client->write(reponse.toUtf8());
