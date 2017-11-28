@@ -94,7 +94,7 @@ void ServeurMainWindow::slotReadyRead()
             ui->textEditEtat->append(messageReponse);
             break;
 
-        case 'o':
+        case 'a':
 
             reponse =  QSysInfo::buildAbi() + "\n\r";
             client->write(reponse.toUtf8());
@@ -110,7 +110,7 @@ void ServeurMainWindow::slotReadyRead()
             ui->textEditEtat->append(messageReponse);
             break;
 
-        case 'a':
+        case 'o':
             // Commande (Linux) uname  ou QSysInfo
             reponse = QSysInfo::productType() + " - " + QSysInfo::productVersion() + "\n\r";
             messageReponse += reponse + "</b>";
@@ -134,6 +134,9 @@ void ServeurMainWindow::slotReadyRead()
             reponse = "Requête non implémentée \n\r";
             messageReponse += reponse;
             client->write(reponse.toUtf8());
+            // déconnexion du client
+            lesConnexionsClients.removeOne(client);
+            client->disconnectFromHost();
             ui->textEditEtat->append(messageReponse);
             break;
 

@@ -50,7 +50,9 @@ void CompteClient::Deposer(float montant)
 
 float CompteClient::ObtenirSolde()
 {
+
     solde=bd.ObtenirSolde(numCompte);
+    qDebug() << "obtenir Solde : " << solde;
     return solde;
 
 }

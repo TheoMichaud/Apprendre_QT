@@ -31,9 +31,7 @@ void DAB_MainWindow::on_pushButtonEnvoi_clicked()
     quint16 taille=0;
     QChar commande;
 
-
     float valeur=(float)ui->lineEditMontant->text().toFloat();
-
 
     QBuffer tampon;
     tampon.open(QIODevice::WriteOnly);

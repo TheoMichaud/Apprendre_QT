@@ -9,7 +9,10 @@ InterfaceAccesBDBanque::InterfaceAccesBDBanque(QString hote, QString bd, QString
     bdd.setUserName(login);
     bdd.setPassword(mdp);
     if (!bdd.open()){
-        qDebug()<<"pb access bd "<<bdd.lastError();
+        qDebug()<<"Pb access bd "<<bdd.lastError();
+    }
+    else{
+        qDebug()<<"Access bd OK ";
     }
 
 }
