@@ -9,6 +9,8 @@
 #include <QHostInfo>
 #include <QHostAddress>
 #include <QNetworkInterface>
+#include <QComboBox>
+#include <Qlabel>
 
 
 namespace Ui {
@@ -27,6 +29,7 @@ private:
     Ui::ServeurMainWindow *ui;
     QTcpServer *tcpServeur;
     QList <QTcpSocket *> lesConnexionsClients;  // liste des clients connectés
+    QComboBox *myComboBoxClient; //La comboBox pour afficher les clients connectés
     QProcess   *process;
 
 private slots:

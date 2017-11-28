@@ -10,8 +10,14 @@ ServeurMainWindow::ServeurMainWindow(QWidget *parent) :
     process = new QProcess(this);
 
     tcpServeur = new QTcpServer(this);
-    tcpServeur->setMaxPendingConnections(30);  // maximum 30 clients  à la fois
-
+    tcpServeur->setMaxPendingConnections(30);  // Version 2 maximum 30 clients  à la fois
+    // Version 2 ajout d'une comboBox dans la toolBar
+    myComboBoxClient = new QComboBox;
+    myComboBoxClient->setMinimumSize(QSize(250,0));
+    QLabel *labelClient = new QLabel;
+    labelClient->setText(" Client(s) connecté(s) : ");
+    ui->toolBar->addWidget(labelClient);
+    ui->toolBar->addWidget(myComboBoxClient);
 
 
     if(!tcpServeur->listen(QHostAddress::Any,8888))
@@ -27,7 +33,7 @@ ServeurMainWindow::ServeurMainWindow(QWidget *parent) :
     }
     else
     {
-        // Affichage des adresses IP du serveur dans listWidgetIp
+        // Affichage des adresses IPv4 du serveur dans listWidgetIp
         QList<QHostAddress> listeAdresse = QNetworkInterface::allAddresses();
 
         for (int i = 0; i < listeAdresse.size();i++)
@@ -58,8 +64,10 @@ void ServeurMainWindow::slotNewConnection()
         lesConnexionsClients.append(client);
 
         QHostAddress addresseClient = client->peerAddress();
-        QString message = "Nouveau client connecté : " + addresseClient.toString();
-        this->statusBar()->showMessage(message);
+
+        myComboBoxClient->insertItem(0,addresseClient.toString());
+        myComboBoxClient->setCurrentIndex(0);
+
 
     }
 
@@ -151,8 +159,10 @@ void ServeurMainWindow::slotDisconnected()
     // renvoie un QTcpSocket sur le client qui a envoyé le signal de déconnexion
     QTcpSocket *client = (QTcpSocket *)this->sender();
     QHostAddress addresseClient = client->peerAddress();
-    QString message = "Le client " + addresseClient.toString() + " a  déconnecté" ;
-    this->statusBar()->showMessage(message);
+    // l'adresse du client est retiré de l'affichage
+    int id = myComboBoxClient->findText(addresseClient.toString());
+    myComboBoxClient->removeItem(id);
+
     lesConnexionsClients.removeOne(client);
     client->deleteLater();
 
@@ -186,7 +196,7 @@ void ServeurMainWindow::on_actionA_propos_triggered()
 
 }
 
-// slot pour déconnecter le ou les clients
+// slot pour déconnecter tous les clients
 void ServeurMainWindow::on_actionD_connecter_le_client_triggered()
 {
     for (int i=0; i <lesConnexionsClients.size(); i++)
@@ -195,5 +205,6 @@ void ServeurMainWindow::on_actionD_connecter_le_client_triggered()
         lesConnexionsClients.at(i)->deleteLater();
     }
     lesConnexionsClients.clear();
+    myComboBoxClient->clear();
     this->statusBar()->showMessage("Client(s) déconnectés par le serveur !");
 }
