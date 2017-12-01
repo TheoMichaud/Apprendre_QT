@@ -10,7 +10,7 @@
 #include <QHostAddress>
 #include <QNetworkInterface>
 #include <QComboBox>
-#include <Qlabel>
+#include <QLabel>
 
 
 namespace Ui {
