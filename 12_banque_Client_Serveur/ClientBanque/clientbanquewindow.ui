@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>526</width>
-    <height>465</height>
+    <height>487</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,6 +23,11 @@
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
            <widget class="QLabel" name="label_2">
+            <property name="font">
+             <font>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string>Adresse :</string>
             </property>
@@ -46,6 +51,11 @@
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
            <widget class="QLabel" name="label_3">
+            <property name="font">
+             <font>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string>Port :</string>
             </property>
@@ -82,6 +92,11 @@
           </item>
           <item>
            <widget class="QPushButton" name="pushButtonConnexion">
+            <property name="font">
+             <font>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string>Connexion</string>
             </property>
@@ -95,6 +110,11 @@
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
          <widget class="QLabel" name="label_5">
+          <property name="font">
+           <font>
+            <pointsize>11</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>Etat de la connexion</string>
           </property>
@@ -111,6 +131,11 @@
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
        <widget class="QLabel" name="label_4">
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>Message de la banque :</string>
         </property>
@@ -123,11 +148,19 @@
     </item>
     <item>
      <widget class="QGroupBox" name="groupBox">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="minimumSize">
        <size>
         <width>0</width>
         <height>150</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
       </property>
       <property name="title">
        <string>Opérations envoyées à la banque</string>
@@ -137,7 +170,7 @@
         <rect>
          <x>0</x>
          <y>30</y>
-         <width>131</width>
+         <width>171</width>
          <height>23</height>
         </rect>
        </property>
@@ -148,7 +181,7 @@
       <widget class="QLineEdit" name="lineEditNumero">
        <property name="geometry">
         <rect>
-         <x>140</x>
+         <x>190</x>
          <y>30</y>
          <width>113</width>
          <height>20</height>
@@ -158,9 +191,9 @@
       <widget class="QLabel" name="label">
        <property name="geometry">
         <rect>
-         <x>20</x>
+         <x>90</x>
          <y>60</y>
-         <width>51</width>
+         <width>81</width>
          <height>16</height>
         </rect>
        </property>
@@ -171,7 +204,7 @@
       <widget class="QLineEdit" name="lineEditMontant">
        <property name="geometry">
         <rect>
-         <x>140</x>
+         <x>190</x>
          <y>60</y>
          <width>113</width>
          <height>20</height>
@@ -240,7 +273,7 @@
      <x>0</x>
      <y>0</y>
      <width>526</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

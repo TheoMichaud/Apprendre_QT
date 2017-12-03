@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QTcpSocket>
+#include <QErrorMessage>
+#include <QString>
 
 namespace Ui {
     class ClientBanqueWindow;
@@ -20,6 +22,7 @@ public:
 private:
     Ui::ClientBanqueWindow *ui;
     QTcpSocket *tcpSocket;
+    QString designation;
 
 private slots:
     void on_pushButtonEnvoyer_clicked();
@@ -29,6 +32,6 @@ private slots:
     void slotReadyRead();
     void slotConnected();
     void slotDisconnected();
+    void onQTcpSocket_error(QAbstractSocket::SocketError socketError);
 };
-
 #endif // CLIENTBANQUEWINDOW_H
