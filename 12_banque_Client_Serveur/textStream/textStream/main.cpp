@@ -1,5 +1,6 @@
 #include <QCoreApplication>
-#include <Qtcore>
+
+#include <QtCore>
 #include <QDebug>
 
 // fonction pour "déverser" un flux dans un fichier
@@ -35,7 +36,8 @@ void lireLigne(QFile &fichier)
         {
             ligne = flux.readLine();  // Lit une ligne de texte du flux
             qDebug() << ligne;
-        }while(!ligne.isNull());
+        }
+        while(!ligne.isNull());
 
         fichier.close();
         qDebug() << "Fichier lu";
@@ -54,7 +56,8 @@ void lireMot(QFile &fichier)
         {
             flux >> mot;        // lecture mot par mot avec l'opérateur >>
             qDebug() << mot;
-        }while(!mot.isNull());
+        }
+        while(!mot.isNull());
 
         fichier.close();
         qDebug() << "Fichier lu";

@@ -6,10 +6,10 @@ compte::compte()
     QSqlDatabase dbBanque = QSqlDatabase::addDatabase("QMYSQL");
 
 
-    dbBanque.setHostName("192.168.1.10");         // l'adresse IP du serveur mySQL
+    dbBanque.setHostName("172.18.58.5");         // l'adresse IP du serveur mySQL
     dbBanque.setUserName("snir");                 // le nom de l'utilisateur
     dbBanque.setPassword("snir");                 // le mot de passe de l'utilisateur
-    dbBanque.setDatabaseName("snirBanque");           // le nom de la base pour la banque
+    dbBanque.setDatabaseName("snirBanque1");           // le nom de la base pour la banque
 
     if(!dbBanque.open())
     {

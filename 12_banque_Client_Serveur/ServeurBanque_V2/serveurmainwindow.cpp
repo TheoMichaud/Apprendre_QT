@@ -110,7 +110,7 @@ void ServeurMainWindow::slotReadyRead()
         client->write(reponse.toUtf8());
         QString messageReponse  = "Réponse envoyée : <b>" + reponse;
         ui->textEditEtat->append(reponse);
-        ui->textEditEtat->append(" ");
+
     }
 
 }
@@ -155,7 +155,7 @@ void ServeurMainWindow::on_actionD_connecter_le_client_triggered()
 {
     for (int i=0; i <lesConnexionsClients.size(); i++)
     {
-        //lesConnexionsClients.at(i)->disconnect();
+
         lesConnexionsClients.at(i)->deleteLater();
     }
     lesConnexionsClients.clear();
@@ -175,11 +175,11 @@ QString ServeurMainWindow::traitement(QStringList entete, QString corps)
         QString titulaire;
         if (compteclient->obtenirTitulaire( entete[1], titulaire))
         {
-            reponse = "Bienvenue "+ titulaire;
+            reponse = "Bienvenue "+ titulaire + "\n\r";
         }
         else
         {
-            reponse = "Compte n° " + entete[1] + " inconnu";
+            reponse = "Compte n° " + entete[1] + " inconnu\n\r";
         }
     }
 
@@ -189,11 +189,11 @@ QString ServeurMainWindow::traitement(QStringList entete, QString corps)
         QString solde;
         if (compteclient->obtenirSolde(entete[1], solde))
         {
-            reponse = "le solde du compte n° " + entete[1] + " est : " + solde + "€";
+            reponse = "le solde du compte n° " + entete[1] + " est : " + solde + "€\n\r";
         }
         else
         {
-            reponse = "Compte n° " + entete[1] + " inconnu";
+            reponse = "Compte n° " + entete[1] + " inconnu\n\r";
         }
     }
 
@@ -202,11 +202,11 @@ QString ServeurMainWindow::traitement(QStringList entete, QString corps)
     {
         if (compteclient->operation(entete[1], "-" + entete[2], corps))
         {
-            reponse = "Opération effectuée";
+            reponse = "Opération effectuée\n\r";
         }
         else
         {
-            reponse = "Echec";
+            reponse = "Echec\n\r";
         }
     }
 
@@ -214,11 +214,11 @@ QString ServeurMainWindow::traitement(QStringList entete, QString corps)
     {
         if (compteclient->operation(entete[1], entete[2], corps))
         {
-            reponse = "Opération effectuée";
+            reponse = "Opération effectuée\n\r";
         }
         else
         {
-            reponse = "Echec";
+            reponse = "Echec\n\r";
         }
     }
     delete compteclient;
