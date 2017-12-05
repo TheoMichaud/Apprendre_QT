@@ -79,18 +79,26 @@ bool compte::obtenirTitulaire(QString idCompte, QString &titulaire)
 // Methode pour effectuer un retrait ou un dépot
 bool compte::EffectuerOperation(QString idCompte, QString montant, QString description)
 {
-     bool OK = false;
+    bool OK = false;
 
-     QSqlQuery maRequete(dbBanque);
-     QString requeteSQL = "INSERT INTO `operation` (`idop`, `date`, `idcompte`, `montant`, `informations`) VALUES (NULL, CURRENT_TIMESTAMP, '";
-     requeteSQL += idCompte + "', '" + montant + "', '" + description + "')";
-     qDebug() << requeteSQL;
+    if (montant.toInt() != 0)   // si le montant est différent de zéro
+    {
 
-     if (maRequete.exec(requeteSQL))
-     {
-         OK = true;
-     }
-     return OK;
+        if (montant.toInt() < 0)  // les montant négatifs correspondent à des retraits
+        {
+
+        }
+        QSqlQuery maRequete(dbBanque);
+        QString requeteSQL = "INSERT INTO `operation` (`idop`, `date`, `idcompte`, `montant`, `informations`) VALUES (NULL, CURRENT_TIMESTAMP, '";
+        requeteSQL += idCompte + "', '" + montant + "', '" + description + "')";
+        qDebug() << requeteSQL;
+
+        if (maRequete.exec(requeteSQL))
+        {
+            OK = true;
+        }
+    }
+    return OK;
 }
 
 

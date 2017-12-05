@@ -5,20 +5,22 @@
 #-------------------------------------------------
 
 QT       += core gui network
+QT       += sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = ServeurInfoOrdi
+TARGET = ServeurBanque
 TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        serveurmainwindow.cpp
+        serveurmainwindow.cpp \
+    compte.cpp
 
-HEADERS  += serveurmainwindow.h
+HEADERS  += serveurmainwindow.h \
+    compte.h
 
 FORMS    += serveurmainwindow.ui
 
 RESOURCES += \
-    icones.qrc \
-    test.qrc
+    icones.qrc

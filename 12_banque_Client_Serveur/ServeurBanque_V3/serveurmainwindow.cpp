@@ -79,32 +79,35 @@ void ServeurMainWindow::slotReadyRead()
     // renvoie un pointeur sur le client qui a envoyé le signal ReadyRead
     QTcpSocket *client = (QTcpSocket *)this->sender();
     QTextStream flux(client);  // association du flux au socket du client
-
+    QStringList requete;
+    QString designation;
+    QString mot;
     if(client->bytesAvailable())
-
     {
 
         // 1 Lecture de la requête
-        QString ligne = flux.readLine();   // lecture de la première ligne
-        QStringList entete = ligne.split(" "); // la ligne est fendue suivant l'espace
+
+        flux >> mot;
+        requete.append(mot);   // lecture du mot clé de la requête
+        flux >> mot;
+        requete.append(mot);    // lecture des arguments
+        flux >> mot;
+        requete.append(mot);    // lecture du montant
 
         // 1.1 Affichage de l'adresse du client et de la première ligne de la requête
         QHostAddress addresseClient = client->peerAddress();
-        QString messageCommande = "Requète de :<b>" + addresseClient.toString() + " (" + ligne + ")</b>";
+        QString messageCommande = "Requète de :<b>" + addresseClient.toString() + " (" + requete[0] + ")</b>";
         ui->textEditEtat->append(messageCommande);
 
-        qDebug() << entete;
+        qDebug() << requete;
         // 1.2 lecture des ligne suivantes
-        QString corps;
-        do
-        {
-            ligne = flux.readLine();  // Lit une ligne de texte du flux entrant
-            corps += ligne;
-        }while(!ligne.isNull());
+        QString designation;
 
-        qDebug() << corps;
+        designation += flux.readAll();  // Lit une ligne de texte du flux entrant
+
+        qDebug() << designation;
         // 2 Traitement de la requête
-        QString reponse = traitement(entete, corps);
+        QString reponse = traitement(requete, designation);
 
         // 3 Envoie de la réponse au client et affichage
         client->write(reponse.toUtf8());

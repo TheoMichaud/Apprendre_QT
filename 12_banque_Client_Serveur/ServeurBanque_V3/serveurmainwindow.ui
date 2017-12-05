@@ -16,7 +16,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Serveur Information Ordinateur</string>
+   <string>Serveur Banque DAB</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -41,7 +41,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Adresse IP Serveur</string>
+           <string>Adresse IPv4 Serveur</string>
           </property>
          </widget>
         </item>
@@ -100,7 +100,7 @@
      <x>0</x>
      <y>0</y>
      <width>696</width>
-     <height>25</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFichier">
@@ -111,7 +111,6 @@
     <addaction name="actionD_connecter_le_client"/>
     <addaction name="separator"/>
     <addaction name="actionQuitter"/>
-    <addaction name="actiontest"/>
    </widget>
    <addaction name="menuFichier"/>
   </widget>
@@ -137,7 +136,6 @@
    <addaction name="actionA_propos"/>
    <addaction name="actionD_connecter_le_client"/>
    <addaction name="actionQuitter"/>
-   <addaction name="actiontest"/>
   </widget>
   <action name="actionQuitter">
    <property name="icon">
@@ -167,15 +165,6 @@
    </property>
    <property name="text">
     <string>Déconnecter le client</string>
-   </property>
-  </action>
-  <action name="actiontest">
-   <property name="icon">
-    <iconset resource="icones.qrc">
-     <normaloff>:/images/data-center.png</normaloff>:/images/data-center.png</iconset>
-   </property>
-   <property name="text">
-    <string>test</string>
    </property>
   </action>
  </widget>

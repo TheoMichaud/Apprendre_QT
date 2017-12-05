@@ -32,7 +32,7 @@ ServeurMainWindow::ServeurMainWindow(QWidget *parent) :
 
         for (int i = 0; i < listeAdresse.size();i++)
         {
-            if(listeAdresse.at(i).toIPv4Address())
+            //if(listeAdresse.at(i).toIPv4Address())
                 ui->listWidgetIp->addItem((listeAdresse.at(i).toString()));
         }
 
@@ -114,13 +114,14 @@ void ServeurMainWindow::slotReadyRead()
 
         case 'a':
             // Commande (Linux) uname  ou QSysInfo
-            reponse = QSysInfo::productType();
+            process->start("uname");
+            /*reponse = QSysInfo::productType();
             reponse += " - ";
             reponse += QSysInfo::productVersion();
             messageReponse += reponse;
             messageReponse += "</b>";
             clientConnexion->write(reponse.toUtf8());
-            ui->textEditEtat->append(messageReponse);
+            ui->textEditEtat->append(messageReponse);*/
             break;
 
 

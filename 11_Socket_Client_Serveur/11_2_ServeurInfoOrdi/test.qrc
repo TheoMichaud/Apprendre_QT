@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/data-center.png</file>
+    </qresource>
+</RCC>

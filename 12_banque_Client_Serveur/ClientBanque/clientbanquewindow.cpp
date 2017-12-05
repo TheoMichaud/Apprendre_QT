@@ -17,7 +17,7 @@ ClientBanqueWindow::ClientBanqueWindow(QWidget *parent) :
     connect(tcpSocket, SIGNAL(connected()), this , SLOT (slotConnected()));
     connect(tcpSocket,SIGNAL(disconnected()), this, SLOT(slotDisconnected()));
     connect(tcpSocket, SIGNAL( error (QAbstractSocket::SocketError)), this, SLOT (onQTcpSocket_error (QAbstractSocket::SocketError)));
-    designation = " - DAB le Mans Croix de Pierre - ";
+    designation = " - DAB le Mans Touchard SNIR - ";
 
 }
 
