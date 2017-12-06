@@ -3,25 +3,8 @@
 // le constructeur
 compte::compte()
 {
-    QSqlDatabase dbBanque = QSqlDatabase::addDatabase("QMYSQL");
-
-
-    dbBanque.setHostName("172.18.58.5");         // l'adresse IP du serveur mySQL
-    dbBanque.setUserName("snir");                 // le nom de l'utilisateur
-    dbBanque.setPassword("snir");                 // le mot de passe de l'utilisateur
-    dbBanque.setDatabaseName("snirBanque1");           // le nom de la base pour la banque
-
-    if(!dbBanque.open())
-    {
-        connecte = false;
-        qDebug() << dbBanque.lastError().driverText();
-
-    }
-    else
-    {
-        connecte = true;
-        qDebug() << "connecté au serveur mySQL";
-    }
+    // récupération de la connexion à la snirBanque1
+    dbBanque = QSqlDatabase::database("snirBanque1");
 }
 
 // la connexion est fermée quand l'objet compte est détruit
@@ -77,28 +60,39 @@ bool compte::obtenirTitulaire(QString idCompte, QString &titulaire)
 }
 
 // Methode pour effectuer un retrait ou un dépot
-bool compte::EffectuerOperation(QString idCompte, QString montant, QString description)
+// Rien ne se fait si le montant de l'opération est nul
+// Les découverts ne sont pas autorisés
+int compte::EffectuerOperation(QString idCompte, QString montant, QString description)
 {
-    bool OK = false;
+    int erreur = 0;
 
-    if (montant.toInt() != 0)   // si le montant est différent de zéro
+    QSqlQuery maRequete(dbBanque);
+    QString solde;
+
+    if (montant.toInt() == 0) erreur = 1;  // si le montant est égal à zéro
+    if (montant.toInt() > 2000) erreur = 4; // les dépots supérieurs à 2000€ ne sont pas autorisés
+
+    if (montant.toInt() < 0)  // les montant négatifs correspondent à des retraits
     {
+        if (this->obtenirSolde(idCompte,solde)){
 
-        if (montant.toInt() < 0)  // les montant négatifs correspondent à des retraits
-        {
-
+            if (solde.toFloat() + montant.toFloat() < 0)
+                erreur = 2;  // Les découverts ne sont pas autorisés
         }
-        QSqlQuery maRequete(dbBanque);
+    }
+
+    if (erreur == 0){
         QString requeteSQL = "INSERT INTO `operation` (`idop`, `date`, `idcompte`, `montant`, `informations`) VALUES (NULL, CURRENT_TIMESTAMP, '";
         requeteSQL += idCompte + "', '" + montant + "', '" + description + "')";
         qDebug() << requeteSQL;
 
-        if (maRequete.exec(requeteSQL))
+        if (!maRequete.exec(requeteSQL))
         {
-            OK = true;
+            erreur = 3;
         }
     }
-    return OK;
+    qDebug() << "erreur : " << erreur;
+    return erreur;
 }
 
 

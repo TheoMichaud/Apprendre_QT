@@ -13,7 +13,7 @@ public:
 
     bool obtenirSolde(QString idCompte, QString &solde);
     bool obtenirTitulaire(QString idCompte, QString &titulaire);
-    bool EffectuerOperation(QString idCompte, QString montant, QString description);
+    int EffectuerOperation(QString idCompte, QString montant, QString description);
 
 
 

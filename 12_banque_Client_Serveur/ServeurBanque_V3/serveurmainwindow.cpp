@@ -42,6 +42,24 @@ ServeurMainWindow::ServeurMainWindow(QWidget *parent) :
         connect(tcpServeur,SIGNAL(newConnection()),this,SLOT(slotNewConnection()));
     }
 
+    // connexion à la base de données MySql
+    QSqlDatabase dbBanque = QSqlDatabase::addDatabase("QMYSQL","snirBanque1");
+
+    //dbBanque.setHostName("172.18.58.5");         // l'adresse IP du serveur mySQL
+    dbBanque.setHostName("192.168.1.10");
+    dbBanque.setUserName("snir");                 // le nom de l'utilisateur
+    dbBanque.setPassword("snir");                 // le mot de passe de l'utilisateur
+    dbBanque.setDatabaseName("snirBanque1");           // le nom de la base pour la banque1
+
+    if(!dbBanque.open())
+    {
+        this->statusBar()->showMessage(dbBanque.lastError().driverText());
+    }
+    else
+    {
+        this->statusBar()->showMessage("Connecté au serveur MySQL : snirBanque1");
+    }
+
 }
 
 ServeurMainWindow::~ServeurMainWindow()
@@ -167,11 +185,12 @@ void ServeurMainWindow::on_actionD_connecter_le_client_triggered()
 }
 
 
-// Methode pour traiter la requête envoyée par le client
+// Méthode pour traiter la requête envoyée par le client
 QString ServeurMainWindow::traitement(QStringList entete, QString corps)
 {
     QString reponse;
     compteclient = new compte();
+    int erreur;
 
     if (entete[0] == "compte")
     {
@@ -203,25 +222,40 @@ QString ServeurMainWindow::traitement(QStringList entete, QString corps)
 
     if (entete[0] == "retrait")
     {
-        if (compteclient->EffectuerOperation(entete[1], "-" + entete[2], corps))
+        erreur = compteclient->EffectuerOperation(entete[1], "-" + entete[2], corps);
+        switch (erreur)
         {
-            reponse = "Opération effectuée\n\r";
-        }
-        else
-        {
-            reponse = "Echec\n\r";
+        case 0:
+            reponse = "Opération effectuée avec succès\n\r";
+            break;
+        case 1:
+            reponse = "Erreur le montant est nul !!!\n\r";
+            break;
+        case 2:
+            reponse = "Le découvert n'est pas autorisé\n\r";
+            break;
+        case 3:
+            reponse = "Erreur interne SQL\n\r";
         }
     }
 
     if (entete[0] == "depot")
     {
-        if (compteclient->EffectuerOperation(entete[1], entete[2], corps))
+        erreur = compteclient->EffectuerOperation(entete[1], entete[2], corps);
+        switch (erreur)
         {
-            reponse = "Opération effectuée\n\r";
-        }
-        else
-        {
-            reponse = "Echec\n\r";
+        case 0:
+            reponse = "Opération effectuée avec succès\n\r";
+            break;
+        case 1:
+            reponse = "Erreur le montant est nul !!!\n\r";
+            break;
+        case 4:
+            reponse = "Le dépot supérieur à 2000€ n'est pas autorisé\n\r";
+            break;
+        case 3:
+            reponse = "Erreur interne SQL\n\r";
+
         }
     }
     delete compteclient;
