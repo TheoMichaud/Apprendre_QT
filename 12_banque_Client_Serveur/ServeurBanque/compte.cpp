@@ -1,24 +1,44 @@
+/**
+ * \brief Définition des méthodes de la classe compte
+ * \author Philippe SIMIER
+ * \date 01/12/2017
+ *
+ * Classe modélisant un compte banquaire
+ */
+
 #include "compte.h"
 
-// le constructeur
+/**
+ * @brief compte::compte()
+ * Constructeur de la classe compte
+ * Récupère la connexion au serveur MySQL
+ * @author Philippe SIMIER
+ */
 compte::compte()
 {
-    // récupération de la connexion à la snirBanque1
-    dbBanque = QSqlDatabase::database("snirBanque1");
+        dbBanque = QSqlDatabase::database("snirBanque1");
 }
 
-// la connexion est fermée quand l'objet compte est détruit
+/**
+ * @brief compte::~compte()
+ * destructeur de compte
+ * ferme la connexion au serveur MySQL
+ * @author Philippe SIMIER
+ */
+
 compte::~compte()
 {
     dbBanque.close();
-
 }
 
 
 
-
-// Methode pour obtenir le solde d'un compte
-
+/**
+ * @brief compte::obtenirSolde()
+ * destructeur de compte
+ * ferme la connexion au serveur MySQL
+ * @author Philippe SIMIER
+ */
 bool compte::obtenirSolde(QString idCompte, QString &solde )
 {
     bool OK = false;;

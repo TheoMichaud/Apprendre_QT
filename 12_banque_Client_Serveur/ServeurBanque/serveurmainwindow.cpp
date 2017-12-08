@@ -129,7 +129,7 @@ void ServeurMainWindow::slotReadyRead()
 
         // 3 Envoie de la réponse au client et affichage
         client->write(reponse.toUtf8());
-        QString messageReponse  = "Réponse envoyée : <b>" + reponse;
+        QString messageReponse  = "Réponse envoyée : <b>" + reponse + "</b>";
         ui->textEditEtat->append(reponse);
 
     }
