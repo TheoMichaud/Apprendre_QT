@@ -258,6 +258,11 @@ QString ServeurMainWindow::traitement(QStringList entete, QString corps)
 
         }
     }
+
+    if (entete[0] == "extrait")
+    {
+        compteclient->obtenirReleveCompte(entete[1], reponse);
+    }
     delete compteclient;
     return reponse;
 }

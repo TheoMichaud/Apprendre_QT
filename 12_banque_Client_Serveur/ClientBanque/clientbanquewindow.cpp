@@ -61,6 +61,8 @@ void ClientBanqueWindow::on_pushButtonEnvoyer_clicked()
         operation = "depot";
     if(ui->radioButtonRetrait->isChecked ())
         operation = "retrait";
+    if(ui->radioButtonExtrait->isChecked ())
+        operation = "extrait";
 
     out << operation << " ";
 
@@ -71,7 +73,7 @@ void ClientBanqueWindow::on_pushButtonEnvoyer_clicked()
         out << designation;
     }
 
-    if (operation == "solde")
+    if (operation == "solde" || operation == "extrait")
     {
         out << ui->lineEditNumero->text();
     }
@@ -92,6 +94,8 @@ void ClientBanqueWindow::slotReadyRead()
         do
         {
             reponse = fluxIn.readLine();
+            reponse.replace("\n", "");
+            reponse.replace("\r", "");
             ui->textEditMessageBanque->append(reponse);
         }
         while(!reponse.isNull());

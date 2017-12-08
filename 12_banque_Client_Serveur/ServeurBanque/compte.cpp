@@ -116,6 +116,33 @@ int compte::EffectuerOperation(QString idCompte, QString montant, QString descri
     return erreur;
 }
 
+bool compte::obtenirReleveCompte(QString idCompte, QString &releveCompte)
+{
+    qint8 nb;
+    QString ligne;
+    bool OK = false;
+    // Création d'une requète pour lire la vue
+    QSqlQuery maRequete(dbBanque);
+    QString requeteSQL = "SELECT * FROM `operation` where `idcompte` = " + idCompte;
+    requeteSQL += " ORDER BY `idop` DESC LIMIT 10";
+    if (maRequete.exec(requeteSQL))
+    {
+        while(maRequete.next())
+        {
+            ligne = maRequete.value("date").toString() + "\t";
+            ligne += maRequete.value("montant").toString() + "\t";
+            ligne += maRequete.value("informations").toString() + "\t";
+            ligne.replace("\n","");
+            ligne.replace("\r","");
+            ligne += "\r\n";
+            releveCompte += ligne;
+            OK = true;
+        }
+    }
+    return OK;
+
+}
+
 
 
 

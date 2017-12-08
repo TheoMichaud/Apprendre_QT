@@ -14,6 +14,7 @@ public:
     bool obtenirSolde(QString idCompte, QString &solde);
     bool obtenirTitulaire(QString idCompte, QString &titulaire);
     int EffectuerOperation(QString idCompte, QString montant, QString description);
+    bool obtenirReleveCompte(QString idCompte, QString &releveCompte);
 
 
 
