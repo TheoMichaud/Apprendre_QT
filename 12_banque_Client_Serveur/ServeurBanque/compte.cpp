@@ -42,7 +42,7 @@ compte::~compte()
 bool compte::obtenirSolde(QString idCompte, QString &solde )
 {
     bool OK = false;;
-    // Création d'une requète pour lire la vue
+    // Création d'une requète pour lire la vue 'Vue_compte'
     QSqlQuery maRequete(dbBanque);
     QString requeteSQL = "SELECT * FROM `Vue_compte` where `idcompte` = "+idCompte;
     if (maRequete.exec(requeteSQL))
@@ -127,10 +127,12 @@ bool compte::obtenirReleveCompte(QString idCompte, QString &releveCompte)
     requeteSQL += " ORDER BY `idop` DESC LIMIT 10";
     if (maRequete.exec(requeteSQL))
     {
+        releveCompte = "Date\t\tMontant\tDésignation\r\n";
+
         while(maRequete.next())
         {
             ligne = maRequete.value("date").toString() + "\t";
-            ligne += maRequete.value("montant").toString() + "\t";
+            ligne += maRequete.value("montant").toString() + " €\t";
             ligne += maRequete.value("informations").toString() + "\t";
             ligne.replace("\n","");
             ligne.replace("\r","");
@@ -138,6 +140,9 @@ bool compte::obtenirReleveCompte(QString idCompte, QString &releveCompte)
             releveCompte += ligne;
             OK = true;
         }
+        QString solde;
+        this->obtenirSolde(idCompte,solde);
+        releveCompte += "<b>Solde : " + solde +" €<b/>";
     }
     return OK;
 
