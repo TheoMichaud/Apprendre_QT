@@ -45,8 +45,8 @@ ServeurMainWindow::ServeurMainWindow(QWidget *parent) :
     // connexion à la base de données MySql
     QSqlDatabase dbBanque = QSqlDatabase::addDatabase("QMYSQL","snirBanque1");
 
-    dbBanque.setHostName("172.18.58.5");         // l'adresse IP du serveur mySQL
-    //dbBanque.setHostName("192.168.1.10");
+    //dbBanque.setHostName("172.18.58.5");         // l'adresse IP du serveur mySQL
+    dbBanque.setHostName("192.168.1.10");
     dbBanque.setUserName("snir");                 // le nom de l'utilisateur
     dbBanque.setPassword("snir");                 // le mot de passe de l'utilisateur
     dbBanque.setDatabaseName("snirBanque1");           // le nom de la base pour la banque1
