@@ -33,6 +33,7 @@ private slots:
     void OnErreur( quint8 code, quint8 value, QString reponse);
     void OnTcpErreur(QAbstractSocket::SocketError socketError);
 
+
 private:
     Ui::IhmSocket *ui;
     QTcpSocket *socketDeDialogueAvecServeur;

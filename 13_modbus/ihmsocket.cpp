@@ -42,7 +42,7 @@ void ClientDialogueWindows::on_pushButtonConnexionAuServeur_clicked()
         // pour chaque nouvelle connexion on réinitialise la zone evenement
         ui->textEditAfficheurEvenement->clear();
         // connexion à l'esclave modbus
-        modbus->ConnecterEsclaveModBus(ui->lineEditAdresse->text(),ui->lineEditNumeroPort->text().toInt());
+        modbus->ConnecterEsclaveModBus(ui->lineEditAdresse->text(),ui->lineEditNumeroPort->text().toInt(),ui->spinBoxSlaveId->value());
         ui->pushButtonConnexionAuServeur->setText("Déconnexion");
         // rendre accessible zone des demandes
         ui->groupBoxCommandes->setEnabled(true);
@@ -120,5 +120,7 @@ void ClientDialogueWindows::OnTcpErreur(QAbstractSocket::SocketError socketError
    ui->lineEditNumeroPort->setEnabled(true);
    ui->groupBoxCommandes->setEnabled(false);
 }
+
+
 
 

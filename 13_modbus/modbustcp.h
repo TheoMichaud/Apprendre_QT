@@ -14,7 +14,7 @@ public:
     void WriteMultipleRegisters(quint16 adresse, QList<quint16> data);
     void ForceSingleCoil(quint16 adresse, bool valeur);
     void ReadCoil(quint16 adresse, quint16 nb);
-    void ConnecterEsclaveModBus(QString adresse, qint16 port);
+    void ConnecterEsclaveModBus(QString adresse, qint16 port, quint8 slaveId);
     void DeconnecterEsclaveModBus();
 
 signals:

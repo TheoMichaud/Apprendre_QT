@@ -123,9 +123,11 @@ void modbusTcp::ReadCoil(quint16 adresse, quint16 nb)
 }
 
 // connexion au serveur
-void modbusTcp::ConnecterEsclaveModBus(QString adresse, qint16 port)
+void modbusTcp::ConnecterEsclaveModBus(QString adresse, qint16 port, quint8 slaveId)
 {
-     pSocket->connectToHost ( adresse, port );
+    UnitId = slaveId;
+    qDebug() << "unit Id " << UnitId;
+    pSocket->connectToHost ( adresse, port );
 }
 
 // déconnexion du serveur
