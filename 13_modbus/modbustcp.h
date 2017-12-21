@@ -18,7 +18,9 @@ public:
     void DeconnecterEsclaveModBus();
 
 signals:
-    void Reponse(QString expression);
+    void Reponse(quint8 fonction, quint16 value, QString expression);
+    void Erreur(quint8 fonction, quint8 codeErreur, QString expression);
+    void SocketErreur(QAbstractSocket::SocketError socketError);
 
 public slots:
     void 	onQTcpSocket_connected();

@@ -150,6 +150,7 @@ void modbusTcp::onQTcpSocket_disconnected()
 void modbusTcp::onQTcpSocket_error(QAbstractSocket::SocketError socketError)
 {
     QString message = "Oups une erreur !!! <br />" + pSocket->errorString();
+    emit SocketErreur(socketError);
     qDebug() << message;
 }
 
@@ -165,6 +166,7 @@ void modbusTcp::onQTcpSocket_readyRead()
     quint8 val;
     quint8 nb;
     QByteArray data;
+    QString hexValue;
 
     if ( pSocket->bytesAvailable() > 6 )
     {
@@ -179,35 +181,54 @@ void modbusTcp::onQTcpSocket_readyRead()
     case 1:  // Read Coil
         fluxIn >> nb;
         fluxIn >> val;
-        emit Reponse("(F1) Read Coil : " + QString::number(val));
+        emit Reponse(01,val,"(F1) Read Coil : " + QString::number(val));
         break;
 
     case 3:   //Read holding registers
         fluxIn >> nb;
         fluxIn >> donnee;
-        emit Reponse("(F3) Read holding registers : " + QString::number(donnee, 10));
+        hexValue = QString("0x%1").arg(donnee, 4, 16, QLatin1Char( '0' ));
+        emit Reponse(03,donnee,"(F3) Read holding registers : " + hexValue);
         break;
 
     case 5: // Force Single Coil
-        emit Reponse("(F5) Ecriture Coil effectuée");
+        emit Reponse(05,00,"(F5) Ecriture Coil effectuée");
         break;
 
     case 6: // Preset Single Register
-        emit Reponse("(F6) Ecriture Registre effectuée");
+        emit Reponse(06,00,"(F6) Ecriture Registre effectuée");
         break;
 
     case 16: // Write Multiple Registers
-        emit Reponse("(F16) Ecriture Registres multiples effectuée");
+        emit Reponse(16,00,"(F16) Ecriture Registres multiples effectuée");
         break;
 
     default:
 
         fluxIn >> val;
-        emit Reponse("Erreur : " + QString::number(val, 10));
+        switch (val)
+        {
+        case 1:
+            emit Erreur(fonctionCode, val, "Erreur : La fonction demandée n'est pas supportée");
+            break;
+        case 2:
+            emit Erreur(fonctionCode, val, "Erreur : Adresse invalide");
+            break;
+        case 3:
+            emit Erreur(fonctionCode, val, "Erreur : Valeur hors de la plage admissible");
+            break;
+        case 8:
+            emit Erreur(fonctionCode, val, "Erreur : Valeur en lecture seule");
+            break;
+        default:
+            emit Erreur(fonctionCode, val, "Erreur : type inconnue");
+
+        }
+
+
 
 
     }
     fluxIn >> data;
-    qDebug() << data.toHex();
 
 }

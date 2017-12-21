@@ -8,8 +8,12 @@ ClientDialogueWindows::ClientDialogueWindows(QWidget *parent) :
     ui->setupUi(this);
     modbus = new modbusTcp(this);
 
-    if(!connect(modbus, SIGNAL(Reponse(QString)), this, SLOT(OnReponse(QString))))
-    qDebug() << "Erreur connexion reponse";
+    if(!connect(modbus, SIGNAL(Reponse(quint8, quint16, QString)), this, SLOT(OnReponse(quint8, quint16, QString))))
+        qDebug() << "Erreur connexion reponse";
+    if(!connect(modbus, SIGNAL(Erreur(quint8, quint8, QString)), this, SLOT(OnErreur(quint8,quint8,QString))))
+        qDebug() << "Erreur connexion erreur";
+    if(!connect(modbus, SIGNAL(SocketErreur(QAbstractSocket::SocketError)), this, SLOT(OnTcpErreur(QAbstractSocket::SocketError))))
+        qDebug() << "Erreur connexion erreur";
 }
 
 ClientDialogueWindows::~ClientDialogueWindows()
@@ -37,12 +41,12 @@ void ClientDialogueWindows::on_pushButtonConnexionAuServeur_clicked()
     if (ui->pushButtonConnexionAuServeur->text()!="Déconnexion"){
         // pour chaque nouvelle connexion on réinitialise la zone evenement
         ui->textEditAfficheurEvenement->clear();
-        // connexion a l'esclave modbus
+        // connexion à l'esclave modbus
         modbus->ConnecterEsclaveModBus(ui->lineEditAdresse->text(),ui->lineEditNumeroPort->text().toInt());
         ui->pushButtonConnexionAuServeur->setText("Déconnexion");
         // rendre accessible zone des demandes
-        //ui->groupBoxInfosPoste->setEnabled(true);
-         // désactiver les zones de saisie d'adresse ip et de numéro de port
+        ui->groupBoxCommandes->setEnabled(true);
+        // désactiver les zones de saisie d'adresse ip et de numéro de port
         ui->lineEditAdresse->setEnabled(false);
         ui->lineEditNumeroPort->setEnabled(false);
     }
@@ -91,7 +95,30 @@ void ClientDialogueWindows::on_pushButtonF3_clicked()
     modbus->ReadHoldingRegisters(adresseRegistre,0x0001); // 1 seul registre
 }
 
-void ClientDialogueWindows::OnReponse(QString reponse)
+void ClientDialogueWindows::OnReponse(quint8 code, quint16 value, QString reponse)
 {
-     ui->textEditAfficheurEvenement->append(reponse);
+    if (code == 1)
+        ui->checkBoxEtat->setChecked(value == 1);
+    if (code == 3)
+    {
+        QString hexValue = QString("%1").arg(value, 16, 2, QLatin1Char( '0' ));
+        ui->ValeurRegistreLire->setText(hexValue);
+    }
+    ui->textEditAfficheurEvenement->append(reponse);
 }
+
+void ClientDialogueWindows::OnErreur(quint8 code, quint8 value, QString reponse)
+{
+    ui->textEditAfficheurEvenement->append(reponse);
+}
+
+void ClientDialogueWindows::OnTcpErreur(QAbstractSocket::SocketError socketError)
+{
+   qDebug() << "erreur socket TCP";
+   ui->pushButtonConnexionAuServeur->setText("Connexion");
+   ui->lineEditAdresse->setEnabled(true);
+   ui->lineEditNumeroPort->setEnabled(true);
+   ui->groupBoxCommandes->setEnabled(false);
+}
+
+
