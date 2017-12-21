@@ -1,47 +1,23 @@
-﻿Apprendre Qt  -   Client TCP avec QTcpSocket
+﻿
+﻿Apprendre Qt  -  MODBUS TCP
 ================
 Présentation
 ----
-On se propose de créer un **client TCP** capable de se connecter à un serveur. Le client enverra une requête  sous forme d'un caractère au serveur et affichera la réponse reçue en retour à sa demande.
-
-Le module QtNetwork
------
-
-Le module QtNetwork offre des classes qui vous permettent d’écrire vos propres clients et serveurs TCP/IP. Pour inclure les déclarations des classes de ce module, il vous faut utiliser la directive suivante :
-
-    #include <QtNetwork>
-
-Pour disposer ce module, il vous faut ajouter cette ligne à votre fichier de projet .pro :
-
-    QT += network
-
-Qt fournit de nombreuses classes pour la programmation réseau, on disposera :
-
- - des classes comme **QFtp** pour les protocoles de la couche Application
- - des classes de plus bas niveau comme **QTcpSocket** ,  **QTcpServer** et **QUdpSocket**
- - des classes de plus haut niveau pour une gestion simplifiée du réseau comme **QNetworkConfiguration** ,  **QNetworkConfigurationManager**, ...
- 
-La classe QTcpSocket
---------
-La classe QTcpSocket est asynchrone et émet des signaux pour reporter des changements de statuts et des erreurs. Elle repose sur une boucle d’événements pour détecter des données arrivantes et automatiquement envoyer les données partantes.
-Les signaux qu’il faut au minimum gérer par connect() côté client :
- - **readyRead()** signale que des données ont été reçues et sont prêtes à être lues ;
- -  **connected()** signale que la socket est dans l’état connecté ;
- - **disconnected()** signale que la socket est dans l’état déconnecté ;
- - **error()** signale qu’une erreur s’est produite sur la socket ;
- 
-Vous pouvez écrire des données dans le socket avec **QTcpSocket::write()** 
-et en lire avec **QTcpSocket::read()**.
+Modbus (marque déposée par Modicon) est un protocole de communication utilisé pour des réseaux d'automates programmables (API). Il fonctionne sur le mode maître / esclave(s). Il est constitué de trames contenant l'adresse de l'esclave concerné, la fonction à traiter
+(écriture, lecture) et pour finir les données. 
+Modbus TCP est la variante "encapsulée" dans TCP/IP du protocole
+Modbus. Pour permettre l’établissement des connexions et l’échange de données entre équipements, le service  Modbus TCP doit fournir une socket d’écoute sur le port **502** qui  est réservé aux communications Modbus.
+La classe client **modbustcp** construit les  requêtes sur la base des informations transmises par l'interface graphique.
  
 L'objectif de ce TP est :
 ---
- - Mettre en œuvre la classe QTcpSocket 
- - Définir un protocole application basique
+ - Développer un **client Modbus over TCP.**
+ - Mettre en œuvre le protocole modbus 
+ - les flux binaires avec **QDataStream** 
  
 Screenshot:
 ----
-
-![enter image description here](https://lh3.googleusercontent.com/-O_dMGB3DxfU/Whc8uYS-dhI/AAAAAAAANO0/nQfNFwdXI0INYzqi5zauKcVF-L5RYYLgACLcBGAs/s0/ScreenShot2.PNG "ScreenShot client TCP")
-
-> - Auteurs  **BERNARD CRUCHET SIMIER Lycée Touchard Le Mans**
+Le client modbus TCP connecté à un variateur ATV32
+![enter image description here](https://lh3.googleusercontent.com/-uxdI1BNIVwQ/WjvH8AsH-kI/AAAAAAAANgc/5xoV74j2rigp90PR6RhpTh2hDdNbK8OeQCLcBGAs/s0/screenshot1.png "screenshot1.png")
+> - Auteur  **philippe SIMIER Lycée Touchard Le Mans**
 > - Licence  **licence publique générale GNU (GPL)**
