@@ -10,10 +10,12 @@ ClientDialogueWindows::ClientDialogueWindows(QWidget *parent) :
 
     if(!connect(modbus, SIGNAL(Reponse(quint8, quint16, QString)), this, SLOT(OnReponse(quint8, quint16, QString))))
         qDebug() << "Erreur connexion reponse";
-    if(!connect(modbus, SIGNAL(Erreur(quint8, quint8, QString)), this, SLOT(OnErreur(quint8,quint8,QString))))
+    if(!connect(modbus, SIGNAL(ModbusErreur(quint8, quint8, QString)), this, SLOT(OnErreur(quint8,quint8,QString))))
         qDebug() << "Erreur connexion erreur";
     if(!connect(modbus, SIGNAL(SocketErreur(QAbstractSocket::SocketError)), this, SLOT(OnTcpErreur(QAbstractSocket::SocketError))))
         qDebug() << "Erreur connexion erreur";
+    if(!connect(modbus, SIGNAL(SignalEtatConnexion(QString)), this, SLOT(OnEtatConnexion(QString))))
+        qDebug() << "Erreur connexion signal état";
 }
 
 ClientDialogueWindows::~ClientDialogueWindows()
@@ -42,22 +44,22 @@ void ClientDialogueWindows::on_pushButtonConnexionAuServeur_clicked()
         // pour chaque nouvelle connexion on réinitialise la zone evenement
         ui->textEditAfficheurEvenement->clear();
         // connexion à l'esclave modbus
-        modbus->ConnecterEsclaveModBus(ui->lineEditAdresse->text(),ui->lineEditNumeroPort->text().toInt(),ui->spinBoxSlaveId->value());
+        modbus->ConnecterEsclaveModBus(ui->lineEditAdresse->text(),ui->spinBoxPort->value(),ui->spinBoxSlaveId->value());
         ui->pushButtonConnexionAuServeur->setText("Déconnexion");
         // rendre accessible zone des demandes
         ui->groupBoxCommandes->setEnabled(true);
         // désactiver les zones de saisie d'adresse ip et de numéro de port
         ui->lineEditAdresse->setEnabled(false);
-        ui->lineEditNumeroPort->setEnabled(false);
+        ui->spinBoxPort->setEnabled(false);
+        ui->spinBoxSlaveId->setEnabled(false);
     }
     else
     {
         modbus->DeconnecterEsclaveModBus();
         ui->pushButtonConnexionAuServeur->setText("Connexion");
         ui->lineEditAdresse->setEnabled(true);
-        ui->lineEditNumeroPort->setEnabled(true);
-        //ui->groupBoxInfosPoste->setEnabled(false);
-
+        ui->spinBoxPort->setEnabled(true);
+        ui->spinBoxSlaveId->setEnabled(true);
     }
 }
 
@@ -117,8 +119,13 @@ void ClientDialogueWindows::OnTcpErreur(QAbstractSocket::SocketError socketError
    qDebug() << "erreur socket TCP";
    ui->pushButtonConnexionAuServeur->setText("Connexion");
    ui->lineEditAdresse->setEnabled(true);
-   ui->lineEditNumeroPort->setEnabled(true);
+   ui->spinBoxPort->setEnabled(true);
    ui->groupBoxCommandes->setEnabled(false);
+}
+
+void ClientDialogueWindows::OnEtatConnexion(QString message)
+{
+    ui->textEditAfficheurEvenement->append(message);
 }
 
 

@@ -32,6 +32,7 @@ private slots:
     void OnReponse(quint8 code, quint16 value, QString reponse);
     void OnErreur( quint8 code, quint8 value, QString reponse);
     void OnTcpErreur(QAbstractSocket::SocketError socketError);
+    void OnEtatConnexion(QString message);
 
 
 private:
