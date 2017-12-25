@@ -28,29 +28,20 @@ ClientDialogueWindows::~ClientDialogueWindows()
     delete ui;
 }
 
-void ClientDialogueWindows::on_lineEditAdresse_textEdited(const QString &arg1)
-{
-
-}
-
-void ClientDialogueWindows::on_lineEditNumeroPort_textEdited(const QString &arg1)
-{
-
-}
-
 void ClientDialogueWindows::on_pushButtonConnexionAuServeur_clicked()
 {
     if (ui->pushButtonConnexionAuServeur->text()!="Déconnexion"){
         // pour chaque nouvelle connexion on réinitialise la zone evenement
         ui->textEditAfficheurEvenement->clear();
-        // connexion à l'esclave modbus
-        modbus->ConnecterEsclaveModBus(ui->lineEditAdresse->text(),ui->spinBoxPort->value(),ui->spinBoxSlaveId->value());
+        // connexion au Master modbus
+        const QUrl url = QUrl::fromUserInput(ui->lineEditAdresse->text());
+        modbus->ConnecterEsclaveModBus(url.host(), url.port() ,ui->spinBoxSlaveId->value());
         ui->pushButtonConnexionAuServeur->setText("Déconnexion");
         // rendre accessible zone des demandes
         ui->groupBoxCommandes->setEnabled(true);
         // désactiver les zones de saisie d'adresse ip et de numéro de port
         ui->lineEditAdresse->setEnabled(false);
-        ui->spinBoxPort->setEnabled(false);
+        //ui->spinBoxPort->setEnabled(false);
         ui->spinBoxSlaveId->setEnabled(false);
     }
     else
@@ -58,7 +49,7 @@ void ClientDialogueWindows::on_pushButtonConnexionAuServeur_clicked()
         modbus->DeconnecterEsclaveModBus();
         ui->pushButtonConnexionAuServeur->setText("Connexion");
         ui->lineEditAdresse->setEnabled(true);
-        ui->spinBoxPort->setEnabled(true);
+        //ui->spinBoxPort->setEnabled(true);
         ui->spinBoxSlaveId->setEnabled(true);
     }
 }
@@ -119,7 +110,7 @@ void ClientDialogueWindows::OnTcpErreur(QAbstractSocket::SocketError socketError
    qDebug() << "erreur socket TCP";
    ui->pushButtonConnexionAuServeur->setText("Connexion");
    ui->lineEditAdresse->setEnabled(true);
-   ui->spinBoxPort->setEnabled(true);
+   //ui->spinBoxPort->setEnabled(true);
    ui->groupBoxCommandes->setEnabled(false);
 }
 
