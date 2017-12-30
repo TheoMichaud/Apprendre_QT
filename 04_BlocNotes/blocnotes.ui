@@ -160,6 +160,9 @@
     <addaction name="actionEnregistrer"/>
     <addaction name="actionEnregistrer_sous"/>
     <addaction name="separator"/>
+    <addaction name="actionCrypter"/>
+    <addaction name="actionD_crypter"/>
+    <addaction name="separator"/>
     <addaction name="actionQuitter"/>
    </widget>
    <widget class="QMenu" name="menuFormat">
@@ -393,6 +396,16 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+A</string>
+   </property>
+  </action>
+  <action name="actionCrypter">
+   <property name="text">
+    <string>Chiffrer</string>
+   </property>
+  </action>
+  <action name="actionD_crypter">
+   <property name="text">
+    <string>Déchiffrer</string>
    </property>
   </action>
  </widget>

@@ -12,6 +12,7 @@
 #include <QInputDialog>
 #include <QDebug>
 #include "finddialog.h"
+#include "crypto.h"
 
 
 namespace Ui {
@@ -29,7 +30,7 @@ public:
 public slots:
     void rechercher(QString expression, QTextDocument::FindFlag options);
     void rechercherReg(QRegExp expression, QTextDocument::FindFlags options);
-
+    void crypter(QString clef);
 
 private slots:
     void on_actionOuvrir_triggered();
@@ -48,12 +49,15 @@ private slots:
     void on_actionCouper_triggered();
     void on_actionCopier_triggered();
     void on_actionColler_triggered();
-
     void on_actionSelectionner_tout_triggered();
+    void on_actionCrypter_triggered();
+    void on_actionD_crypter_triggered();
+
 
 private:
     Ui::blocNotes *ui;
     FindDialog *WRechercher;
+    Crypto *WCrypto;
     QString nomDocument;
     QString contenuDocument;
     QFileInfo *fichierInfo;
@@ -61,6 +65,7 @@ private:
     // attributs utilisés pour la recherche
     QString expression;
     QTextDocument::FindFlag options;
+    Crypto::FONCTION opt;
 };
 
 #endif // BLOCNOTES_H

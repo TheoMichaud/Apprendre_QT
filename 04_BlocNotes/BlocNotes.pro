@@ -27,17 +27,20 @@ SOURCES += \
         main.cpp \
         blocnotes.cpp \
     info.cpp \
-    finddialog.cpp
+    finddialog.cpp \
+    crypto.cpp
 
 HEADERS += \
         blocnotes.h \
     info.h \
-    finddialog.h
+    finddialog.h \
+    crypto.h
 
 FORMS += \
         blocnotes.ui \
     info.ui \
-    finddialog.ui
+    finddialog.ui \
+    crypto.ui
 
 RESOURCES += \
     ressourcesicones.qrc

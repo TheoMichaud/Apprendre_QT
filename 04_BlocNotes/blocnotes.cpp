@@ -20,6 +20,10 @@ blocNotes::blocNotes(QWidget *parent) :
         qDebug() << "Erreur connexion rechercher";
     if(!connect(WRechercher, SIGNAL(rechercherReg(QRegExp,QTextDocument::FindFlags)), this, SLOT(rechercherReg(QRegExp,QTextDocument::FindFlags))))
         qDebug() << "Erreur connexion rechercherReg";
+
+    WCrypto = new Crypto(this);
+    if(!connect(WCrypto, SIGNAL(clef(QString)), this, SLOT(crypter(QString))))
+        qDebug() << "Erreur connexion crypter ";
 }
 
 blocNotes::~blocNotes()
@@ -29,7 +33,7 @@ blocNotes::~blocNotes()
 
 void blocNotes::on_actionOuvrir_triggered()
 {
-    nomDocument = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", QDir::homePath() , "Text files (*.txt)");
+    nomDocument = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", QDir::homePath() , "Text files (*.*)");
     fichierInfo = new QFileInfo(nomDocument);
     QFile fichier(nomDocument);
     if(fichier.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -72,6 +76,7 @@ void blocNotes::on_actionEnregistrer_triggered(){
         {
             // création d'un flux
             QTextStream flux(&fichier);
+            flux.setCodec("UTF-8");
             contenuDocument = ui->plainTextEdit->toPlainText();
             flux << contenuDocument;
             fichier.close();
@@ -88,7 +93,7 @@ void blocNotes::on_actionEnregistrer_triggered(){
 }
 
 void blocNotes::on_actionEnregistrer_sous_triggered(){
-    nomDocument = QFileDialog::getSaveFileName(this, "Enregistrer sous...", QDir::homePath(), "Texte (*.txt)");
+    nomDocument = QFileDialog::getSaveFileName(this, "Enregistrer sous...", QDir::homePath());
     fichierInfo = new QFileInfo(nomDocument);
     setWindowTitle(fichierInfo->baseName() + " - Bloc-notes");
     on_actionEnregistrer_triggered();
@@ -202,6 +207,9 @@ void blocNotes::rechercherReg(QRegExp expression, QTextDocument::FindFlags optio
 }
 
 
+
+
+
 // Slot appelé quand la touche F3 est actionnée
 void blocNotes::on_actionRechercher_le_suivant_triggered(){
     rechercher(expression,options);   // appelle le slot rechercher
@@ -222,3 +230,30 @@ void blocNotes::on_actionColler_triggered(){
 void blocNotes::on_actionSelectionner_tout_triggered(){
     ui->plainTextEdit->selectAll();
 }
+
+void blocNotes::on_actionCrypter_triggered()
+{
+    contenuDocument = ui->plainTextEdit->toPlainText();
+    opt = Crypto::CHIFFRER;
+    WCrypto->show();
+
+
+}
+
+void blocNotes::on_actionD_crypter_triggered()
+{
+    contenuDocument = ui->plainTextEdit->toPlainText();
+    opt = Crypto::DECHIFFRER;
+    WCrypto->show();
+
+}
+
+
+void blocNotes::crypter(QString clef)
+{
+
+    WCrypto->Coder(contenuDocument, clef , opt);
+    ui->plainTextEdit->setPlainText(contenuDocument);
+}
+
+
