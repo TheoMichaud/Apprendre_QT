@@ -32,13 +32,15 @@ void Crypto::Coder(QString &contenu, QString clef, FONCTION opt)
     for (int i = 0; i< lc; i++){
 
         if (clef.at(i % lg).unicode() > 96)
-            decalage = clef.at(i % lg).unicode()-96;  // a -> 1 b -> 2 etc
+            decalage = clef.at(i % lg).unicode()-96;  // 'a' -> 1 'b' -> 2 etc
         else if (clef.at(i % lg).unicode() > 64)
-            decalage = clef.at(i % lg).unicode()-64;  // A -> 1 B -> 2 etc
+            decalage = clef.at(i % lg).unicode()-64;  // 'A' -> 1 'B' -> 2 etc
+        else if (clef.at(i % lg).unicode() > 47)   // '0'-> 1 '1' -> 2
+            decalage = clef.at(i % lg).unicode()-47;
         else
             decalage = clef.at(i % lg).unicode();  // les espaces -> 32
 
-        if (contenu.at(i).unicode() > 20){   // les codes spéciaux ne sont pas chiffrés
+        if (contenu.at(i).unicode() > 19){   // les codes spéciaux ne sont pas chiffrés
             if (opt == CHIFFRER){
 
                 contenu[i] = contenu.at(i).unicode() + decalage;
@@ -50,3 +52,13 @@ void Crypto::Coder(QString &contenu, QString clef, FONCTION opt)
         }
     }
 }
+
+// Méthode pour obtenir l'empreinte Sha512 de la clef
+QString Crypto::Sha512(QString clef)
+{
+    QCryptographicHash hash(QCryptographicHash::Sha512);
+    hash.addData(clef.toUtf8());
+    return hash.result().toHex();
+}
+
+

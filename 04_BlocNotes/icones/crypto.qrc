@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>cadenas-ouvert-icone.png</file>
+        <file>verrouillage-icone.png</file>
+    </qresource>
+</RCC>

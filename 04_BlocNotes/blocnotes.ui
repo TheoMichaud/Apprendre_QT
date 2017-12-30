@@ -217,6 +217,7 @@
    <addaction name="actionColler"/>
    <addaction name="actionRechercher"/>
    <addaction name="separator"/>
+   <addaction name="actionCrypter"/>
    <addaction name="actionA_propos"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
@@ -399,11 +400,19 @@
    </property>
   </action>
   <action name="actionCrypter">
+   <property name="icon">
+    <iconset resource="icones/crypto.qrc">
+     <normaloff>:/verrouillage-icone.png</normaloff>:/verrouillage-icone.png</iconset>
+   </property>
    <property name="text">
     <string>Chiffrer</string>
    </property>
   </action>
   <action name="actionD_crypter">
+   <property name="icon">
+    <iconset resource="icones/crypto.qrc">
+     <normaloff>:/cadenas-ouvert-icone.png</normaloff>:/cadenas-ouvert-icone.png</iconset>
+   </property>
    <property name="text">
     <string>Déchiffrer</string>
    </property>
@@ -411,6 +420,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
+  <include location="icones/crypto.qrc"/>
   <include location="ressourcesicones.qrc"/>
  </resources>
  <connections/>

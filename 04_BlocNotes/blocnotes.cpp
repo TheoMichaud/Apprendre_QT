@@ -251,8 +251,8 @@ void blocNotes::on_actionD_crypter_triggered()
 
 void blocNotes::crypter(QString clef)
 {
-
-    WCrypto->Coder(contenuDocument, clef , opt);
+    qDebug() << WCrypto->Sha512(clef);
+    WCrypto->Coder(contenuDocument, WCrypto->Sha512(clef) , opt);
     ui->plainTextEdit->setPlainText(contenuDocument);
 }
 

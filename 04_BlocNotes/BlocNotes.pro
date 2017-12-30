@@ -43,4 +43,8 @@ FORMS += \
     crypto.ui
 
 RESOURCES += \
-    ressourcesicones.qrc
+    ressourcesicones.qrc \
+    icones/crypto.qrc
+
+DISTFILES += \
+    icones/cadenas-ouvert-icone.png
