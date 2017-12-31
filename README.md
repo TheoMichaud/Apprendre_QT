@@ -22,7 +22,9 @@ la devise de Qt est "***codé une fois, déployés partout***" ce qui signifie q
 | 10 |Les comptes banquaires | Modèle vue (QSqlTableModel) | [![enter image description here](https://img.shields.io/badge/La_banque-lien-yellowgreen.svg)](https://github.com/PhilippeSimier/Apprendre_QT/tree/master/10_Arbre)
 | 11 |Les Sockets TCP | QTcpSocket   | [![enter image description here](https://img.shields.io/badge/Client_Serveur-lien-yellowgreen.svg)](https://github.com/PhilippeSimier/Apprendre_QT/tree/master/11_Socket_Client_Serveur)
 | 12 | Le distributeur de billets | QTcpSocket & QTextStream   | [![enter image description here](https://img.shields.io/badge/Client_Serveur-lien-yellowgreen.svg)](https://github.com/PhilippeSimier/Apprendre_QT/tree/master/12_banque_Client_Serveur)
-| 13 | Le protocole ModBUS TCP | QTcpSocket & QDataStream   | [![enter image description here](https://img.shields.io/badge/Client_ModBus-lien-yellowgreen.svg)](https://github.com/PhilippeSimier/Apprendre_QT/tree/master/)
+| 13 | Le protocole ModBUS TCP | QTcpSocket & QDataStream   | [![enter image description here](https://img.shields.io/badge/Client_ModBus-lien-yellowgreen.svg)](https://github.com/PhilippeSimier/Apprendre_QT/tree/master/13_modbus)
+| 14 | Le port série sous Qt5 | QSerialPort & QSerialPortInfo  | [![enter image description here](https://img.shields.io/badge/Port_série-lien-yellowgreen.svg)](https://github.com/PhilippeSimier/Apprendre_QT/tree/master/14_Liaison_Serie)
+
 
 # Mise en garde
 

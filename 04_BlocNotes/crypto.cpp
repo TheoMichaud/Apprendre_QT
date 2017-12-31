@@ -1,3 +1,26 @@
+/**
+ * @brief Définition des méthodes de la classe crypto
+ * @author Philippe SIMIER
+ * @date 31/12/2017
+ * @details
+ *  Classe modélisant un systéme de cryptographie simple
+ *  Parfois, vous devez stocker certaines informations que vous pourriez vouloir protéger
+ *  contre une observation occasionnelle comme les  mots de passe pour les services distants, par exemple.
+ *  La cryptographie forte est évidemment la meilleure solution, mais il peut être difficile de l'utiliser
+ *  de la bonne manière. Elles ont tendance à utiliser des bibliothèques volumineuses, et franchement,
+ *  cela peut être exagéré pour certaine situation.
+ *  Ici je propose un système basé sur le système de substitution polyalphabétique.
+ *  les décalages sont opérés à partir d'une clé de longueur quelconque.
+ *  si la clé à pour longueur un seul caractère,  c'est la méthode de César
+ *  si la clé est très longue alors le système est plus robuste.
+ *  pour ne pas avoir à saisir comme clé une phrase très longue et donc difficile à mémoriser.
+ *  J'utilise plutôt comme clé une empreinte SHA512 obtenu à partir d'une suite de caractères plus simple à mémoriser.
+ */
+
+
+// Only symmetric encryption is supported (= same key for encryption and decryption required)
+// https://wiki.qt.io/Simple_encryption_with_SimpleCrypt
+
 #include "crypto.h"
 #include "ui_crypto.h"
 

@@ -1,6 +1,8 @@
 #ifndef CRYPTO_H
 #define CRYPTO_H
 
+// Only symmetric encryption is supported (= same key for encryption and decryption required)
+
 #include <QDialog>
 #include <QDebug>
 #include <QCryptographicHash>
