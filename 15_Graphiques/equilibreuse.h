@@ -28,9 +28,9 @@ private slots:
 private:
     Ui::Equilibreuse *ui;
     QChart *FabriquerCourbes();
-    float map(float x, float in_min, float in_max, float out_min, float out_max);
-    QChartView *chartView;
+    QChartView  *chartView;
     QHBoxLayout *horizontalLayout;
+    QFileInfo   *fichierInfo;
 
     Experience data;
 
@@ -39,6 +39,8 @@ private:
     bool decalage;
     bool filtre;
     bool brutes;
+
+    float map(float x, float in_min, float in_max, float out_min, float out_max);
 };
 
 #endif // EQUILIBREUSE_H

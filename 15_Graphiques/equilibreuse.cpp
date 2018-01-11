@@ -24,14 +24,16 @@ Equilibreuse::~Equilibreuse()
 
 void Equilibreuse::on_actionOuvrir_triggered()
 {
-    QString leFichier;
-    QString chemin = "/home/USERS/PROFS/" + QDir::home().dirName() +"/";
-    chemin += QStandardPaths::displayName(QStandardPaths::DocumentsLocation) + "/";
-    leFichier = QFileDialog::getOpenFileName(this, tr("Charger un fichier équilibrage"), chemin, tr("Fichiers (*.mbr)"));
+
+    QString leFichier = QFileDialog::getOpenFileName(this, "Charger un fichier de données", QDir::homePath(), "Fichiers (*.mbr)");
+    fichierInfo = new QFileInfo(leFichier);
     if(leFichier != NULL)
     {
         if (!leFichier.isEmpty())
         {
+            statusBar()->showMessage("Fichier ouvert : " + fichierInfo->baseName() );
+            setWindowTitle(fichierInfo->baseName() + " - Viewer");
+
             data.LireMesuresBrutes(leFichier);
 
             if(chartView != NULL)
@@ -44,10 +46,11 @@ void Equilibreuse::on_actionOuvrir_triggered()
     }
 }
 
+
 QChart * Equilibreuse::FabriquerCourbes()
 {
     QChart *chart = new QChart();
-    chart->setTitle("Restitution des Courbes");
+    chart->setTitle("Restitution des Forces");
     QLineSeries *courbeA = new QLineSeries(chart);
     QLineSeries *courbeO = new QLineSeries(chart);
 
@@ -109,7 +112,7 @@ QChart * Equilibreuse::FabriquerCourbes()
     axisY->setMinorTickCount(10);
 
     if(newton)
-        axisY->setTitleText("Effort en Newtons");
+        axisY->setTitleText("Force en Newton");
     else
         axisY->setTitleText("Tension en Volts");
 
