@@ -40,6 +40,7 @@ void Equilibreuse::on_actionOuvrir_triggered()
                 delete chartView;
 
             chartView = new QChartView(FabriquerCourbes());
+            chartView->setRenderHint(QPainter::Antialiasing, true);
             horizontalLayout->addWidget(chartView);
 
         }
@@ -66,9 +67,9 @@ QChart * Equilibreuse::FabriquerCourbes()
     if(brutes)
         fin = data.nbEchantillons / 2;
 
-    double tensionCalibrage = 1;
+    double Calibrage = 1;     // 1V correspond à 1V
     if(newton)
-        tensionCalibrage = 9.80665; // 5kg = 5V et 1Kg = 9,80665 N
+        Calibrage = 9.80665;  // 1V correspond à 9.80665 N
 
     for(int i = 0 ; i < fin ; i++)
     {
@@ -80,8 +81,8 @@ QChart * Equilibreuse::FabriquerCourbes()
         else
         {
             float x  = map(i, 0, 1000, 0, 360);
-            float FA = map(data.mesuresBrutes[indiceA++], 0, 1, 0, tensionCalibrage);
-            float FO = map(data.mesuresBrutes[indiceO++], 0, 1, 0, tensionCalibrage);
+            float FA = map(data.mesuresBrutes[indiceA++], 0, 1, 0, Calibrage);
+            float FO = map(data.mesuresBrutes[indiceO++], 0, 1, 0, Calibrage);
             courbeA->append(x , FA);
             courbeO->append(x , FO);
         }
@@ -96,6 +97,7 @@ QChart * Equilibreuse::FabriquerCourbes()
     chart->addSeries(courbeO);
 
     chart->createDefaultAxes();
+
 
     QValueAxis *axisX = (QValueAxis *)chart->axisX();
     axisX->setTickCount(5);
@@ -144,6 +146,7 @@ void Equilibreuse::on_actionAffichage_en_brutes_toggled(bool arg1)
         delete chartView;
     }
     chartView = new QChartView(FabriquerCourbes());
+    chartView->setRenderHint(QPainter::Antialiasing, true);
     horizontalLayout->addWidget(chartView);
 }
 
@@ -156,6 +159,7 @@ void Equilibreuse::on_actionAffichage_en_Newton_toggled(bool arg1)
         delete chartView;
     }
     chartView = new QChartView(FabriquerCourbes());
+    chartView->setRenderHint(QPainter::Antialiasing, true);
     horizontalLayout->addWidget(chartView);
 }
 
@@ -167,5 +171,6 @@ void Equilibreuse::on_actionPrise_en_compte_de_l_origine_toggled(bool arg1)
         delete chartView;
     }
     chartView = new QChartView(FabriquerCourbes());
+    chartView->setRenderHint(QPainter::Antialiasing, true);
     horizontalLayout->addWidget(chartView);
 }
