@@ -40,11 +40,7 @@
     <property name="title">
      <string>Options</string>
     </property>
-    <addaction name="actionAffichage_en_brutes"/>
-    <addaction name="separator"/>
     <addaction name="actionAffichage_en_Newton"/>
-    <addaction name="actionPrise_en_compte_du_filtre"/>
-    <addaction name="actionPrise_en_compte_de_l_origine"/>
    </widget>
    <addaction name="menuFichier"/>
    <addaction name="menuOptions"/>
@@ -56,9 +52,15 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionOuvrir"/>
+   <addaction name="actionQuitter"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOuvrir">
+   <property name="icon">
+    <iconset resource="icones.qrc">
+     <normaloff>:/Icones/open-file-icon.png</normaloff>:/Icones/open-file-icon.png</iconset>
+   </property>
    <property name="text">
     <string>Ouvrir</string>
    </property>
@@ -67,6 +69,10 @@
    </property>
   </action>
   <action name="actionQuitter">
+   <property name="icon">
+    <iconset resource="icones.qrc">
+     <normaloff>:/Icones/Windows-Close-Program-icon.png</normaloff>:/Icones/Windows-Close-Program-icon.png</iconset>
+   </property>
    <property name="text">
     <string>Quitter</string>
    </property>
@@ -79,48 +85,17 @@
     <bool>true</bool>
    </property>
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="text">
     <string>Affichage en Newton</string>
    </property>
   </action>
-  <action name="actionAffichage_en_brutes">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="checked">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Affichage mesures brutes</string>
-   </property>
-  </action>
-  <action name="actionPrise_en_compte_du_filtre">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>Compensation du filtre</string>
-   </property>
-  </action>
-  <action name="actionPrise_en_compte_de_l_origine">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>Prise en compte de l'origine</string>
-   </property>
-  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="icones.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>actionQuitter</sender>

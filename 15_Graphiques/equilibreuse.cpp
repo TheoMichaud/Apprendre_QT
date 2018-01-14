@@ -8,8 +8,6 @@ Equilibreuse::Equilibreuse(QWidget *parent) :
     ui(new Ui::Equilibreuse),
     chartView(NULL),
     newton(false),
-    decalage(false),
-    filtre(false),
     brutes(true)
 {
     //initialisation de l'IHM
@@ -51,46 +49,42 @@ void Equilibreuse::on_actionOuvrir_triggered()
 QChart * Equilibreuse::FabriquerCourbes()
 {
     QChart *chart = new QChart();
-    chart->setTitle("Restitution des Forces");
+    chart->setTitle("Forces appliquées sur les paliers");
     QLineSeries *courbeA = new QLineSeries(chart);
     QLineSeries *courbeO = new QLineSeries(chart);
 
+
     int indiceA = 0 ;
     int indiceO = data.nbEchantillons/2;
-    if(decalage)
-    {
-        indiceA += data.decalageOrigine;
-        indiceO += data.decalageOrigine;
-    }
-
-    int fin = data.nbEchantillons / 4;
-    if(brutes)
-        fin = data.nbEchantillons / 2;
+    float decalageDegre = data.decalageOrigine * 360/1000;
 
     double Calibrage = 1;     // 1V correspond à 1V
     if(newton)
         Calibrage = 9.80665;  // 1V correspond à 9.80665 N
 
-    for(int i = 0 ; i < fin ; i++)
+    for(int i = 0 ; i < data.nbEchantillons / 2 ; i++)
     {
         if(brutes)
         {
-            courbeA->append(i,data.mesuresBrutes[indiceA++]);
-            courbeO->append(i,data.mesuresBrutes[indiceO++]);
+
+            float degree  = map(i, 0, 1000, 0 - decalageDegre, 360 -decalageDegre);
+            courbeA->append(degree, data.mesuresBrutes[indiceA++]);
+            courbeO->append(degree, data.mesuresBrutes[indiceO++]);
         }
         else
         {
-            float x  = map(i, 0, 1000, 0, 360);
+            float degree  = map(i, 0, 1000, 0 - decalageDegre, 360 -decalageDegre);
             float FA = map(data.mesuresBrutes[indiceA++], 0, 1, 0, Calibrage);
             float FO = map(data.mesuresBrutes[indiceO++], 0, 1, 0, Calibrage);
-            courbeA->append(x , FA);
-            courbeO->append(x , FO);
+
+            courbeA->append(degree , FA);
+            courbeO->append(degree , FO);
         }
     }
 
-    courbeA->setName("Courbe A");
+    courbeA->setName("Force en A");
     courbeA->setColor(Qt::blue);
-    courbeO->setName("Courbe O");
+    courbeO->setName("Force en O");
     courbeO->setColor(Qt::red);
 
     chart->addSeries(courbeA);
@@ -103,8 +97,6 @@ QChart * Equilibreuse::FabriquerCourbes()
     axisX->setTickCount(5);
     axisX->setMinorTickCount(2);
 
-    if(!brutes)
-        axisX->setMax(360);
 
     axisX->setLabelFormat("%d");
     axisX->setTitleText("Position angulaire en °");
@@ -112,6 +104,13 @@ QChart * Equilibreuse::FabriquerCourbes()
     QValueAxis *axisY = (QValueAxis *)chart->axisY();
     axisY->applyNiceNumbers();
     axisY->setMinorTickCount(10);
+
+    /* Customize axis colors
+        QPen axisPen(QRgb(0xd18952));
+        axisPen.setWidth(2);
+        axisX->setLinePen(axisPen);
+        axisY->setLinePen(axisPen);
+    */
 
     if(newton)
         axisY->setTitleText("Force en Newton");
@@ -130,16 +129,6 @@ float Equilibreuse::map(float x, float in_min, float in_max, float out_min, floa
 
 void Equilibreuse::on_actionAffichage_en_brutes_toggled(bool arg1)
 {
-    QList<QAction *> lesActions = ui->menuOptions->actions();
-    foreach (QAction *action, lesActions)
-    {
-        if(action->text() != "Affichage mesures brutes")
-        {
-            action->setEnabled(!arg1);
-            if(arg1)
-                action->setChecked(false);
-        }
-    }
     brutes = arg1;
     if(chartView != NULL)
     {
@@ -153,7 +142,6 @@ void Equilibreuse::on_actionAffichage_en_brutes_toggled(bool arg1)
 void Equilibreuse::on_actionAffichage_en_Newton_toggled(bool arg1)
 {
     newton = arg1;
-
     if(chartView != NULL)
     {
         delete chartView;
@@ -165,12 +153,5 @@ void Equilibreuse::on_actionAffichage_en_Newton_toggled(bool arg1)
 
 void Equilibreuse::on_actionPrise_en_compte_de_l_origine_toggled(bool arg1)
 {
-    decalage = arg1;
-    if(chartView != NULL)
-    {
-        delete chartView;
-    }
-    chartView = new QChartView(FabriquerCourbes());
-    chartView->setRenderHint(QPainter::Antialiasing, true);
-    horizontalLayout->addWidget(chartView);
+
 }

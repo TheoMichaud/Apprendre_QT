@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Icones/open-file-icon.png</file>
+        <file>Icones/Windows-Close-Program-icon.png</file>
+    </qresource>
+</RCC>

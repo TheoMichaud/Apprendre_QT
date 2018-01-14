@@ -36,3 +36,6 @@ HEADERS += \
 
 FORMS += \
         equilibreuse.ui
+
+RESOURCES += \
+    icones.qrc

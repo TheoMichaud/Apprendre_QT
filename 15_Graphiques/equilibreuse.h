@@ -36,8 +36,6 @@ private:
 
     int origine;
     bool newton;
-    bool decalage;
-    bool filtre;
     bool brutes;
 
     float map(float x, float in_min, float in_max, float out_min, float out_max);
