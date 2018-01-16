@@ -53,6 +53,15 @@ QChart * Equilibreuse::FabriquerCourbes()
     QLineSeries *courbeA = new QLineSeries(chart);
     QLineSeries *courbeO = new QLineSeries(chart);
 
+    QLineSeries *axeX0 = new QLineSeries(chart);
+    QLineSeries *axeY0 = new QLineSeries(chart);
+
+    axeX0->setColor(QRgb(Qt::black));
+    axeY0->setColor(QRgb(Qt::black));
+
+
+    axeY0->append(QPoint(0,-4));
+    axeY0->append(QPoint(0,+4));
 
     int indiceA = 0 ;
     int indiceO = data.nbEchantillons/2;
@@ -62,18 +71,20 @@ QChart * Equilibreuse::FabriquerCourbes()
     if(newton)
         Calibrage = 9.80665;  // 1V correspond à 9.80665 N
 
-    for(int i = 0 ; i < data.nbEchantillons / 2 ; i++)
+    int i;
+    float degree;
+    for(i = 0 ; i < data.nbEchantillons / 2 ; i++)
     {
+        degree  = map(i, 0, 1000, 0 - decalageDegre, 360 -decalageDegre);
+        if (i==0) axeX0->append(QPoint(degree,0));
         if(brutes)
         {
-
-            float degree  = map(i, 0, 1000, 0 - decalageDegre, 360 -decalageDegre);
             courbeA->append(degree, data.mesuresBrutes[indiceA++]);
             courbeO->append(degree, data.mesuresBrutes[indiceO++]);
         }
         else
         {
-            float degree  = map(i, 0, 1000, 0 - decalageDegre, 360 -decalageDegre);
+
             float FA = map(data.mesuresBrutes[indiceA++], 0, 1, 0, Calibrage);
             float FO = map(data.mesuresBrutes[indiceO++], 0, 1, 0, Calibrage);
 
@@ -81,6 +92,7 @@ QChart * Equilibreuse::FabriquerCourbes()
             courbeO->append(degree , FO);
         }
     }
+    axeX0->append(QPoint(degree,0));
 
     courbeA->setName("Force en A");
     courbeA->setColor(Qt::blue);
@@ -89,8 +101,11 @@ QChart * Equilibreuse::FabriquerCourbes()
 
     chart->addSeries(courbeA);
     chart->addSeries(courbeO);
+    chart->addSeries(axeX0);
+    chart->addSeries(axeY0);
 
     chart->createDefaultAxes();
+
 
 
     QValueAxis *axisX = (QValueAxis *)chart->axisX();
@@ -105,12 +120,6 @@ QChart * Equilibreuse::FabriquerCourbes()
     axisY->applyNiceNumbers();
     axisY->setMinorTickCount(10);
 
-    /* Customize axis colors
-        QPen axisPen(QRgb(0xd18952));
-        axisPen.setWidth(2);
-        axisX->setLinePen(axisPen);
-        axisY->setLinePen(axisPen);
-    */
 
     if(newton)
         axisY->setTitleText("Force en Newton");
@@ -120,16 +129,17 @@ QChart * Equilibreuse::FabriquerCourbes()
     return chart;
 }
 
-float Equilibreuse::map(float x, float in_min, float in_max, float out_min, float out_max)
+float Equilibreuse::map(float x, float Xa, float Xb, float Ya, float Yb)
 {
-    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+    return (x - Xa) * (Yb - Ya) / (Xb - Xa) + Ya;
 
 }
 
 
 void Equilibreuse::on_actionAffichage_en_brutes_toggled(bool arg1)
 {
-    brutes = arg1;
+    brutes = true;
+    newton = false;
     if(chartView != NULL)
     {
         delete chartView;
@@ -141,7 +151,8 @@ void Equilibreuse::on_actionAffichage_en_brutes_toggled(bool arg1)
 
 void Equilibreuse::on_actionAffichage_en_Newton_toggled(bool arg1)
 {
-    newton = arg1;
+    newton = true;
+    brutes = false;
     if(chartView != NULL)
     {
         delete chartView;
