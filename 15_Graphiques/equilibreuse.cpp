@@ -105,8 +105,8 @@ QChart * Equilibreuse::FabriquerCourbes()
     chart->addSeries(axeY0);
 
     chart->createDefaultAxes();
-
-
+    chart->setAcceptHoverEvents(true);
+    chart->legend()->hide();  // Cache les légendes
 
     QValueAxis *axisX = (QValueAxis *)chart->axisX();
     axisX->setTickCount(5);
@@ -117,7 +117,6 @@ QChart * Equilibreuse::FabriquerCourbes()
     axisX->setTitleText("Position angulaire en °");
 
     QValueAxis *axisY = (QValueAxis *)chart->axisY();
-    axisY->applyNiceNumbers();
     axisY->setMinorTickCount(10);
 
 
@@ -126,9 +125,18 @@ QChart * Equilibreuse::FabriquerCourbes()
     else
         axisY->setTitleText("Tension en Volts");
 
+    if(!connect(courbeA, SIGNAL(hovered(QPointF, bool)), this, SLOT(tooltip(QPointF,bool))))
+        qDebug() << "Erreur connexion hovered courbeA";
+    if(!connect(courbeO, SIGNAL(hovered(QPointF, bool)), this, SLOT(tooltip(QPointF,bool))))
+        qDebug() << "Erreur connexion hovered courbeO";
     return chart;
 }
 
+// Fonction map
+// Cette fonction est très utile pour effectuer des changements d'échelle.
+// Avec ou sans décalage.
+// exemple y= map(500, 0, 1000, 0, 360)
+// donne 180
 float Equilibreuse::map(float x, float Xa, float Xb, float Ya, float Yb)
 {
     return (x - Xa) * (Yb - Ya) / (Xb - Xa) + Ya;
@@ -146,8 +154,21 @@ void Equilibreuse::on_actionAffichage_en_brutes_toggled(bool arg1)
     }
     chartView = new QChartView(FabriquerCourbes());
     chartView->setRenderHint(QPainter::Antialiasing, true);
+
     horizontalLayout->addWidget(chartView);
 }
+
+void Equilibreuse::tooltip(QPointF point, bool state)
+{
+    QLineSeries *courbe = (QLineSeries *)sender();
+
+    if (state)
+        statusBar()->showMessage(" Téta : " + QString::number( point.x()) + "° " + courbe->name() +" : " + QString::number( point.y()) + "N");
+    else
+        statusBar()->showMessage("");
+}
+
+
 
 void Equilibreuse::on_actionAffichage_en_Newton_toggled(bool arg1)
 {
@@ -162,7 +183,4 @@ void Equilibreuse::on_actionAffichage_en_Newton_toggled(bool arg1)
     horizontalLayout->addWidget(chartView);
 }
 
-void Equilibreuse::on_actionPrise_en_compte_de_l_origine_toggled(bool arg1)
-{
 
-}

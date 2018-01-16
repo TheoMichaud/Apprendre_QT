@@ -27,7 +27,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         equilibreuse.cpp \
-        experience.cpp \
+        experience.cpp
 
 
 HEADERS += \

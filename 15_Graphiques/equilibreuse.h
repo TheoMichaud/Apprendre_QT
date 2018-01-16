@@ -23,8 +23,7 @@ private slots:
     void on_actionOuvrir_triggered();
     void on_actionAffichage_en_Newton_toggled(bool arg1);
     void on_actionAffichage_en_brutes_toggled(bool arg1);
-
-    void on_actionPrise_en_compte_de_l_origine_toggled(bool arg1);
+    void tooltip(QPointF point, bool state);
 
 private:
     Ui::Equilibreuse *ui;
