@@ -1,4 +1,4 @@
-﻿# Apprendre Qt 5
+﻿﻿# Apprendre Qt 5
 
 Ce repository a pour objectif de permettre aux étudiants de  SNIR d'apprendre à développer des applications à partir du framework Qt 5 en un minimum de temps.
 Qt utilise un certain nombre de concepts informatiques fondamentaux (**objet, héritage, pointeur, référence**, etc) qu'il convient de bien maîtriser avant d'entamer l'apprentissage de ce framework. 
@@ -24,6 +24,7 @@ la devise de Qt est "***codé une fois, déployés partout***" ce qui signifie q
 | 12 | Le distributeur de billets | QTcpSocket & QTextStream   | [![enter image description here](https://img.shields.io/badge/Client_Serveur-lien-yellowgreen.svg)](https://github.com/PhilippeSimier/Apprendre_QT/tree/master/12_banque_Client_Serveur)
 | 13 | Le protocole ModBUS TCP | QTcpSocket & QDataStream   | [![enter image description here](https://img.shields.io/badge/Client_ModBus-lien-yellowgreen.svg)](https://github.com/PhilippeSimier/Apprendre_QT/tree/master/13_modbus)
 | 14 | Le port série sous Qt5 | QSerialPort & QSerialPortInfo  | [![enter image description here](https://img.shields.io/badge/Port_série-lien-yellowgreen.svg)](https://github.com/PhilippeSimier/Apprendre_QT/tree/master/14_Liaison_Serie)
+| 15 | Graphiques sous Qt5 | QChart  | [![enter image description here](https://img.shields.io/badge/Graphiques-lien-yellowgreen.svg)](https://github.com/PhilippeSimier/Apprendre_QT/tree/master/15_Graphiques)
 
 
 # Mise en garde
@@ -36,6 +37,8 @@ Ces programmes ne sont là que pour vous aider à comprendre certaines notions e
 
 **16/12/2017:** Distribution et organisation originale du repository **Apprendre Qt**. 
 
+**18/01/2017:** Ajout des chapitres **14 port série** et **15  graphiques**. 
+
 > **Notes :**
 
 > - Auteurs : **BERNARD CRUCHET SIMIER Lycée Touchard Le Mans**
@@ -44,4 +47,8 @@ Ces programmes ne sont là que pour vous aider à comprendre certaines notions e
 
 Génération des badges : https://shields.io/
 Génération de ce fichier : https://stackedit.io/editor#
--->
+
+
+
+
+
