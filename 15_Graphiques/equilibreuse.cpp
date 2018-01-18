@@ -7,8 +7,8 @@ Equilibreuse::Equilibreuse(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Equilibreuse),
     chartView(NULL),
-    newton(false),
-    degre(false),
+    newton(true),
+    degre(true),
     graphiques(NULL)
 {
     //initialisation de l'IHM
@@ -34,13 +34,8 @@ void Equilibreuse::on_actionOuvrir_triggered()
             setWindowTitle(fichierInfo->baseName() + " - Viewer");
 
             data.LireMesuresBrutes(leFichier);
+            afficherVueGraphique();
 
-            if(graphiques != NULL) delete graphiques;
-            graphiques = FabriquerCourbes();
-            if(chartView != NULL) delete chartView;
-            chartView = new QChartView(graphiques);
-            chartView->setRenderHint(QPainter::Antialiasing, true);
-            horizontalLayout->addWidget(chartView);
         }
     }
 }
@@ -153,6 +148,17 @@ float Equilibreuse::map(float x, float Xa, float Xb, float Ya, float Yb)
 
 }
 
+void Equilibreuse::afficherVueGraphique()
+{
+    if(graphiques != NULL) delete graphiques;
+    graphiques = FabriquerCourbes();
+
+    if(chartView != NULL) delete chartView;
+    chartView = new QChartView(graphiques);
+    chartView->setRenderHint(QPainter::Antialiasing, true);
+    horizontalLayout->addWidget(chartView);
+}
+
 
 void Equilibreuse::tooltip(QPointF point, bool state)
 {
@@ -169,13 +175,7 @@ void Equilibreuse::tooltip(QPointF point, bool state)
 void Equilibreuse::on_actionAffichage_en_Newton_toggled(bool arg1)
 {
     newton = arg1;
-    if(graphiques != NULL) delete graphiques;
-    graphiques = FabriquerCourbes();
-
-    if(chartView != NULL) delete chartView;
-    chartView = new QChartView(graphiques);
-    chartView->setRenderHint(QPainter::Antialiasing, true);
-    horizontalLayout->addWidget(chartView);
+    afficherVueGraphique();
 }
 
 
@@ -183,11 +183,5 @@ void Equilibreuse::on_actionAffichage_en_Newton_toggled(bool arg1)
 void Equilibreuse::on_actionAffichage_en_degr_toggled(bool arg1)
 {
     degre = arg1;
-    if(graphiques != NULL) delete graphiques;
-    graphiques = FabriquerCourbes();
-
-    if(chartView != NULL) delete chartView;
-    chartView = new QChartView(graphiques);
-    chartView->setRenderHint(QPainter::Antialiasing, true);
-    horizontalLayout->addWidget(chartView);
+    afficherVueGraphique();
 }
