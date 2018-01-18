@@ -22,8 +22,9 @@ public:
 private slots:
     void on_actionOuvrir_triggered();
     void on_actionAffichage_en_Newton_toggled(bool arg1);
-    void on_actionAffichage_en_brutes_toggled(bool arg1);
     void tooltip(QPointF point, bool state);
+
+    void on_actionAffichage_en_degr_toggled(bool arg1);
 
 private:
     Ui::Equilibreuse *ui;
@@ -36,7 +37,8 @@ private:
 
     int origine;
     bool newton;
-    bool brutes;
+    bool degre;
+    QChart *graphiques;
 
     float map(float x, float in_min, float in_max, float out_min, float out_max);
 };

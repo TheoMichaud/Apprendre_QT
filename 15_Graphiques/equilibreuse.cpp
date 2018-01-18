@@ -8,7 +8,8 @@ Equilibreuse::Equilibreuse(QWidget *parent) :
     ui(new Ui::Equilibreuse),
     chartView(NULL),
     newton(false),
-    brutes(true)
+    degre(false),
+    graphiques(NULL)
 {
     //initialisation de l'IHM
     ui->setupUi(this);
@@ -34,13 +35,12 @@ void Equilibreuse::on_actionOuvrir_triggered()
 
             data.LireMesuresBrutes(leFichier);
 
-            if(chartView != NULL)
-                delete chartView;
-
-            chartView = new QChartView(FabriquerCourbes());
+            if(graphiques != NULL) delete graphiques;
+            graphiques = FabriquerCourbes();
+            if(chartView != NULL) delete chartView;
+            chartView = new QChartView(graphiques);
             chartView->setRenderHint(QPainter::Antialiasing, true);
             horizontalLayout->addWidget(chartView);
-
         }
     }
 }
@@ -60,8 +60,7 @@ QChart * Equilibreuse::FabriquerCourbes()
     axeY0->setColor(QRgb(Qt::black));
 
 
-    axeY0->append(QPoint(0,-4));
-    axeY0->append(QPoint(0,+4));
+
 
     int indiceA = 0 ;
     int indiceO = data.nbEchantillons/2;
@@ -72,15 +71,19 @@ QChart * Equilibreuse::FabriquerCourbes()
         Calibrage = 9.80665;  // 1V correspond à 9.80665 N
 
     int i;
-    float degree;
+    float x;
     for(i = 0 ; i < data.nbEchantillons / 2 ; i++)
     {
-        degree  = map(i, 0, 1000, 0 - decalageDegre, 360 -decalageDegre);
-        if (i==0) axeX0->append(QPoint(degree,0));
-        if(brutes)
+        if(degre)
+            x  = map(i, 0, 1000, 0 - decalageDegre, 360 -decalageDegre);
+        else
+            x = i;
+
+        if (i==0) axeX0->append(QPoint(x,0));
+        if(!newton)
         {
-            courbeA->append(degree, data.mesuresBrutes[indiceA++]);
-            courbeO->append(degree, data.mesuresBrutes[indiceO++]);
+            courbeA->append(x, data.mesuresBrutes[indiceA++]);
+            courbeO->append(x, data.mesuresBrutes[indiceO++]);
         }
         else
         {
@@ -88,21 +91,24 @@ QChart * Equilibreuse::FabriquerCourbes()
             float FA = map(data.mesuresBrutes[indiceA++], 0, 1, 0, Calibrage);
             float FO = map(data.mesuresBrutes[indiceO++], 0, 1, 0, Calibrage);
 
-            courbeA->append(degree , FA);
-            courbeO->append(degree , FO);
+            courbeA->append(x , FA);
+            courbeO->append(x , FO);
         }
     }
-    axeX0->append(QPoint(degree,0));
+
+    axeX0->append(QPoint(x,0));
+
 
     courbeA->setName("Force en A");
     courbeA->setColor(Qt::blue);
     courbeO->setName("Force en O");
     courbeO->setColor(Qt::red);
 
-    chart->addSeries(courbeA);
-    chart->addSeries(courbeO);
     chart->addSeries(axeX0);
-    chart->addSeries(axeY0);
+    chart->addSeries(courbeO);
+    chart->addSeries(courbeA);
+
+
 
     chart->createDefaultAxes();
     chart->setAcceptHoverEvents(true);
@@ -119,6 +125,10 @@ QChart * Equilibreuse::FabriquerCourbes()
     QValueAxis *axisY = (QValueAxis *)chart->axisY();
     axisY->setMinorTickCount(10);
 
+    axeY0->append(QPoint(0.0,axisY->max()));
+    axeY0->append(QPoint(0.0,axisY->min()));
+    chart->addSeries(axeY0);
+    chart->createDefaultAxes();
 
     if(newton)
         axisY->setTitleText("Force en Newton");
@@ -133,7 +143,7 @@ QChart * Equilibreuse::FabriquerCourbes()
 }
 
 // Fonction map
-// Cette fonction est très utile pour effectuer des changements d'échelle.
+// Fonction  pour effectuer des changements d'échelle.
 // Avec ou sans décalage.
 // exemple y= map(500, 0, 1000, 0, 360)
 // donne 180
@@ -143,20 +153,6 @@ float Equilibreuse::map(float x, float Xa, float Xb, float Ya, float Yb)
 
 }
 
-
-void Equilibreuse::on_actionAffichage_en_brutes_toggled(bool arg1)
-{
-    brutes = true;
-    newton = false;
-    if(chartView != NULL)
-    {
-        delete chartView;
-    }
-    chartView = new QChartView(FabriquerCourbes());
-    chartView->setRenderHint(QPainter::Antialiasing, true);
-
-    horizontalLayout->addWidget(chartView);
-}
 
 void Equilibreuse::tooltip(QPointF point, bool state)
 {
@@ -172,15 +168,26 @@ void Equilibreuse::tooltip(QPointF point, bool state)
 
 void Equilibreuse::on_actionAffichage_en_Newton_toggled(bool arg1)
 {
-    newton = true;
-    brutes = false;
-    if(chartView != NULL)
-    {
-        delete chartView;
-    }
-    chartView = new QChartView(FabriquerCourbes());
+    newton = arg1;
+    if(graphiques != NULL) delete graphiques;
+    graphiques = FabriquerCourbes();
+
+    if(chartView != NULL) delete chartView;
+    chartView = new QChartView(graphiques);
     chartView->setRenderHint(QPainter::Antialiasing, true);
     horizontalLayout->addWidget(chartView);
 }
 
 
+
+void Equilibreuse::on_actionAffichage_en_degr_toggled(bool arg1)
+{
+    degre = arg1;
+    if(graphiques != NULL) delete graphiques;
+    graphiques = FabriquerCourbes();
+
+    if(chartView != NULL) delete chartView;
+    chartView = new QChartView(graphiques);
+    chartView->setRenderHint(QPainter::Antialiasing, true);
+    horizontalLayout->addWidget(chartView);
+}

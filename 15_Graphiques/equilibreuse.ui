@@ -20,7 +20,7 @@
      <x>0</x>
      <y>0</y>
      <width>813</width>
-     <height>34</height>
+     <height>27</height>
     </rect>
    </property>
    <property name="font">
@@ -41,6 +41,7 @@
      <string>Options</string>
     </property>
     <addaction name="actionAffichage_en_Newton"/>
+    <addaction name="actionAffichage_en_degr"/>
    </widget>
    <addaction name="menuFichier"/>
    <addaction name="menuOptions"/>
@@ -89,6 +90,14 @@
    </property>
    <property name="text">
     <string>Affichage en Newton</string>
+   </property>
+  </action>
+  <action name="actionAffichage_en_degr">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Affichage en degré</string>
    </property>
   </action>
  </widget>
