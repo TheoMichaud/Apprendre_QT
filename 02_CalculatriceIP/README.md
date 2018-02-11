@@ -14,7 +14,7 @@ Ce qui donnera l'écran suivant:
 ----
 ![Screen shot Calculatrice IPv4](https://lh3.googleusercontent.com/-R3isaRD5hK4/WfCg7R8ksmI/AAAAAAAANCA/vnETBRslioMX6UEyIvKafVZ84--1EQHNACLcBGAs/s0/Capture.PNG "Capture.PNG")
 
-
+<img src=https://github.com/PhilippeSimier/Apprendre_QT/blob/master/02_CalculatriceIP/icons/config-reseau-icon.png>
 > **Note :**
 
 > - Auteurs **Philippe Cruchet & Philippe SIMIER Lycée Touchard Le Mans**
