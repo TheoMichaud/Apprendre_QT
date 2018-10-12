@@ -52,27 +52,8 @@ ClientDialogueWindows::~ClientDialogueWindows()
     delete ui;
 }
 
-void ClientDialogueWindows::on_lineEditAdresse_textEdited(const QString &arg1)
-{
-    if(!ui->lineEditNumeroPort->text().isEmpty()){
-        ui->pushButtonConnexionAuServeur->setEnabled(true);
-    }
-    else
-    {
-        ui->pushButtonConnexionAuServeur->setEnabled(false);
-    }
-}
 
-void ClientDialogueWindows::on_lineEditNumeroPort_textEdited(const QString &arg1)
-{
-    if(!ui->lineEditAdresse->text().isEmpty()){
-        ui->pushButtonConnexionAuServeur->setEnabled(true);
-    }
-    else
-    {
-        ui->pushButtonConnexionAuServeur->setEnabled(false);
-    }
-}
+
 
 void ClientDialogueWindows::on_pushButtonConnexionAuServeur_clicked()
 {
@@ -80,7 +61,8 @@ void ClientDialogueWindows::on_pushButtonConnexionAuServeur_clicked()
         // pour chaque nouvelle connexion on réinitialise la zone evenement
         ui->textEditAfficheurEvenement->clear();
         // connexion au serveur
-        socketDeDialogueAvecServeur->connectToHost ( ui->lineEditAdresse->text(),ui->lineEditNumeroPort->text().toInt() );
+        QStringList AddressPort = ui->lineEditAdresse->text().split(":");
+        socketDeDialogueAvecServeur->connectToHost ( AddressPort[0], AddressPort[1].toInt());
 
     }
     else
@@ -106,7 +88,7 @@ void 	ClientDialogueWindows::onQTcpSocket_connected ()
 
     // désactiver les zones de saisie d'adresse ip et de numéro de port
     ui->lineEditAdresse->setEnabled(false);
-    ui->lineEditNumeroPort->setEnabled(false);
+
 }
 
 
@@ -119,7 +101,7 @@ void 	ClientDialogueWindows::onQTcpSocket_disconnected ()
     socketDeDialogueAvecServeur->close();
     // rendre accessible les zone de saisie d'adresse ip et de numero de port
     ui->lineEditAdresse->setEnabled(true);
-    ui->lineEditNumeroPort->setEnabled(true);
+
     // desactiver zone des demandes
     //ui->groupBoxInfosPoste->setEnabled(false);
 }

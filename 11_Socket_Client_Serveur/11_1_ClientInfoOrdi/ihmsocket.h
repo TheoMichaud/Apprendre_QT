@@ -32,7 +32,7 @@ private slots:
 
     void on_lineEditAdresse_textEdited(const QString &arg1);
 
-    void on_lineEditNumeroPort_textEdited(const QString &arg1);
+
 
     void on_pushButtonConnexionAuServeur_clicked();
 
