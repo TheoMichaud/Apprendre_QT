@@ -95,7 +95,7 @@ QSpinBox, QDoubleSpinBox, QPushButton, QLineEdit{
      </font>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <property name="tabBarAutoHide">
      <bool>false</bool>
@@ -474,7 +474,7 @@ QSpinBox, QDoubleSpinBox, QPushButton, QLineEdit{
      </widget>
     </widget>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>110</x>
@@ -524,7 +524,7 @@ QSpinBox, QDoubleSpinBox, QPushButton, QLineEdit{
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>0</x>
